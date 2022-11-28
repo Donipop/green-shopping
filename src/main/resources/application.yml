@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    username: admin
+    password: Green1234567
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@tcps://adb.ap-seoul-1.oraclecloud.com/g0a67b711a0f3b1_zuztnsnmj1nhn4dm_high.adb.oraclecloud.com
+
+server:
+  servlet:
+    context-Path: /api
+
+mybatis:
+  mapper-locations: mapper/*.xml
