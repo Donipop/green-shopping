@@ -12,7 +12,6 @@ public class SignUp {
     private String name;
     private String email;
     private String password;
-
     private String brith;
     private String address;
     private int sex;
