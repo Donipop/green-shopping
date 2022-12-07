@@ -8,14 +8,45 @@ import com.green.shopping.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController("/api")
 public class IndexController {
 
     @Autowired
     LoginService loginService;
+
+    @PostMapping("/login")
+    @ResponseBody
+    public HashMap<String, Object> loginProcess(HttpSession session, @RequestBody HashMap<String, String> map) {
+        UserVo vo = loginService.login( map );
+        String returnURL = "";
+        System.out.println(session);
+
+        HashMap<String, Object> map1 = new HashMap<>();
+
+        if ( session.getAttribute("login") != null) {
+            session.removeAttribute("login");
+        }
+
+        if ( vo != null) {
+            session.setAttribute("login", vo);
+            returnURL = "/";
+        } else {
+            returnURL = "/login";
+        }
+
+
+        map1.put("vo", vo);
+        map1.put("returnURL", returnURL);
+
+
+        return map1;
+
+    }
 
 
     @GetMapping("/name")
@@ -48,7 +79,7 @@ public class IndexController {
         ObjectMapper objectMapper = new ObjectMapper();
         SignUp signUp = objectMapper.convertValue(map, SignUp.class);
 
-
+        System.out.println("signUp = " + signUp);
         loginService.user_sign_up(signUp);
 
 

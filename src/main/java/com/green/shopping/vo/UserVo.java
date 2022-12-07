@@ -21,10 +21,12 @@ public class UserVo {
     private int user_role;
     private int user_state;
 
+    private String user_tel;
+
     public UserVo() {
     }
 
-    public UserVo(String user_id, String user_password, String user_email, String user_name, String user_brith, String user_address, int user_grade, int user_money, int user_sex, String user_nick, String user_signdate, int user_role, int user_state) {
+    public UserVo(String user_id, String user_password, String user_email, String user_name, String user_brith, String user_address, int user_grade, int user_money, int user_sex, String user_nick, String user_signdate, int user_role, int user_state, String user_tel) {
         this.user_id = user_id;
         this.user_password = user_password;
         this.user_email = user_email;
@@ -38,6 +40,7 @@ public class UserVo {
         this.user_signdate = user_signdate;
         this.user_role = user_role;
         this.user_state = user_state;
+        this.user_tel = user_tel;
     }
 
     @Override
@@ -56,6 +59,7 @@ public class UserVo {
                 ", user_signdate='" + user_signdate + '\'' +
                 ", user_role=" + user_role +
                 ", user_state=" + user_state +
+                ", user_tel=" + user_tel +
                 '}';
     }
 }
