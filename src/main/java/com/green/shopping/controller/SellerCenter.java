@@ -21,6 +21,7 @@ public class SellerCenter {
         if (parent_num == null || parent_num.equals("")) {
             parent_num = "-1";
         }
+        System.out.println(parent_num);
         return sellerCenterService.getCategoryList(parent_num);
     }
 }
