@@ -1,6 +1,7 @@
 package com.green.shopping.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.shopping.interceptor.AuthInterceptor;
 import com.green.shopping.service.LoginService;
@@ -11,12 +12,17 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 import java.net.URLDecoder;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,10 +36,20 @@ public class IndexController {
 
     @PostMapping("/login")
     @ResponseBody
-    public HashMap<String, Object> loginProcess(HttpSession session, @RequestBody HashMap<String, String> map) {
+    public HashMap<String, Object> loginProcess(HttpSession session, @RequestBody HashMap<String, String> map,
+                                                HttpServletRequest request) throws JsonProcessingException {
+
         UserVo vo = loginService.login( map );
+
+        ObjectMapper mapper = new ObjectMapper();
+        String vo1 = mapper.writeValueAsString(vo);
+
+
         String returnURL = "";
-        System.out.println(session);
+
+        Cookie cookie = new Cookie("login", vo1);
+
+
 
         HashMap<String, Object> map1 = new HashMap<>();
 
@@ -49,8 +65,10 @@ public class IndexController {
         }
 
 
-        map1.put("vo", vo);
+
+        map1.put("vo", cookie.getValue());
         map1.put("returnURL", returnURL);
+
 
 
         return map1;
@@ -96,30 +114,13 @@ public class IndexController {
         return test123;
     }
 
-    @PostMapping("/test123")
+    @PostMapping("/logout")
     @ResponseBody
-    public String test123(HttpServletRequest request) {
-        String result = "실패";
-
-        Cookie[] myCookies = request.getCookies();
-
-        String decodeData = "";
-
-        for( int i = 0; i < myCookies.length; i++) {
-            System.out.println(i + "번째 쿠키 이름: " + myCookies[i].getName() );
-            System.out.println(i + "번째 쿠키 값: " + myCookies[i].getValue());
-
-            try {
-                decodeData = URLDecoder.decode(myCookies[i].getValue(), "UTF-8");
-                System.out.println(i + "번째 쿠기 값 디코딩 결과 : " + decodeData);
-
-
-            } catch(Exception e) {
-                e.printStackTrace();
-            }
-
-
-        }
+    public String logout(HttpServletRequest request, HttpSession session, HashMap<String, Object> map) {
+        String result = "로그아웃 완료";
+        session.removeAttribute("login");
+        Cookie cookie = new Cookie("vo", null);
+        cookie.setMaxAge(0);
 
 
 

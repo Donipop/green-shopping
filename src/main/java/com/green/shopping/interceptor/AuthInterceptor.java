@@ -17,7 +17,7 @@ public class AuthInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle (HttpServletRequest request,
                               HttpServletResponse response, Object handler)
-                              throws Exception {
+            throws Exception {
 
         HttpSession session = request.getSession();
 
@@ -43,3 +43,5 @@ public class AuthInterceptor implements HandlerInterceptor {
         HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
     }
 }
+
+
