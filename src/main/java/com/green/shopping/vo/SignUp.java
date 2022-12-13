@@ -17,9 +17,11 @@ public class SignUp {
     private int sex;
     private String nick;
 
+    private String tel;
+
     public SignUp() {}
 
-    public SignUp(String username, String name, String email, String password, String brith, String address, int sex, String nick) {
+    public SignUp(String username, String name, String email, String password, String brith, String address, int sex, String nick, String tel) {
         this.username = username;
         this.name = name;
         this.email = email;
@@ -28,6 +30,7 @@ public class SignUp {
         this.address = address;
         this.sex = sex;
         this.nick = nick;
+        this.tel = tel;
     }
 
     @Override
@@ -41,6 +44,7 @@ public class SignUp {
                 ", address='" + address + '\'' +
                 ", sex='" + sex + '\'' +
                 ", nick='" + nick + '\'' +
+                ", nick='" + tel + '\'' +
                 '}';
     }
 }

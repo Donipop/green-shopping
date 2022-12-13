@@ -20,7 +20,28 @@
 
 
         </insert>
+        <select id="login"
+        parameterType="HashMap"
+        resultType="com.green.shopping.vo.UserVo">
+                SELECT  USER_ID,
+                        USER_PASSWORD,
+                        USER_EMAIL,
+                        USER_NAME,
+                        USER_BRITH,
+                        USER_ADDRESS,
+                        USER_GRADE,
+                        USER_MONEY,
+                        USER_SEX,
+                        USER_NICK,
+                        USER_SIGNDATE,
+                        USER_ROLE,
+                        USER_STATE,
+                        USER_TEL
+                FROM USER_TB
+                WHERE USER_ID = #{user_name}
+                AND   USER_PASSWORD = #{user_pw}
 
+        </select>
 
 
 
