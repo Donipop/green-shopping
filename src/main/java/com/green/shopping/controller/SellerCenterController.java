@@ -2,17 +2,16 @@ package com.green.shopping.controller;
 
 import com.green.shopping.service.SellerCenterService;
 import com.green.shopping.vo.CategoryVo;
+import com.green.shopping.vo.ProductVo;
+import com.green.shopping.vo.SellerCenterCreateVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController()
+@RestController
 @RequestMapping("/sellercenter")
-public class SellerCenter {
+public class SellerCenterController {
     @Autowired
     SellerCenterService sellerCenterService;
 
@@ -23,5 +22,10 @@ public class SellerCenter {
         }
 
         return sellerCenterService.getCategoryList(parent_num);
+    }
+
+    @PostMapping("/create")
+    public void createCategory(@RequestBody SellerCenterCreateVo sellerCenterCreateVo) {
+
     }
 }
