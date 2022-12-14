@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestController("/api")
+@RestController
 public class IndexController {
 
     @Autowired
