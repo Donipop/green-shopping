@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class UserService {
@@ -20,7 +21,10 @@ public class UserService {
     }
 
 
+    public void update_userinformation(Map<String, Object> map1) {
+        userDao.update_userinformation(map1);
     }
+}
 
 
 
