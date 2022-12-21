@@ -20,20 +20,24 @@
 
     <insert id="createProduct"
             parameterType="java.util.HashMap">
-        <selectKey keyProperty="Id" resultType="int" order="BEFORE">
-            select product_tb_seq.nextval from dual
-        </selectKey>
+
         INSERT INTO Product_Tb(Id,Market_Name,Category,Title,Cont,Event)
         VALUES (product_tb_seq.nextval,#{market_Name},#{category},#{title},#{cont},#{event})
+
+        <selectKey keyProperty="Id" resultType="String" order="AFTER">
+            select product_tb_seq.currval from dual
+        </selectKey>
     </insert>
 
     <insert id="createProductDetail"
             parameterType="java.util.HashMap">
-        <selectKey keyProperty="Id" resultType="int" order="BEFORE">
-            select product_detail_tb_seq.nextval from dual
-        </selectKey>
+
         INSERT INTO ProductDetail_Tb(Id,Product_Id,Product_Name,Product_Price,Product_Discount,Product_Count,DateStart,DateEnd)
         VALUES (product_detail_tb_seq.nextval,#{product_Id},#{product_Name},#{product_Price},#{product_Discount},#{product_Count},#{dateStart},#{dateEnd})
+
+        <selectKey keyProperty="Id" resultType="String" order="AFTER">
+            select product_detail_tb_seq.currval from dual
+        </selectKey>
     </insert>
 
 </mapper>

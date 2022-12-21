@@ -18,4 +18,5 @@ public class SellerCenterCreateVo {
     public List<ProductVo> Product;
     public String MainImg;
     public List<String> DetailImg;
+    public String UserId;
 }

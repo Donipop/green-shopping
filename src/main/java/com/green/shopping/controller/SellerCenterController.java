@@ -1,5 +1,6 @@
 package com.green.shopping.controller;
 
+import com.green.shopping.service.FileService;
 import com.green.shopping.service.SellerCenterService;
 import com.green.shopping.vo.CategoryVo;
 import com.green.shopping.vo.ProductVo;
@@ -15,6 +16,8 @@ public class SellerCenterController {
     @Autowired
     SellerCenterService sellerCenterService;
 
+    @Autowired
+    FileService fileService;
     @GetMapping("/getcategory")
     public List<CategoryVo> getCategory(@RequestParam(value = "parent_num", required = false) String parent_num) {
         if (parent_num == null || parent_num.equals("")) {
@@ -27,5 +30,8 @@ public class SellerCenterController {
     @PostMapping("/create")
     public String createCategory(@RequestBody SellerCenterCreateVo sellerCenterCreateVo) {
         return sellerCenterService.create(sellerCenterCreateVo);
+//        System.out.println(sellerCenterCreateVo.getMainImg());
+//        fileService.fileUpload(sellerCenterCreateVo.getMainImg());
+//        return "success";
     }
 }

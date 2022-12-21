@@ -28,14 +28,15 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
     @Override
     public int createProduct(String market_Name, String category, String title, String cont, String event) {
         HashMap<String, String> createProductMap =  new HashMap<String, String>();
-        createProductMap.put("market_Name", "마켓이름");
+        createProductMap.put("market_Name", market_Name);
         createProductMap.put("category", category);
         createProductMap.put("title", title);
         createProductMap.put("cont", cont);
         createProductMap.put("event", "0");
-        System.out.println("createProductMap : " + createProductMap);
 
-        return sqlSession.insert("SellerCenter.createProduct",createProductMap);
+        sqlSession.insert("SellerCenter.createProduct",createProductMap);
+        System.out.println("createProductMap : " + createProductMap);
+        return Integer.parseInt(createProductMap.get("Id"));
     }
 
 
@@ -47,11 +48,13 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
         productDetailMap.put("product_Price", Product_Price);
         productDetailMap.put("product_Discount", Product_Discount);
         productDetailMap.put("product_Count", Product_Count);
-        productDetailMap.put("dateStart", "2000-01-01");
-        productDetailMap.put("dateEnd", "9999-12-31");
+        productDetailMap.put("dateStart", DateStart);
+        productDetailMap.put("dateEnd", DateEnd);
+
+        sqlSession.insert("SellerCenter.createProductDetail", productDetailMap);
         System.out.println("productDetailMap : " + productDetailMap);
 
-        return sqlSession.insert("SellerCenter.createProductDetail", productDetailMap);
+        return Integer.parseInt(productDetailMap.get("Id"));
     }
 
     @Override

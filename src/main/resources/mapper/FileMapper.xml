@@ -7,7 +7,7 @@
     <insert id="upload"
             parameterType="HashMap">
         INSERT INTO File_Tb(Name,File_Type,User_Id)
-        values (#{name},#{type},#{user_id})
+        values (#{name},#{File_Type},#{userId})
 
     </insert>
 

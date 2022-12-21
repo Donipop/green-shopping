@@ -61,17 +61,20 @@ public class SellerCenterService {
         //메인 이미지가 있을 경우에만 업로드 진행
         if (sellerCenterCreateVo.getMainImg() != null && !sellerCenterCreateVo.getMainImg().equals("")) {
             //썸네일 이미지 먼저 업로드
-            String mainImgUpload = fileService.fileUpload(sellerCenterCreateVo.getMainImg());
+            String mainImgUpload = fileService.fileUpload(sellerCenterCreateVo.getMainImg(),sellerCenterCreateVo.getUserId());
             //File_Tb에 업로드한 파일의 Id받아서 Product_Img_Tb에 저장
             if (mainImgUpload != "error") {
                 sellerCenterDaoImpl.createProductImg(mainImgUpload, productCreate_and_Num, "1");
             }
             //상세 이미지 업로드
-            for (int i=0; i< sellerCenterCreateVo.getDetailImg().size(); i++){
-                String detailImgUpload = fileService.fileUpload(sellerCenterCreateVo.getDetailImg().get(i));
-                if(detailImgUpload != "error"){
-                    sellerCenterDaoImpl.createProductImg(detailImgUpload, productCreate_and_Num, "0");
+            for (int i=0; i < sellerCenterCreateVo.getDetailImg().size(); i++){
+                if(sellerCenterCreateVo.getDetailImg().get(i).length() > 0){
+                    String detailImgUpload = fileService.fileUpload(sellerCenterCreateVo.getDetailImg().get(i), sellerCenterCreateVo.getUserId());
+                    if(detailImgUpload != "error"){
+                        sellerCenterDaoImpl.createProductImg(detailImgUpload, productCreate_and_Num, "0");
+                    }
                 }
+
             }
         }
         
