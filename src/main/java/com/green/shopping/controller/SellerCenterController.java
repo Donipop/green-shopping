@@ -25,7 +25,7 @@ public class SellerCenterController {
     }
 
     @PostMapping("/create")
-    public void createCategory(@RequestBody SellerCenterCreateVo sellerCenterCreateVo) {
-
+    public String createCategory(@RequestBody SellerCenterCreateVo sellerCenterCreateVo) {
+        return sellerCenterService.create(sellerCenterCreateVo);
     }
 }

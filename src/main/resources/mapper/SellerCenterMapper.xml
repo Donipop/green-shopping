@@ -12,6 +12,30 @@
         WHERE NVL(parent_num,-1) = #{parent_num}
     </select>
 
+    <insert id="insertProduct_Img"
+            parameterType="java.util.HashMap">
+        INSERT INTO Product_Img_Tb(File_Name, Product_Num, IsMain)
+        VALUES (#{file_Name}, #{product_Num}, #{isMain})
+    </insert>
+
+    <insert id="createProduct"
+            parameterType="java.util.HashMap">
+        <selectKey keyProperty="Id" resultType="int" order="BEFORE">
+            select product_tb_seq.nextval from dual
+        </selectKey>
+        INSERT INTO Product_Tb(Id,Market_Name,Category,Title,Cont,Event)
+        VALUES (product_tb_seq.nextval,#{market_Name},#{category},#{title},#{cont},#{event})
+    </insert>
+
+    <insert id="createProductDetail"
+            parameterType="java.util.HashMap">
+        <selectKey keyProperty="Id" resultType="int" order="BEFORE">
+            select product_detail_tb_seq.nextval from dual
+        </selectKey>
+        INSERT INTO ProductDetail_Tb(Id,Product_Id,Product_Name,Product_Price,Product_Discount,Product_Count,DateStart,DateEnd)
+        VALUES (product_detail_tb_seq.nextval,#{product_Id},#{product_Name},#{product_Price},#{product_Discount},#{product_Count},#{dateStart},#{dateEnd})
+    </insert>
+
 </mapper>
 
 
