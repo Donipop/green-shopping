@@ -25,7 +25,6 @@ public class LoginService {
     }
 
     public UserVo login(HashMap<String, String> map) {
-        System.out.println(map);
         UserVo vo = loginDao.login(map);
         return vo;
     }
