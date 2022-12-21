@@ -1,6 +1,7 @@
 package com.green.shopping.service;
 
 import com.green.shopping.dao.LoginDao;
+import com.green.shopping.vo.SellerVo;
 import com.green.shopping.vo.SignUp;
 import com.green.shopping.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,9 @@ public class LoginService {
     public UserVo login(HashMap<String, String> map) {
         UserVo vo = loginDao.login(map);
         return vo;
+    }
+
+    public void seller_sign_up(SellerVo sellerVo) {
+         loginDao.seller_sign_up(sellerVo);
     }
 }

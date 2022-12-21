@@ -1,5 +1,6 @@
 package com.green.shopping.dao;
 
+import com.green.shopping.vo.SellerVo;
 import com.green.shopping.vo.SignUp;
 import com.green.shopping.vo.UserVo;
 
@@ -13,4 +14,6 @@ public interface LoginDao {
     void user_sign_up(SignUp signUp);
 
     UserVo login(HashMap<String, String> map);
+
+    void seller_sign_up(SellerVo sellerVo);
 }

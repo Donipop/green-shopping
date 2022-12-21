@@ -1,6 +1,7 @@
 package com.green.shopping.dao.impl;
 
 import com.green.shopping.dao.LoginDao;
+import com.green.shopping.vo.SellerVo;
 import com.green.shopping.vo.SignUp;
 import com.green.shopping.vo.UserVo;
 import org.apache.ibatis.session.SqlSession;
@@ -31,5 +32,10 @@ public class LoginDaoimpl implements LoginDao {
     public UserVo login(HashMap<String, String> map) {
         UserVo vo = sqlSession.selectOne("Login.login", map);
         return vo;
+    }
+
+    @Override
+    public void seller_sign_up(SellerVo sellerVo) {
+        sqlSession.insert("Login.seller_sign_up", sellerVo);
     }
 }

@@ -43,7 +43,12 @@
 
         </select>
 
+        <insert id="seller_sign_up"
+                parameterType="com.green.shopping.vo.SellerVo">
+        INSERT INTO SELLER_TB( USER_ID, BANK_NAME, BANK_ACCOUNT, BANK_ACCOUNTOWNER, DESCRIPTION, BUSINESS_NUMBER,MARKET_NAME)
+        VALUES ( 'admin4', #{bank_name}, #{bank_account}, #{bank_accountowner}, #{description}, #{business_number}, #{market_name})
 
+        </insert>
 
 
 

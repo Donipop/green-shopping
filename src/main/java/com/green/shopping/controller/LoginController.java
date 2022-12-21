@@ -4,6 +4,7 @@ package com.green.shopping.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.shopping.service.LoginService;
+import com.green.shopping.vo.SellerVo;
 import com.green.shopping.vo.SignUp;
 import com.green.shopping.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,5 +108,14 @@ public class LoginController {
 
         return result;
     }
+
+    @PostMapping("/sellersignup")
+    public void Sellersignup(@RequestBody HashMap<String, Object> map){
+        ObjectMapper objectMapper = new ObjectMapper();
+        SellerVo sellerVo = objectMapper.convertValue(map, SellerVo.class);
+        loginService.seller_sign_up(sellerVo);
+        //파일 넘기는건 아직 안함
+    }
+
 
 }
