@@ -14,4 +14,11 @@ public class BoardService {
     public List<NoticeVo> BoardList() {
         return boardDao.BoardList();
     }
+
+    public NoticeVo boardDetail(int id) { return boardDao.boardDetail(id);}
+
+
+
 }
+
+

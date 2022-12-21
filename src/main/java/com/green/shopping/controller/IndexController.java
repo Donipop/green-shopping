@@ -122,9 +122,6 @@ public class IndexController {
         Cookie cookie = new Cookie("vo", null);
         cookie.setMaxAge(0);
 
-
-
-
         return result;
     }
 

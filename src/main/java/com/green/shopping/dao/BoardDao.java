@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface BoardDao {
     List<NoticeVo> BoardList();
+
+    NoticeVo boardDetail(int id);
 }

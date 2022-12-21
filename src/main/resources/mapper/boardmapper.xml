@@ -9,16 +9,21 @@
 
     <select id="BoardList"
             resultType="com.green.shopping.vo.NoticeVo">
-        SELECT ID,TITLE,CONT,READ_COUNT,USER_NICK
+        SELECT ID,TITLE,CONT,READ_COUNT,USER_NICK,TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd') AS INDATE
+
         FROM    NOTICEBOARD_TB
         order by ID DESC
     </select>
 
+    <select id ="BoardDetail"
+            resultType="com.green.shopping.vo.NoticeVo">
+
+        SELECT TITLE,CONT,USER_NICK,TO_CHAR(INDATE + 9/24, 'yyyy-mm-dd') AS INDATE
+       FROM NOTICEBOARD_TB
+       WHERE ID = #{id}
 
 
-
-
-
+    </select>
 
 
 </mapper>
