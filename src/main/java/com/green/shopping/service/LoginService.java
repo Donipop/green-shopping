@@ -1,5 +1,6 @@
 package com.green.shopping.service;
-
+import com.green.shopping.dao.LoginDao;
+import com.green.shopping.vo.SellerVo;
 import com.green.shopping.dao.impl.UserDaoImpl;
 import com.green.shopping.vo.SignUp;
 import com.green.shopping.vo.UserVo;
@@ -13,22 +14,25 @@ import java.util.List;
 public class LoginService {
 
     @Autowired
+    private LoginDao loginDao;
+
     private UserDaoImpl userDaoimpl;
 
-
-
-
     public List<UserVo> test() {
-        return userDaoimpl.getList();
+        return loginDao.getList();
     }
 
     public void user_sign_up(SignUp signUp) {
-        userDaoimpl.user_sign_up(signUp);
+
+        loginDao.user_sign_up(signUp);
     }
 
     public UserVo login(HashMap<String, String> map) {
-        System.out.println(map);
-        UserVo vo = userDaoimpl.login(map);
+        UserVo vo = loginDao.login(map);
         return vo;
+    }
+
+    public void seller_sign_up(SellerVo sellerVo) {
+         loginDao.seller_sign_up(sellerVo);
     }
 }

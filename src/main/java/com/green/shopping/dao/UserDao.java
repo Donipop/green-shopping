@@ -1,12 +1,14 @@
 package com.green.shopping.dao;
 
-import com.green.shopping.vo.SignUp;
-import com.green.shopping.vo.UserVo;
+import java.util.HashMap;
+import java.util.Map;
 
-import java.util.List;
+import com.green.shopping.vo.UserVo;
 
 public interface UserDao {
 
-    List<UserVo> getList();
-    void user_sign_up(SignUp signUp);
+
+    UserVo finduser_information(String user_id);
+
+    void update_userinformation(Map<String, Object> map1);
 }
