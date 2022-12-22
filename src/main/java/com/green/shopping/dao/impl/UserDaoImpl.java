@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.List;
 @Repository
-public class UserDaoimpl implements UserDao {
+public class UserDaoImpl implements UserDao {
 
     @Autowired
     SqlSession sqlSession;

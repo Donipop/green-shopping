@@ -1,7 +1,7 @@
 package com.green.shopping.service;
-
 import com.green.shopping.dao.LoginDao;
 import com.green.shopping.vo.SellerVo;
+import com.green.shopping.dao.impl.UserDaoImpl;
 import com.green.shopping.vo.SignUp;
 import com.green.shopping.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,8 @@ public class LoginService {
 
     @Autowired
     private LoginDao loginDao;
+
+    private UserDaoImpl userDaoimpl;
 
     public List<UserVo> test() {
         return loginDao.getList();
