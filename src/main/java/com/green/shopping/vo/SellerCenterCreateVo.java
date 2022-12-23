@@ -10,13 +10,13 @@ import java.util.List;
 @Setter
 @ToString
 public class SellerCenterCreateVo {
-    public String market_Name;
-    public String Category;
-    public String Title;
-    public String Content;
-    public String Event;
-    public List<ProductVo> Product;
-    public String MainImg;
-    public List<String> DetailImg;
-    public String UserId;
+    public String market_name;
+    public String category;
+    public String title;
+    public String cont;
+    public String event;
+    public List<ProductVo> product;
+    public String mainImg;
+    public List<String> detailImg;
+    public String userId;
 }

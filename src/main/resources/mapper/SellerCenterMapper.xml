@@ -22,7 +22,7 @@
             parameterType="java.util.HashMap">
 
         INSERT INTO Product_Tb(Id,Market_Name,Category,Title,Cont,Event)
-        VALUES (product_tb_seq.nextval,#{market_Name},#{category},#{title},#{cont},#{event})
+        VALUES (product_tb_seq.nextval,#{market_name},#{category},#{title},#{cont},#{event})
 
         <selectKey keyProperty="Id" resultType="String" order="AFTER">
             select product_tb_seq.currval from dual

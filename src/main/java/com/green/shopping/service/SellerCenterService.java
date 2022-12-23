@@ -35,7 +35,7 @@ public class SellerCenterService {
         if (sellerCenterCreateVo.getTitle() == null || sellerCenterCreateVo.getTitle().equals("")) {
             return "페이지 제목을 입력해주세요.";
         }
-        if (sellerCenterCreateVo.getContent() == null || sellerCenterCreateVo.getContent().equals("")) {
+        if (sellerCenterCreateVo.getCont() == null || sellerCenterCreateVo.getCont().equals("")) {
             return "페이지 내용을 입력해주세요.";
         }
         if (sellerCenterCreateVo.getProduct() == null || sellerCenterCreateVo.getProduct().size() == 0) {
@@ -46,16 +46,16 @@ public class SellerCenterService {
         }
         //Product_Tb 등록
         int productCreate_and_Num = sellerCenterDaoImpl.createProduct(
-                sellerCenterCreateVo.getMarket_Name(),
+                sellerCenterCreateVo.getMarket_name(),
                 sellerCenterCreateVo.getCategory(),
                 sellerCenterCreateVo.getTitle(),
-                sellerCenterCreateVo.getContent(),
+                sellerCenterCreateVo.getCont(),
                 sellerCenterCreateVo.getEvent()
         );
         //ProductDetail_Tb 등록
         for (int i = 0; i < sellerCenterCreateVo.getProduct().size(); i++) {
             ProductVo productVo = sellerCenterCreateVo.getProduct().get(i);
-            sellerCenterDaoImpl.createProductDetail(productCreate_and_Num, productVo.getName(), productVo.getPrice(), productVo.getDiscount(), productVo.getCount(), productVo.getDatestart(), productVo.getDateend());
+            sellerCenterDaoImpl.createProductDetail(productCreate_and_Num, productVo.getProduct_name(), productVo.getProduct_price(), productVo.getProduct_discount(), productVo.getProduct_count(), productVo.getDateStart(), productVo.getDateEnd());
         }
         //File_Tb에 파일 업로드
         //메인 이미지가 있을 경우에만 업로드 진행
@@ -70,6 +70,7 @@ public class SellerCenterService {
             for (int i=0; i < sellerCenterCreateVo.getDetailImg().size(); i++){
                 if(sellerCenterCreateVo.getDetailImg().get(i).length() > 0){
                     String detailImgUpload = fileService.fileUpload(sellerCenterCreateVo.getDetailImg().get(i), sellerCenterCreateVo.getUserId());
+                    //System.out.println("detailImgUpload : " + detailImgUpload);
                     if(detailImgUpload != "error"){
                         sellerCenterDaoImpl.createProductImg(detailImgUpload, productCreate_and_Num, "0");
                     }

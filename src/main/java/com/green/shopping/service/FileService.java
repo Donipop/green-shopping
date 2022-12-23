@@ -76,6 +76,7 @@ public class FileService {
             while ((responseLine = br.readLine()) != null) {
                 response.append(responseLine.trim());
             }
+            conn.disconnect();
             return response.toString();
 
         }catch (Exception e){

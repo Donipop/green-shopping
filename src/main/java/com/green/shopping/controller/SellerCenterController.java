@@ -30,8 +30,5 @@ public class SellerCenterController {
     @PostMapping("/create")
     public String createCategory(@RequestBody SellerCenterCreateVo sellerCenterCreateVo) {
         return sellerCenterService.create(sellerCenterCreateVo);
-//        System.out.println(sellerCenterCreateVo.getMainImg());
-//        fileService.fileUpload(sellerCenterCreateVo.getMainImg());
-//        return "success";
     }
 }
