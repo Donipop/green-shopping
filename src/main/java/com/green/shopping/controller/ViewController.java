@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+import java.util.OptionalInt;
+
 @RestController
 @RequestMapping("/view")
 public class ViewController {
@@ -22,8 +25,11 @@ public class ViewController {
 
     @GetMapping("/product")
     public SellerCenterCreateVo product(@RequestParam int product_num) {
-        SellerCenterCreateVo product = viewService.getProduct(product_num);
-//        System.out.println(product.toString());
-        return product;
+        //product_num == 숫자가 아닐경우 에러처리
+        if (OptionalInt.of(product_num).isPresent()) {
+            return viewService.getProduct(product_num);
+        } else {
+            return null;
+        }
     }
 }
