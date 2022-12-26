@@ -2,6 +2,8 @@ package com.green.shopping.dao;
 
 import com.green.shopping.vo.QnAVo;
 import com.green.shopping.vo.ReviewVo;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,9 +14,9 @@ public interface ReviewDao  {
 
     void QnAWrite(HashMap<String, Object> map);
 
-    List<QnAVo> QnAList();
+    List<QnAVo> QnAList(@PathVariable("page") int page);
 
-    QnAVo QnAReply(int id);
+    QnAVo QnAReply(@RequestParam HashMap<String ,Object> map);
 
     void QnAreplyWrite(HashMap<String, Object> map);
 

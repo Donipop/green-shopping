@@ -5,6 +5,8 @@ import com.green.shopping.vo.QnAVo;
 import com.green.shopping.vo.ReviewVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,14 +23,14 @@ public class ReviewService {
         reviewDao.QnAWrite(map);
     }
 
-    public List<QnAVo> QnAList() {
+    public List<QnAVo> QnAList(@PathVariable("page") int page) {
 
-        return reviewDao.QnAList();
+        return reviewDao.QnAList(page);
 
     }
 
-    public QnAVo QnAreply(int id) {
-        return reviewDao.QnAReply(id);
+    public QnAVo QnAreply(@RequestParam HashMap<String ,Object> map) {
+        return reviewDao.QnAReply(map);
     }
 
     public void QnAreplyWrite(HashMap<String, Object> map) {

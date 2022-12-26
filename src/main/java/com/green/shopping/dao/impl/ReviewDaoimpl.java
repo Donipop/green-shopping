@@ -6,6 +6,8 @@ import com.green.shopping.vo.ReviewVo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,13 +28,13 @@ public class ReviewDaoimpl implements ReviewDao {
     }
 
     @Override
-    public List<QnAVo> QnAList() {
-        return sqlSession.selectList("Review.QnAList");
+    public List<QnAVo> QnAList(@PathVariable("page") int page) {
+        return sqlSession.selectList("Review.QnAList", page);
     }
 
     @Override
-    public QnAVo QnAReply(int id) {
-        return sqlSession.selectOne("Review.QnAReply", id);
+    public QnAVo QnAReply(@RequestParam HashMap<String ,Object> map) {
+        return sqlSession.selectOne("Review.QnAReply", map);
     }
 
     @Override

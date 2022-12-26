@@ -25,24 +25,22 @@ public class ReviewController {
         reviewService.reviewWrite(reviewVo);
 
     }
-        @PostMapping("/view/qna/1234")
+        @PostMapping("/view/QnA/write/{page}")
          public void qna(@RequestBody HashMap<String, Object> map){
 
         reviewService.QnAWrite(map);
             System.out.println(map);
         }
 
-        @GetMapping("/view/QnA")
-        public List<QnAVo> QnAList(){
+        @GetMapping("/view/QnA/{page}")
+        public List<QnAVo> QnAList(@PathVariable("page") int page ){
 
-
-               return reviewService.QnAList();
+               return reviewService.QnAList(page);
         }
 
-       @GetMapping("/QnA/reply/{id}")
-       public QnAVo QnAreply (@PathVariable("id") int id ){
-
-        return reviewService.QnAreply(id);
+       @GetMapping("/QnA/reply/{page}/{id}")
+       public QnAVo QnAreply (@RequestParam HashMap<String ,Object> map){
+         return reviewService.QnAreply(map);
 
        }
 
