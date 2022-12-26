@@ -22,6 +22,7 @@ public class NoticeBoardController {
 
     @GetMapping("/NoticeDetail/{id}")
     public NoticeVo BoardDetail(@PathVariable("id") int id){
+
         return boardService.boardDetail(id);
     }
 
