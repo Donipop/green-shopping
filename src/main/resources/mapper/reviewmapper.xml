@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- Mapper를 사용하는 Repository의 전체 경로를 적어줘야함. -->
+<mapper namespace="Review">
+         <insert id="ReviewWrite"
+                 parameterType="com.green.shopping.vo.ReviewVo">
+           INSERT INTO REVIEW_TB( ID, USER_ID, PRODUCT_NUM, TITLE, CONT, STAR)
+           VALUES ( #{id}, #{user_id}, #{product_num},#{title}, #{cont}, #{star})
+
+         </insert>
+
+    <insert id="QnAWrite"
+            parameterType="HashMap">
+        INSERT INTO QNA_TB( ID, USER_ID, PRODUCT_NUM, CONT, PRODUCT_NAME)
+        VALUES ( #{id}, #{user_id}, #{product_num},#{cont}, #{product_name})
+
+    </insert>
+
+    <select id="QnAList"
+            resultType="com.green.shopping.vo.QnAVo">
+        SELECT ID,USER_ID,QNATYPE,CONT,PRODUCT_NUM,PRODUCT_NAME,TO_CHAR(REGDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS REGDATE, CHILD_ID
+        FROM    QnA_TB
+    </select>
+
+    <select id="QnAReply"
+            resultType="com.green.shopping.vo.QnAVo">
+        SELECT ID,USER_ID,CONT,TO_CHAR(REGDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS REGDATE
+        FROM QnA_TB
+        WHERE ID = #{id}
+
+    </select>
+
+    <insert id="QnAreplyWrite"
+            parameterType="HashMap">
+        INSERT INTO QNA_TB( ID, USER_ID, PRODUCT_NUM, CONT, PRODUCT_NAME,CHILD_ID)
+        VALUES ( #{id}, #{user_id}, #{product_num},#{cont}, #{product_name},#{child_id})
+    </insert>
+
+
+
+
+
+
+</mapper>
+
+
