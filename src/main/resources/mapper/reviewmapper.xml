@@ -49,11 +49,20 @@
         ORDER BY ID DESC
     </select>
 
-    <delete id="reviewDelete"
-            resultType="com.green.shopping.vo.ReviewVo">
-
+    <delete id="reviewDelete">
+    Delete
+    FROM REVIEW_TB
+    WHERE ID = #{id} and PRODUCT_NUM= #{product_num}
 
     </delete>
+    <select id="ReviewOneSelect"
+            resultType="com.green.shopping.vo.ReviewVo">
+    SELECT ID,USER_ID,TITLE,CONT,STAR,PRODUCT_NUM,TO_CHAR(REGDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS REGDATE
+    FROM REVIEW_TB
+    WHERE ID = #{id} and PRODUCT_NUM = #{page}
+
+
+    </select>
 
 
 

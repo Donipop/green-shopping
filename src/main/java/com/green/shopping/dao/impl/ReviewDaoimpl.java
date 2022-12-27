@@ -52,5 +52,10 @@ public class ReviewDaoimpl implements ReviewDao {
         sqlSession.delete("Review.reviewDelete", map);
     }
 
+    @Override
+    public ReviewVo reviewUpdateForm(HashMap<String, Object> map) {
+        return sqlSession.selectOne("Review.ReviewOneSelect", map);
+    }
+
 
 }

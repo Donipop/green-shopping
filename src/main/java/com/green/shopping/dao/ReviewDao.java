@@ -23,4 +23,6 @@ public interface ReviewDao  {
     List<ReviewVo> reviewList(int page);
 
     void reviewDelete(HashMap<String, Object> map);
+
+    ReviewVo reviewUpdateForm(HashMap<String, Object> map);
 }

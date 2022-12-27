@@ -57,7 +57,15 @@ public class ReviewController {
 
     @PostMapping("/view/review/delete/{id}/{page}")
     public void reviewDelete(@RequestBody HashMap<String, Object> map){
-        return reviewService.reviewDelete(map);
+        System.out.println(map);
+        reviewService.reviewDelete(map);
+    }
+
+    @GetMapping("/view/reviewUpdateForm/{page}/{id}")
+    public ReviewVo reviewUpdateForm(@RequestParam HashMap<String, Object> map){
+
+        return reviewService.reviewUpdateForm(map);
+
     }
 
 

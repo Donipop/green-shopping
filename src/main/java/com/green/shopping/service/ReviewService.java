@@ -43,6 +43,10 @@ public class ReviewService {
     }
 
     public void reviewDelete(HashMap<String, Object> map) {
-        return reviewDao.reviewDelete(map);
+        reviewDao.reviewDelete(map);
+    }
+
+    public ReviewVo reviewUpdateForm(HashMap<String, Object> map) {
+        return reviewDao.reviewUpdateForm(map);
     }
 }
