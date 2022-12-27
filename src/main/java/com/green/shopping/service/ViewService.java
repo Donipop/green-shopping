@@ -20,6 +20,7 @@ public class ViewService {
     public SellerCenterCreateVo getProduct(int product_id) {
         SellerCenterCreateVo product = viewDaoImpl.getProduct(product_id);
         product.setProduct(getProductDetail(product_id));
+        product.setProductId(product_id);
         return getProductImg(product,product_id);
     }
 
