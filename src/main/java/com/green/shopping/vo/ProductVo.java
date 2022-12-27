@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProductVo {
+    public int id;
     public String product_name;
     public String product_price;
     public String product_discount;
