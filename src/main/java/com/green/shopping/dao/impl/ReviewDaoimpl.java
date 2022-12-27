@@ -42,5 +42,15 @@ public class ReviewDaoimpl implements ReviewDao {
         sqlSession.insert("Review.QnAreplyWrite", map);
     }
 
+    @Override
+    public List<ReviewVo> reviewList(int page) {
+        return sqlSession.selectList("Review.reviewList", page);
+    }
+
+    @Override
+    public void reviewDelete(HashMap<String, Object> map) {
+        sqlSession.delete("Review.reviewDelete", map);
+    }
+
 
 }

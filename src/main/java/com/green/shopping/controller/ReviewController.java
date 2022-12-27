@@ -16,7 +16,7 @@ public class ReviewController {
     @Autowired
     ReviewService reviewService;
 
-    @PostMapping("/view/review")
+    @PostMapping("/view/reviewWrite/{page}")
     public void ReviewBoard(@RequestBody HashMap<String, Object> map) {
         ObjectMapper objectMapper = new ObjectMapper();
         ReviewVo reviewVo = objectMapper.convertValue(map, ReviewVo.class);
@@ -49,6 +49,16 @@ public class ReviewController {
            reviewService.QnAreplyWrite(map);
        }
 
+    @GetMapping("/view/review/{page}")
+    public List<ReviewVo> reviewList(@PathVariable("page") int page) {
+        return reviewService.reviewList(page);
+
+    }
+
+    @PostMapping("/view/review/delete/{id}/{page}")
+    public void reviewDelete(@RequestBody HashMap<String, Object> map){
+        return reviewService.reviewDelete(map);
+    }
 
 
     }

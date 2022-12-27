@@ -38,4 +38,11 @@ public class ReviewService {
     }
 
 
+    public List<ReviewVo> reviewList(int page) {
+        return reviewDao.reviewList(page);
+    }
+
+    public void reviewDelete(HashMap<String, Object> map) {
+        return reviewDao.reviewDelete(map);
+    }
 }

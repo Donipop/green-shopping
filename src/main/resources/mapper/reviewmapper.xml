@@ -24,6 +24,7 @@
         SELECT ID,USER_ID,QNATYPE,CONT,PRODUCT_NUM,PRODUCT_NAME,TO_CHAR(REGDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS REGDATE, CHILD_ID
         FROM    QnA_TB
         WHERE PRODUCT_NUM = #{page}
+        ORDER BY ID DESC
     </select>
 
     <select id="QnAReply"
@@ -40,6 +41,19 @@
         VALUES ( REPLY_NUMBER.NEXTVAL, #{user_id}, #{product_num},#{cont}, #{product_name},#{child_id})
     </insert>
 
+    <select id="reviewList"
+            resultType="com.green.shopping.vo.ReviewVo">
+        SELECT ID,USER_ID,TITLE,CONT,STAR,PRODUCT_NUM,TO_CHAR(REGDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS REGDATE
+        FROM REVIEW_TB
+        WHERE PRODUCT_NUM = #{page}
+        ORDER BY ID DESC
+    </select>
+
+    <delete id="reviewDelete"
+            resultType="com.green.shopping.vo.ReviewVo">
+
+
+    </delete>
 
 
 

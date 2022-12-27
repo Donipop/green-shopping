@@ -20,4 +20,7 @@ public interface ReviewDao  {
 
     void QnAreplyWrite(HashMap<String, Object> map);
 
+    List<ReviewVo> reviewList(int page);
+
+    void reviewDelete(HashMap<String, Object> map);
 }
