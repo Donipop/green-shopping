@@ -15,7 +15,6 @@ public class QnAVo {
     private String user_id;
     private String regdate;
     private String product_name;
-
     private int child_id;
 
     public QnAVo() {

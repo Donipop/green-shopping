@@ -21,7 +21,7 @@
 
     <select id="QnAList"
             resultType="com.green.shopping.vo.QnAVo">
-        SELECT ID,USER_ID,QNATYPE,CONT,PRODUCT_NUM,PRODUCT_NAME,TO_CHAR(REGDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS REGDATE, CHILD_ID
+        SELECT ID,USER_ID,QNATYPE,CONT,PRODUCT_NUM,PRODUCT_NAME,TO_CHAR(REGDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS REGDATE,CHILD_ID
         FROM    QnA_TB
         WHERE PRODUCT_NUM = #{page}
         ORDER BY ID DESC
@@ -35,10 +35,18 @@
 
     </select>
 
+    <select id="QnareplyList"
+             resultType="com.green.shopping.vo.QnAVo">
+
+        SELECT ID,USER_ID,QNATYPE,CONT,PRODUCT_NUM,PRODUCT_NAME,TO_CHAR(REGDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS REGDATE,CHILD_ID
+        FROM    QnA_TB
+        WHERE QNATYPE = '1'
+    </select>
+
     <insert id="QnAreplyWrite"
             parameterType="HashMap">
-        INSERT INTO QNA_TB( ID, USER_ID, PRODUCT_NUM, CONT, PRODUCT_NAME,CHILD_ID)
-        VALUES ( REPLY_NUMBER.NEXTVAL, #{user_id}, #{product_num},#{cont}, #{product_name},#{child_id})
+        INSERT INTO QNA_TB( ID, USER_ID, PRODUCT_NUM, CONT, PRODUCT_NAME,CHILD_ID, QNATYPE)
+        VALUES ( REPLY_NUMBER.NEXTVAL, #{user_id}, #{product_num},#{cont}, #{product_name},#{child_id}, #{qnatype})
     </insert>
 
     <select id="reviewList"

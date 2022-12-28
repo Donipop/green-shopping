@@ -40,9 +40,17 @@ public class ReviewController {
 
        @GetMapping("/QnA/reply/{page}/{id}")
        public QnAVo QnAreply (@RequestParam HashMap<String ,Object> map){
+           System.out.println(map);
          return reviewService.QnAreply(map);
 
        }
+
+    @GetMapping("/QnA/replyList/{page}")
+    public List<QnAVo> QnAreplyList (@RequestParam HashMap<String ,Object> map){
+
+        return reviewService.QnareplyList(map);
+
+    }
 
        @PostMapping("/view/Qna/write")
       public void QnAreplyWrite(@RequestBody HashMap<String, Object> map){

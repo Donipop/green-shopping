@@ -6,6 +6,7 @@ import com.green.shopping.vo.ReviewVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
@@ -48,5 +49,9 @@ public class ReviewService {
 
     public ReviewVo reviewUpdateForm(HashMap<String, Object> map) {
         return reviewDao.reviewUpdateForm(map);
+    }
+
+    public List<QnAVo> QnareplyList(HashMap<String, Object> map) {
+        return reviewDao.QnareplyList(map);
     }
 }

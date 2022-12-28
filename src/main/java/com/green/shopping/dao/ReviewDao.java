@@ -25,4 +25,6 @@ public interface ReviewDao  {
     void reviewDelete(HashMap<String, Object> map);
 
     ReviewVo reviewUpdateForm(HashMap<String, Object> map);
+
+    List<QnAVo> QnareplyList(HashMap<String, Object> map);
 }
