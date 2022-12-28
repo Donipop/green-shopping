@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.shopping.service.ReviewService;
 import com.green.shopping.vo.QnAVo;
 import com.green.shopping.vo.ReviewVo;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -75,6 +76,12 @@ public class ReviewController {
         return reviewService.reviewUpdateForm(map);
 
     }
+
+    @PostMapping("/view/reviewUpdate/{page}/{id}")
+    public void reviewUpdate(@RequestBody HashMap<String, Object> map){
+         reviewService.reviewUpdate(map);
+    }
+
 
 
     }

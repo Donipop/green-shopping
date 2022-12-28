@@ -68,9 +68,19 @@
     SELECT ID,USER_ID,TITLE,CONT,STAR,PRODUCT_NUM,TO_CHAR(REGDATE + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS REGDATE
     FROM REVIEW_TB
     WHERE ID = #{id} and PRODUCT_NUM = #{page}
-
-
     </select>
+
+    <update id = "reviewUpdate">
+        UPDATE REVIEW_TB SET
+        CONT = #{cont},
+        TITLE = #{title},
+        STAR = #{star},
+        REGDATE = SYSDATE
+
+        WHERE ID = #{id} and PRODUCT_NUM = #{page}
+
+
+    </update>
 
 
 

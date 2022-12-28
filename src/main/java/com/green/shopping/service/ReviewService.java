@@ -54,4 +54,8 @@ public class ReviewService {
     public List<QnAVo> QnareplyList(HashMap<String, Object> map) {
         return reviewDao.QnareplyList(map);
     }
+
+    public void reviewUpdate(HashMap<String, Object> map) {
+         reviewDao.reviewUpdate(map);
+    }
 }

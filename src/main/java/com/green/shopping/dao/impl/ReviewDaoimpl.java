@@ -62,5 +62,10 @@ public class ReviewDaoimpl implements ReviewDao {
         return sqlSession.selectList("Review.QnareplyList", map);
     }
 
+    @Override
+    public void reviewUpdate(HashMap<String, Object> map) {
+         sqlSession.update("Review.reviewUpdate", map);
+    }
+
 
 }
