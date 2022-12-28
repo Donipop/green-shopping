@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Payment">
+
+    <insert id="insertPurchaseList"
+            parameterType="java.util.HashMap">
+        INSERT INTO PurchaseList_Tb(
+            id,User_Id,TotalPrice,ProductId,Delivery
+        )
+        VALUES(
+            purchaselist_tb_seq.nextval,#{userId},#{totalPrice},#{productId},#{delivery}
+        )
+        <selectKey keyProperty="id" resultType="Integer" order="AFTER">
+            select purchaselist_tb_seq.currval from dual
+        </selectKey>
+    </insert>
+
+    <insert id="insertPurchaseDetailList"
+            parameterType="java.util.HashMap">
+        INSERT INTO PurchaseDetailList_Tb(
+            id,price,productDetailId,count,sale,purchaseListId
+        )
+        VALUES(
+            PurchaseDetailList_Tb_seq.nextval,#{price},#{productDetailId},#{count},#{sale},#{purchaseListId}
+        )
+        <selectKey keyProperty="id" resultType="Integer" order="AFTER">
+            select PurchaseDetailList_tb_seq.currval from dual
+        </selectKey>
+    </insert>
+
+
+</mapper>
+
+
