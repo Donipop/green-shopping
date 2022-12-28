@@ -8,7 +8,9 @@ import com.green.shopping.vo.SellerCenterCreateVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SellerCenterService {
@@ -78,8 +80,20 @@ public class SellerCenterService {
 
             }
         }
-        
-
         return "success";
+    }
+
+    public List<Map<String,Object>> getOrderList(String marketName){
+        List<Map<String,Object>> productNumAndTitleList = sellerCenterDaoImpl.getProductIdAndTitleListByMarketName(marketName);
+        List<Map<String,Object>> purchaseList = new ArrayList<>();
+        List<Map<String, Object>> totalOrderList = new ArrayList<>();
+        for (int i=0; i<productNumAndTitleList.size(); i++) {
+            purchaseList.addAll(sellerCenterDaoImpl.getPurchasedListByProductId(productNumAndTitleList.get(i).get("ID")));
+            for (Map<String, Object> purchase : purchaseList) {
+                purchase.put("product_Title", productNumAndTitleList.get(i).get("TITLE"));
+                totalOrderList.add(purchase);
+            }
+        }
+        return totalOrderList;
     }
 }

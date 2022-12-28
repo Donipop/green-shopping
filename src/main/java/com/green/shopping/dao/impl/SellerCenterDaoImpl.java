@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class SellerCenterDaoImpl implements SellerCenterDao {
@@ -66,5 +67,20 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
         createProductImgMap.put("isMain",isMain);
         sqlSession.insert("SellerCenter.insertProduct_Img",createProductImgMap);
         return file_Name;
+    }
+
+    @Override
+    public List<Object> getOrderList(String marketName) {
+        return sqlSession.selectList("SellerCenter.getOrderList", marketName);
+    }
+
+    @Override
+    public List<Map<String,Object>> getProductIdAndTitleListByMarketName(String marketName) {
+        return sqlSession.selectList("SellerCenter.getProductIdListByMarketName", marketName);
+    }
+
+    @Override
+    public List<Map<String,Object>> getPurchasedListByProductId(Object productId) {
+        return sqlSession.selectList("SellerCenter.getPurchasedListByProductId", productId);
     }
 }

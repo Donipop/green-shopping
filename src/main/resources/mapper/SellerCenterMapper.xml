@@ -40,6 +40,19 @@
         </selectKey>
     </insert>
 
+    <select id="getProductIdListByMarketName" resultType="map" parameterType="String">
+        select id, title from product_tb
+        where market_name = #{marketName}
+    </select>
+
+    <select id="getPurchasedListByProductId" resultType="map" parameterType="Object">
+        select id, productid, state, TO_CHAR(TIME + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS TIME
+        from purchaselist_tb
+        where productid = #{productid}
+    </select>
+
+
 </mapper>
+
 
 

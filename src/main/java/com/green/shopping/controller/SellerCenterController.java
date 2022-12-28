@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/sellercenter")
@@ -30,5 +31,10 @@ public class SellerCenterController {
     @PostMapping("/create")
     public String createCategory(@RequestBody SellerCenterCreateVo sellerCenterCreateVo) {
         return sellerCenterService.create(sellerCenterCreateVo);
+    }
+
+    @GetMapping("/getorderlist")
+    public List<Map<String, Object>> getOrderList(@RequestParam(value = "marketName") String marketName) {
+        return sellerCenterService.getOrderList(marketName);
     }
 }
