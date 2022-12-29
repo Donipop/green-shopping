@@ -18,27 +18,27 @@ public class ReviewDaoimpl implements ReviewDao {
     @Autowired
     SqlSession sqlSession;
     @Override
-    public void reviewWrite(ReviewVo reviewVo) {
+    public void ReviewWrite(ReviewVo reviewVo) {
         sqlSession.insert("Review.ReviewWrite", reviewVo);
     }
 
     @Override
-    public void QnAWrite(HashMap<String, Object> map) {
+    public void QuestionWrite(HashMap<String, Object> map) {
         sqlSession.insert("Review.QnAWrite", map);
     }
 
     @Override
-    public List<QnAVo> QnAList(@PathVariable("page") int page) {
+    public List<QnAVo> QuestionList(@PathVariable("page") int page) {
         return sqlSession.selectList("Review.QnAList", page);
     }
 
     @Override
-    public QnAVo QnAReply(@RequestParam HashMap<String ,Object> map) {
+    public QnAVo QuestionOneList(@RequestParam HashMap<String ,Object> map) {
         return sqlSession.selectOne("Review.QnAReply", map);
     }
 
     @Override
-    public void QnAreplyWrite(HashMap<String, Object> map) {
+    public void AnswerWrite(HashMap<String, Object> map) {
         sqlSession.insert("Review.QnAreplyWrite", map);
     }
 
@@ -65,6 +65,26 @@ public class ReviewDaoimpl implements ReviewDao {
     @Override
     public void reviewUpdate(HashMap<String, Object> map) {
          sqlSession.update("Review.reviewUpdate", map);
+    }
+
+    @Override
+    public void QuestionDelete(HashMap<String, Object> map) {
+        sqlSession.update("Review.QuestionDelete", map);
+    }
+
+    @Override
+    public void answerDelete(HashMap<String, Object> map) {
+       sqlSession.delete("Review.answerDelete", map);
+    }
+
+    @Override
+    public QnAVo QuestionUpdateForm(HashMap<String, Object> map) {
+        return sqlSession.selectOne("Review.QnAanswerupdate", map);
+    }
+
+    @Override
+    public void QuestionUpdate(HashMap<String, Object> map) {
+           sqlSession.update("Review.QuestionUpdate", map);
     }
 
 

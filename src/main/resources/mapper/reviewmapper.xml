@@ -79,6 +79,34 @@
 
         WHERE ID = #{id} and PRODUCT_NUM = #{page}
 
+    </update>
+
+    <update id="QuestionDelete">
+        UPDATE QNA_TB SET
+        CONT = '삭제된 문의입니다.'
+
+        WHERE ID = #{id} and PRODUCT_NUM = #{product_num}
+    </update>
+
+    <delete id="answerDelete">
+        Delete
+        FROM QNA_TB
+        WHERE ID = #{id} and PRODUCT_NUM= #{product_num}
+
+    </delete>
+
+    <select id="QnAanswerupdate"
+           resultType="com.green.shopping.vo.QnAVo">
+        SELECT CONT
+        FROM QNA_TB
+        WHERE ID = #{id} AND PRODUCT_NUM = #{product_num}
+
+    </select>
+
+    <update id="QuestionUpdate">
+        UPDATE QNA_TB SET
+        CONT = #{cont}
+        WHERE ID = #{id} and PRODUCT_NUM = #{product_num}
 
     </update>
 

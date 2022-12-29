@@ -16,28 +16,9 @@ import java.util.List;
 public class ReviewService {
     @Autowired
     ReviewDao reviewDao;
-    public void reviewWrite(ReviewVo reviewVo) {
-        reviewDao.reviewWrite(reviewVo);
+    public void ReviewWrite(ReviewVo reviewVo) {
+        reviewDao.ReviewWrite(reviewVo);
     }
-
-    public void QnAWrite(HashMap<String, Object> map) {
-        reviewDao.QnAWrite(map);
-    }
-
-    public List<QnAVo> QnAList(@PathVariable("page") int page) {
-
-        return reviewDao.QnAList(page);
-
-    }
-
-    public QnAVo QnAreply(@RequestParam HashMap<String ,Object> map) {
-        return reviewDao.QnAReply(map);
-    }
-
-    public void QnAreplyWrite(HashMap<String, Object> map) {
-        reviewDao.QnAreplyWrite(map);
-    }
-
 
     public List<ReviewVo> reviewList(int page) {
         return reviewDao.reviewList(page);
@@ -51,11 +32,50 @@ public class ReviewService {
         return reviewDao.reviewUpdateForm(map);
     }
 
+    public void reviewUpdate(HashMap<String, Object> map) {
+        reviewDao.reviewUpdate(map);
+    }
+
+    public void QuestionWrite(HashMap<String, Object> map) {
+        reviewDao.QuestionWrite(map);
+    }
+
+    public List<QnAVo> QuestionList(@PathVariable("page") int page) {
+
+        return reviewDao.QuestionList(page);
+
+    }
+
+    public QnAVo QuestionOneList(@RequestParam HashMap<String ,Object> map) {
+        return reviewDao.QuestionOneList(map);
+    }
+
+    public void AnswerWrite(HashMap<String, Object> map) {
+        reviewDao.AnswerWrite(map);
+    }
+
+
+
+
     public List<QnAVo> QnareplyList(HashMap<String, Object> map) {
         return reviewDao.QnareplyList(map);
     }
 
-    public void reviewUpdate(HashMap<String, Object> map) {
-         reviewDao.reviewUpdate(map);
+
+
+    public void QuestionDelete(HashMap<String, Object> map) {
+         reviewDao.QuestionDelete(map);
+    }
+
+    public void answerDelete(HashMap<String, Object> map) {
+        reviewDao.answerDelete(map);
+    }
+
+    public QnAVo QuestionUpdateForm(HashMap<String, Object> map) {
+        return reviewDao.QuestionUpdateForm(map);
+    }
+
+    public void QuestionUpdate(HashMap<String, Object> map) {
+         reviewDao.QuestionUpdate(map);
     }
 }

@@ -10,15 +10,7 @@ import java.util.List;
 
 public interface ReviewDao  {
 
-    void reviewWrite(ReviewVo reviewVo);
-
-    void QnAWrite(HashMap<String, Object> map);
-
-    List<QnAVo> QnAList(@PathVariable("page") int page);
-
-    QnAVo QnAReply(@RequestParam HashMap<String ,Object> map);
-
-    void QnAreplyWrite(HashMap<String, Object> map);
+    void ReviewWrite(ReviewVo reviewVo);
 
     List<ReviewVo> reviewList(int page);
 
@@ -26,6 +18,24 @@ public interface ReviewDao  {
 
     ReviewVo reviewUpdateForm(HashMap<String, Object> map);
 
-    List<QnAVo> QnareplyList(HashMap<String, Object> map);
     void reviewUpdate(HashMap<String, Object> map);
+
+
+    void QuestionWrite(HashMap<String, Object> map);
+
+    List<QnAVo> QuestionList(@PathVariable("page") int page);
+
+    QnAVo QuestionOneList(@RequestParam HashMap<String ,Object> map);
+
+    void AnswerWrite(HashMap<String, Object> map);
+
+    List<QnAVo> QnareplyList(HashMap<String, Object> map);
+
+    void QuestionDelete(HashMap<String, Object> map);
+
+    void answerDelete(HashMap<String, Object> map);
+
+    QnAVo QuestionUpdateForm(HashMap<String, Object> map);
+
+    void QuestionUpdate(HashMap<String, Object> map);
 }
