@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.OptionalInt;
 
 @RestController
 @RequestMapping("/sellercenter")
@@ -36,5 +37,23 @@ public class SellerCenterController {
     @GetMapping("/getorderlist")
     public List<Map<String, Object>> getOrderList(@RequestParam(value = "marketName") String marketName) {
         return sellerCenterService.getOrderList(marketName);
+    }
+
+    @GetMapping("/getpostaddress")
+    public Map<String,Object> getPostAddress(@RequestParam(value = "Id") int postNum) {
+        if(OptionalInt.of(postNum).isPresent()) {
+            return sellerCenterService.getPostAddress(postNum);
+        } else {
+            return null;
+        }
+    }
+
+    @GetMapping("/getorderdetail")
+    public List<Map<String, Object>> getOrderDetail(@RequestParam(value = "Id") int orderNum) {
+        if(OptionalInt.of(orderNum).isPresent()) {
+            return sellerCenterService.getOrderDetail(orderNum);
+        } else {
+            return null;
+        }
     }
 }

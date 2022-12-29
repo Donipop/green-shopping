@@ -13,4 +13,6 @@ public interface SellerCenterDao {
     List<Object> getOrderList(String marketName);
     List<Map<String,Object>> getProductIdAndTitleListByMarketName(String marketName);
     List<Map<String,Object>> getPurchasedListByProductId(Object productId);
+    Map<String,Object> getPostAddressById(int postNum);
+    List<Map<String,Object>> getOrderDetail(int orderNum);
 }

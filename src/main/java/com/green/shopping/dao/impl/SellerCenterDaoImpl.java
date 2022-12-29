@@ -83,4 +83,14 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
     public List<Map<String,Object>> getPurchasedListByProductId(Object productId) {
         return sqlSession.selectList("SellerCenter.getPurchasedListByProductId", productId);
     }
+
+    @Override
+    public Map<String, Object> getPostAddressById(int postNum) {
+        return sqlSession.selectOne("SellerCenter.getPostAddressById", postNum);
+    }
+
+    @Override
+    public List<Map<String, Object>> getOrderDetail(int orderNum) {
+        return sqlSession.selectList("SellerCenter.getOrderDetail", orderNum);
+    }
 }

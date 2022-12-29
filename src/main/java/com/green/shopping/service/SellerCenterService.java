@@ -96,4 +96,12 @@ public class SellerCenterService {
         }
         return totalOrderList;
     }
+
+    public Map<String, Object> getPostAddress(int postNum) {
+        return sellerCenterDaoImpl.getPostAddressById(postNum);
+    }
+
+    public List<Map<String, Object>> getOrderDetail(int orderNum) {
+        return sellerCenterDaoImpl.getOrderDetail(orderNum);
+    }
 }
