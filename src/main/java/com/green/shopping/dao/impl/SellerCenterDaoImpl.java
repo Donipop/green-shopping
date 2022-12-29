@@ -93,4 +93,12 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
     public List<Map<String, Object>> getOrderDetail(int orderNum) {
         return sqlSession.selectList("SellerCenter.getOrderDetail", orderNum);
     }
+
+    @Override
+    public void updateOrderStatus(int orderNum, int status) {
+        HashMap<String, Integer> updateOrderStatusMap = new HashMap<>();
+        updateOrderStatusMap.put("orderNum", orderNum);
+        updateOrderStatusMap.put("status", status);
+        sqlSession.update("SellerCenter.updateOrderStatus", updateOrderStatusMap);
+    }
 }

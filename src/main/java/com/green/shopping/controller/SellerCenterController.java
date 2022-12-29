@@ -56,4 +56,9 @@ public class SellerCenterController {
             return null;
         }
     }
+
+    @PostMapping("/updateorderstatus")
+    public void updateOrderStatus(@RequestBody Map<String, Integer> map) {
+        sellerCenterService.updateOrderStatus(map.get("Id"), map.get("status"));
+    }
 }

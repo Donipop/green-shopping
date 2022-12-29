@@ -61,6 +61,12 @@
         from purchasedetaillist_tb a, productdetail_tb b
         where a.purchaselistid = #{orderNum} and a.productdetailid = b.id
     </select>
+
+    <update id="updateOrderStatus" parameterType="java.util.HashMap">
+        update purchaselist_tb
+        set state = #{status}
+        where id = #{orderNum}
+    </update>
 </mapper>
 
 

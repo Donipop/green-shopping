@@ -104,4 +104,7 @@ public class SellerCenterService {
     public List<Map<String, Object>> getOrderDetail(int orderNum) {
         return sellerCenterDaoImpl.getOrderDetail(orderNum);
     }
+    public void updateOrderStatus(int orderNum, int status) {
+        sellerCenterDaoImpl.updateOrderStatus(orderNum, status);
+    }
 }
