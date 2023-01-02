@@ -67,6 +67,11 @@
         set state = #{status}
         where id = #{orderNum}
     </update>
+
+    <insert id="insertPostInfo" parameterType="java.util.HashMap">
+        insert into post_tb(invoice_number,companyname,purcharselistid)
+        values (#{invoiceNum},#{companyName},#{purchaseNum})
+    </insert>
 </mapper>
 
 

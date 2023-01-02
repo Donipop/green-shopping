@@ -101,4 +101,13 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
         updateOrderStatusMap.put("status", status);
         sqlSession.update("SellerCenter.updateOrderStatus", updateOrderStatusMap);
     }
+
+    @Override
+    public void insertPostInfo(String invoiceNum, String companyName, int purchaseNum) {
+        HashMap<String, Object> insertPostInfoMap = new HashMap<>();
+        insertPostInfoMap.put("invoiceNum", invoiceNum);
+        insertPostInfoMap.put("companyName", companyName);
+        insertPostInfoMap.put("purchaseNum", purchaseNum);
+        sqlSession.insert("SellerCenter.insertPostInfo", insertPostInfoMap);
+    }
 }

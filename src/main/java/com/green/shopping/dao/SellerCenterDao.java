@@ -16,4 +16,5 @@ public interface SellerCenterDao {
     Map<String,Object> getPostAddressById(int postNum);
     List<Map<String,Object>> getOrderDetail(int orderNum);
     void updateOrderStatus(int orderNum, int status);
+    void insertPostInfo(String invoiceNum, String companyName, int purchaseNum);
 }

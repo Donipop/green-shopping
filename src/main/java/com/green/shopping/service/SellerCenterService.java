@@ -107,4 +107,7 @@ public class SellerCenterService {
     public void updateOrderStatus(int orderNum, int status) {
         sellerCenterDaoImpl.updateOrderStatus(orderNum, status);
     }
+    public void insertPostInfo(String invoiceNum, String companyName, int purchaseNum) {
+        sellerCenterDaoImpl.insertPostInfo(invoiceNum, companyName, purchaseNum);
+    }
 }

@@ -1,5 +1,6 @@
 package com.green.shopping.controller;
 
+import com.google.gson.JsonArray;
 import com.green.shopping.service.FileService;
 import com.green.shopping.service.SellerCenterService;
 import com.green.shopping.vo.CategoryVo;
@@ -55,6 +56,13 @@ public class SellerCenterController {
         } else {
             return null;
         }
+    }
+
+    @PostMapping("/insertpostinfo")
+    public void insertPostInfo(@RequestBody String RepostList) {
+
+//        sellerCenterService.insertPostInfo(postInfo.get("invoiceNum").toString(), postInfo.get("companyName").toString(), Integer.parseInt(postInfo.get("purchaseNum").toString()));
+        System.out.println(RepostList);
     }
 
     @PostMapping("/updateorderstatus")
