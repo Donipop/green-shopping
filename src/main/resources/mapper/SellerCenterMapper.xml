@@ -40,6 +40,39 @@
         </selectKey>
     </insert>
 
+    <select id="getProductIdListByMarketName" resultType="map" parameterType="String">
+        select id, title from product_tb
+        where market_name = #{marketName}
+    </select>
+
+    <select id="getPurchasedListByProductId" resultType="map" parameterType="Object">
+        select id, productid, state, TO_CHAR(TIME + 9/24, 'yyyy-mm-dd hh24:mi:ss') AS TIME, postaddressid
+        from purchaselist_tb
+        where productid = #{productid}
+    </select>
+
+    <select id="getPostAddressById" parameterType="Integer" resultType="map">
+        select * from PostAddress_Tb
+        where id = #{id}
+    </select>
+
+    <select id="getOrderDetail" parameterType="Integer" resultType="map">
+        select a.productdetailid ,a.count, b.product_name
+        from purchasedetaillist_tb a, productdetail_tb b
+        where a.purchaselistid = #{orderNum} and a.productdetailid = b.id
+    </select>
+
+    <update id="updateOrderStatus" parameterType="java.util.HashMap">
+        update purchaselist_tb
+        set state = #{status}
+        where id = #{orderNum}
+    </update>
+
+    <insert id="insertPostInfo" parameterType="java.util.HashMap">
+        insert into post_tb(invoice_number,companyname,purcharselistid)
+        values (#{invoiceNum},#{companyName},#{purchaseNum})
+    </insert>
 </mapper>
+
 
 

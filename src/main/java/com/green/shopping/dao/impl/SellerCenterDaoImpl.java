@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class SellerCenterDaoImpl implements SellerCenterDao {
@@ -66,5 +67,47 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
         createProductImgMap.put("isMain",isMain);
         sqlSession.insert("SellerCenter.insertProduct_Img",createProductImgMap);
         return file_Name;
+    }
+
+    @Override
+    public List<Object> getOrderList(String marketName) {
+        return sqlSession.selectList("SellerCenter.getOrderList", marketName);
+    }
+
+    @Override
+    public List<Map<String,Object>> getProductIdAndTitleListByMarketName(String marketName) {
+        return sqlSession.selectList("SellerCenter.getProductIdListByMarketName", marketName);
+    }
+
+    @Override
+    public List<Map<String,Object>> getPurchasedListByProductId(Object productId) {
+        return sqlSession.selectList("SellerCenter.getPurchasedListByProductId", productId);
+    }
+
+    @Override
+    public Map<String, Object> getPostAddressById(int postNum) {
+        return sqlSession.selectOne("SellerCenter.getPostAddressById", postNum);
+    }
+
+    @Override
+    public List<Map<String, Object>> getOrderDetail(int orderNum) {
+        return sqlSession.selectList("SellerCenter.getOrderDetail", orderNum);
+    }
+
+    @Override
+    public void updateOrderStatus(int orderNum, int status) {
+        HashMap<String, Integer> updateOrderStatusMap = new HashMap<>();
+        updateOrderStatusMap.put("orderNum", orderNum);
+        updateOrderStatusMap.put("status", status);
+        sqlSession.update("SellerCenter.updateOrderStatus", updateOrderStatusMap);
+    }
+
+    @Override
+    public void insertPostInfo(String invoiceNum, String companyName, int purchaseNum) {
+        HashMap<String, Object> insertPostInfoMap = new HashMap<>();
+        insertPostInfoMap.put("invoiceNum", invoiceNum);
+        insertPostInfoMap.put("companyName", companyName);
+        insertPostInfoMap.put("purchaseNum", purchaseNum);
+        sqlSession.insert("SellerCenter.insertPostInfo", insertPostInfoMap);
     }
 }
