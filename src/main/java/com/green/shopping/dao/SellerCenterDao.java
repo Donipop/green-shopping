@@ -19,4 +19,5 @@ public interface SellerCenterDao {
     void updateOrderStatus(int orderNum, int status);
     void insertPostInfo(String invoiceNum, String companyName, int purchaseNum);
     List<HashMap<String, Object>> getOrderConfirm(String marketName);
+    List<HashMap<String, Object>> getOrderConfirmModal(int purchaseId);
 }

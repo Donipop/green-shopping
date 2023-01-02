@@ -118,7 +118,10 @@ public class SellerCenterService {
     }
 
     public List<HashMap<String, Object>> getOrderConfirm(String marketName) {
-        List<HashMap<String,Object>> list = sellerCenterDaoImpl.getOrderConfirm("아이유당근마켓");
-        return list;
+        return sellerCenterDaoImpl.getOrderConfirm(marketName);
+    }
+
+    public List<HashMap<String,Object>> getOrderConfirmModal(int purchaseNum) {
+        return sellerCenterDaoImpl.getOrderConfirmModal(purchaseNum);
     }
 }

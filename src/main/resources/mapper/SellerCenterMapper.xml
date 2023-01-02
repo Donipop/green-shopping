@@ -74,9 +74,15 @@
     </insert>
     
     <select id="getOrderConfirm" parameterType="String" resultType="java.util.HashMap">
-        select a.id,a.time,a.state,b.title,w.user_name,w.user_tel,w.user_address,w.user_email
+        select a.id,to_char(a.time,'YYYY-MM-DD hh24:mi:ss') as time,a.state,b.title,w.user_name,w.user_tel,w.user_address,w.user_email
         from purchaselist_tb a, product_tb b, user_tb w
-        where state = 3 and b.market_name = #{marketName} and a.user_id = w.user_id
+        where state = 6 and b.market_name = #{marketName} and a.user_id = w.user_id
+    </select>
+    
+    <select id="getOrderConfirmModal" parameterType="Integer" resultType="java.util.HashMap">
+        SELECT A.PRICE,A.SALE,A.COUNT,B.PRODUCT_NAME AS PRODUCTNAME
+        FROM PURCHASEDETAILLIST_TB A, PRODUCTDETAIL_TB B
+        WHERE A.purchaselistid = #{purchaselistid} and a.productdetailid = b.id
     </select>
 </mapper>
 

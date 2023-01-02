@@ -76,7 +76,11 @@ public class SellerCenterController {
 
     @GetMapping("/getorderconfirm")
     public List<HashMap<String,Object>> getOrderConfirm(@RequestParam(value = "marketName") String marketName) {
-
         return sellerCenterService.getOrderConfirm(marketName);
+    }
+
+    @GetMapping("/getorderconfirmmodal")
+    public List<HashMap<String,Object>> getOrderConfirmModal(@RequestParam(value = "purchaseId") int purchaseId) {
+        return sellerCenterService.getOrderConfirmModal(purchaseId);
     }
 }
