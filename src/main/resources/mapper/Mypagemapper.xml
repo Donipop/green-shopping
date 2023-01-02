@@ -23,10 +23,12 @@
 
     </delete>
 
+    <select id = "Mypagecoupon"
+            resultType="com.green.shopping.vo.CouponVo">
 
-
-
-
+        SELECT ID,NAME,CONDITION,DISCOUNT,DISCOUNTRATE
+        FROM COUPON_TB
+    </select>
 
 </mapper>
 
