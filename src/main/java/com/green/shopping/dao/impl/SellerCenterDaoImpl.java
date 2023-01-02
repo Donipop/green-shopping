@@ -3,6 +3,7 @@ package com.green.shopping.dao.impl;
 import com.green.shopping.dao.SellerCenterDao;
 import com.green.shopping.vo.CategoryVo;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -109,5 +110,9 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
         insertPostInfoMap.put("companyName", companyName);
         insertPostInfoMap.put("purchaseNum", purchaseNum);
         sqlSession.insert("SellerCenter.insertPostInfo", insertPostInfoMap);
+    }
+    @Override
+    public List<HashMap<String, Object>> getOrderConfirm(String marketName) {
+        return sqlSession.selectList("SellerCenter.getOrderConfirm", marketName);
     }
 }

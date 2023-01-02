@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -107,7 +108,17 @@ public class SellerCenterService {
     public void updateOrderStatus(int orderNum, int status) {
         sellerCenterDaoImpl.updateOrderStatus(orderNum, status);
     }
-    public void insertPostInfo(String invoiceNum, String companyName, int purchaseNum) {
-        sellerCenterDaoImpl.insertPostInfo(invoiceNum, companyName, purchaseNum);
+    public void insertPostInfo(List<Map<String,Object>> postInfoList) {
+        for (int i=0; i<postInfoList.size(); i++) {
+            //post_Tb에 추가
+            sellerCenterDaoImpl.insertPostInfo(postInfoList.get(i).get("invoiceNum").toString(), postInfoList.get(i).get("companyName").toString(),Integer.parseInt(postInfoList.get(i).get("purchaseNum").toString()));
+            //purchaselist_tb에 상태 3[배송중]으로 변경
+            sellerCenterDaoImpl.updateOrderStatus(Integer.parseInt(postInfoList.get(i).get("purchaseNum").toString()), 3);
+        }
+    }
+
+    public List<HashMap<String, Object>> getOrderConfirm(String marketName) {
+        List<HashMap<String,Object>> list = sellerCenterDaoImpl.getOrderConfirm("아이유당근마켓");
+        return list;
     }
 }

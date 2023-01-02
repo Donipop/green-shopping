@@ -69,9 +69,15 @@
     </update>
 
     <insert id="insertPostInfo" parameterType="java.util.HashMap">
-        insert into post_tb(invoice_number,companyname,purcharselistid)
+        insert into post_tb(invoicenumber,companyname,purcharselistid)
         values (#{invoiceNum},#{companyName},#{purchaseNum})
     </insert>
+    
+    <select id="getOrderConfirm" parameterType="String" resultType="java.util.HashMap">
+        select a.id,a.time,a.state,b.title,w.user_name,w.user_tel,w.user_address,w.user_email
+        from purchaselist_tb a, product_tb b, user_tb w
+        where state = 3 and b.market_name = #{marketName} and a.user_id = w.user_id
+    </select>
 </mapper>
 
 

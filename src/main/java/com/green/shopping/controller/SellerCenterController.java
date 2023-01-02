@@ -1,14 +1,13 @@
 package com.green.shopping.controller;
 
-import com.google.gson.JsonArray;
 import com.green.shopping.service.FileService;
 import com.green.shopping.service.SellerCenterService;
 import com.green.shopping.vo.CategoryVo;
-import com.green.shopping.vo.ProductVo;
 import com.green.shopping.vo.SellerCenterCreateVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.OptionalInt;
@@ -17,10 +16,16 @@ import java.util.OptionalInt;
 @RequestMapping("/sellercenter")
 public class SellerCenterController {
     @Autowired
-    SellerCenterService sellerCenterService;
+    private final SellerCenterService sellerCenterService;
 
     @Autowired
-    FileService fileService;
+    private final FileService fileService;
+
+    public SellerCenterController(SellerCenterService sellerCenterService, FileService fileService) {
+        this.sellerCenterService = sellerCenterService;
+        this.fileService = fileService;
+    }
+
     @GetMapping("/getcategory")
     public List<CategoryVo> getCategory(@RequestParam(value = "parent_num", required = false) String parent_num) {
         if (parent_num == null || parent_num.equals("")) {
@@ -59,14 +64,19 @@ public class SellerCenterController {
     }
 
     @PostMapping("/insertpostinfo")
-    public void insertPostInfo(@RequestBody String RepostList) {
-
-//        sellerCenterService.insertPostInfo(postInfo.get("invoiceNum").toString(), postInfo.get("companyName").toString(), Integer.parseInt(postInfo.get("purchaseNum").toString()));
-        System.out.println(RepostList);
+    public void insertPostInfo(@RequestBody Map<String,Object> RepostList) {
+        List<Map<String,Object>> repoList = (List<Map<String, Object>>) RepostList.get("RepostList");
+        sellerCenterService.insertPostInfo(repoList);
     }
 
     @PostMapping("/updateorderstatus")
     public void updateOrderStatus(@RequestBody Map<String, Integer> map) {
         sellerCenterService.updateOrderStatus(map.get("Id"), map.get("status"));
+    }
+
+    @GetMapping("/getorderconfirm")
+    public List<HashMap<String,Object>> getOrderConfirm(@RequestParam(value = "marketName") String marketName) {
+
+        return sellerCenterService.getOrderConfirm(marketName);
     }
 }

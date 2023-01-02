@@ -33,4 +33,13 @@ class SellerCenterServiceTest {
         }
         System.out.println("totalOrderList : " + totalOrderList);
     }
+
+    @Test
+    @Transactional
+    void getOrderConfirm() {
+        List<Map<String,Object>> list = sellerCenterDaoImpl.getOrderConfirm("아이유당근마켓");
+        for(Map<String,Object> a : list){
+            System.out.println(a);
+        }
+    }
 }
