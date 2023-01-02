@@ -38,4 +38,6 @@ public interface ReviewDao  {
     QnAVo QuestionUpdateForm(HashMap<String, Object> map);
 
     void QuestionUpdate(HashMap<String, Object> map);
+
+    void answerUpdate(HashMap<String, Object> map);
 }

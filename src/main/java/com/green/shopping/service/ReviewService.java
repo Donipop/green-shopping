@@ -78,4 +78,8 @@ public class ReviewService {
     public void QuestionUpdate(HashMap<String, Object> map) {
          reviewDao.QuestionUpdate(map);
     }
+
+    public void answerUpdate(HashMap<String, Object> map) {
+        reviewDao.answerUpdate(map);
+    }
 }

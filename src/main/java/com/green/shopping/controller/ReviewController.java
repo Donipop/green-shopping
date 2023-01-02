@@ -121,6 +121,10 @@ public class ReviewController {
         reviewService.answerDelete(map);
 
     }
+    @PostMapping("view/QnA/answerUpdate/{page}/{id}")
+    public void answerUpdate(@RequestParam HashMap<String, Object> map){
+        reviewService.answerUpdate(map);
+    }
 
 
 

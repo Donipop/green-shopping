@@ -87,5 +87,10 @@ public class ReviewDaoimpl implements ReviewDao {
            sqlSession.update("Review.QuestionUpdate", map);
     }
 
+    @Override
+    public void answerUpdate(HashMap<String, Object> map) {
+        sqlSession.update("Review.answerUpdate", map);
+    }
+
 
 }

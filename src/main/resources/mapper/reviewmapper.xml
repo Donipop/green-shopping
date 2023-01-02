@@ -110,6 +110,12 @@
 
     </update>
 
+    <update id="answerUpdate">
+        UPDATE QNA_TB SET
+        CONT = #{cont}
+        WHERE ID = #{id} and PRODUCT_NUM = #{product_num}
+    </update>
+
 
 
 
