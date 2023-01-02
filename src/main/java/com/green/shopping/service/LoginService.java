@@ -5,13 +5,17 @@ import com.green.shopping.dao.impl.UserDaoImpl;
 import com.green.shopping.vo.SignUp;
 import com.green.shopping.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class LoginService {
+
 
     @Autowired
     private LoginDao loginDao;
@@ -35,4 +39,5 @@ public class LoginService {
     public void seller_sign_up(SellerVo sellerVo) {
          loginDao.seller_sign_up(sellerVo);
     }
+
 }
