@@ -2,6 +2,7 @@ package com.green.shopping.service;
 
 import com.green.shopping.dao.MypageDao;
 import com.green.shopping.vo.CouponVo;
+import com.green.shopping.vo.ReviewVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.green.shopping.vo.Shopping_basketVo;
@@ -31,5 +32,9 @@ public class MypageService {
 
     public void user_shopping_basket_delete(HashMap<String, String> map) {
         mypageDao.user_shopping_basket_delete(map);
+    }
+
+    public List<ReviewVo> myreview(String user_id) {
+        return mypageDao.myreview(user_id);
     }
 }

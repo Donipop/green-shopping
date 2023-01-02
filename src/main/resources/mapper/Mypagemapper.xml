@@ -30,6 +30,14 @@
         FROM COUPON_TB
     </select>
 
+    <select id="myreview"
+            resultType="com.green.shopping.vo.ReviewVo">
+        SELECT ID,USER_ID,TITLE,CONT,STAR,PRODUCT_NUM,TO_CHAR(REGDATE + 9/24, 'yyyy-mm-dd') AS REGDATE
+        FROM REVIEW_TB
+        WHERE USER_ID = #{user_id}
+        ORDER BY ID DESC
+    </select>
+
 </mapper>
 
 

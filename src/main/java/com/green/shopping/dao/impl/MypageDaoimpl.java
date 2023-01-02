@@ -2,6 +2,7 @@ package com.green.shopping.dao.impl;
 
 import com.green.shopping.dao.MypageDao;
 import com.green.shopping.vo.CouponVo;
+import com.green.shopping.vo.ReviewVo;
 import com.green.shopping.vo.Shopping_basketVo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,11 @@ public class MypageDaoimpl implements MypageDao {
     @Override
     public void user_shopping_basket_delete(HashMap<String, String> map) {
         sqlSession.delete("Mypage.user_shopping_basket_delete", map);
+    }
+
+    @Override
+    public List<ReviewVo> myreview(String user_id) {
+
+        return sqlSession.selectList("Mypage.myreview", user_id);
     }
 }

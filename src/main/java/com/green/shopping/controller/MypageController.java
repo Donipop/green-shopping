@@ -2,7 +2,9 @@ package com.green.shopping.controller;
 
 
 import com.green.shopping.service.MypageService;
+import com.green.shopping.service.ReviewService;
 import com.green.shopping.vo.CouponVo;
+import com.green.shopping.vo.ReviewVo;
 import com.green.shopping.vo.Shopping_basketVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +41,12 @@ public class MypageController {
         System.out.println("dd");
         System.out.println(shoppingBasket_deleteList);
         System.out.println(user_id);
+
+    }
+
+    @GetMapping("/myreview")
+    public List<ReviewVo> myreview(@RequestParam String user_id){
+        return mypageService.myreview(user_id);
 
     }
 }
