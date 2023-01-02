@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 @ToString
 public class SellerCenterCreateVo {
-    public String market_Name;
+    public String Market_Name;
     public String Category;
     public String Title;
     public String Content;

@@ -13,11 +13,18 @@ import javax.servlet.http.Cookie;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/login")
 public class LoginController {
+
+    final HashMap<Object, Object> login_userlist = new HashMap<>();
+
 
     @Autowired
     LoginService loginService;
@@ -32,6 +39,19 @@ public class LoginController {
 
         ObjectMapper mapper = new ObjectMapper();
         String vo1 = mapper.writeValueAsString(vo);
+
+
+
+        HashMap<String, String> map2 = mapper.readValue(vo1, HashMap.class);
+
+
+
+        //refreshToken 만들기
+        String refreshToken = UUID.randomUUID().toString();
+
+        login_userlist.put(refreshToken, vo1);
+
+
 
 
 
@@ -58,8 +78,7 @@ public class LoginController {
 
         map1.put("vo", vo1);
         map1.put("returnURL", returnURL);
-
-
+        map1.put("refreshToken", refreshToken);
 
         return map1;
 
@@ -86,6 +105,8 @@ public class LoginController {
 
         map.put("brith", brith);
 
+
+
         ObjectMapper objectMapper = new ObjectMapper();
         SignUp signUp = objectMapper.convertValue(map, SignUp.class);
 
@@ -99,11 +120,15 @@ public class LoginController {
 
     @PostMapping("/logout")
     @ResponseBody
-    public String logout(HttpServletRequest request, HttpSession session, HashMap<String, Object> map) {
+    public String logout(HttpServletRequest request, HttpSession session,@RequestBody HashMap<String, Object> refreshTokens ) {
         String result = "로그아웃 완료";
         session.removeAttribute("login");
         Cookie cookie = new Cookie("vo", null);
         cookie.setMaxAge(0);
+        String refreshToken = (String) refreshTokens.get("refreshToken");
+
+
+        login_userlist.remove(refreshToken);
 
 
         return result;
@@ -116,6 +141,24 @@ public class LoginController {
         loginService.seller_sign_up(sellerVo);
         //파일 넘기는건 아직 안함
     }
+
+    @PostMapping("/viewmap")
+    public String tlqkf(@RequestBody HashMap<String, Object> refreshTokens){
+        String qudtls = "ㄱㄱ";
+        Object refreshToken = refreshTokens.get("refreshToken");
+        // 로그인된 유저
+        System.out.println("login_userlist = " + login_userlist);
+        // 로그인된 유저의 수
+        System.out.println("login_userlist.size() = " + login_userlist.size());
+
+        String accessToken = (String) login_userlist.get(refreshToken);
+
+
+        return accessToken;
+    }
+
+
+
 
 
 }
