@@ -2,6 +2,7 @@ package com.green.shopping.dao.impl;
 
 import com.green.shopping.dao.MypageDao;
 import com.green.shopping.vo.CouponVo;
+import com.green.shopping.vo.PurchaselistVo;
 import com.green.shopping.vo.ReviewVo;
 import com.green.shopping.vo.Shopping_basketVo;
 import org.apache.ibatis.session.SqlSession;
@@ -36,5 +37,10 @@ public class MypageDaoimpl implements MypageDao {
     public List<ReviewVo> myreview(String user_id) {
 
         return sqlSession.selectList("Mypage.myreview", user_id);
+    }
+
+    @Override
+    public List<PurchaselistVo> mypruchaseinquiry(String user_id) {
+        return sqlSession.selectList("Mypage.mypruchaseinquiry", user_id);
     }
 }

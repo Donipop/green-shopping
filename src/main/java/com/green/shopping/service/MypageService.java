@@ -2,6 +2,7 @@ package com.green.shopping.service;
 
 import com.green.shopping.dao.MypageDao;
 import com.green.shopping.vo.CouponVo;
+import com.green.shopping.vo.PurchaselistVo;
 import com.green.shopping.vo.ReviewVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,5 +37,9 @@ public class MypageService {
 
     public List<ReviewVo> myreview(String user_id) {
         return mypageDao.myreview(user_id);
+    }
+
+    public List<PurchaselistVo> mypruchaseinquiry(String user_id) {
+        return mypageDao.mypruchaseinquiry(user_id);
     }
 }

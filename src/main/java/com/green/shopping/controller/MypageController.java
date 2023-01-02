@@ -4,6 +4,7 @@ package com.green.shopping.controller;
 import com.green.shopping.service.MypageService;
 import com.green.shopping.service.ReviewService;
 import com.green.shopping.vo.CouponVo;
+import com.green.shopping.vo.PurchaselistVo;
 import com.green.shopping.vo.ReviewVo;
 import com.green.shopping.vo.Shopping_basketVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +49,9 @@ public class MypageController {
     public List<ReviewVo> myreview(@RequestParam String user_id){
         return mypageService.myreview(user_id);
 
+    }
+    @GetMapping("/MyPurchaseInquiry")
+    public List<PurchaselistVo> mypurchaseinquiry(@RequestParam String user_id){
+      return mypageService.mypruchaseinquiry(user_id);
     }
 }

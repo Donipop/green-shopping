@@ -38,6 +38,13 @@
         ORDER BY ID DESC
     </select>
 
+    <select id="mypruchaseinquiry"
+            resultType="com.green.shopping.vo.PurchaselistVo">
+        SELECT ID,USER_ID,TOTALPRICE,PRODUCTID,STATE,DELIVERY,POSTADDRESSID,TO_CHAR(TIME + 9/24, 'yyyy-mm-dd') AS TIME
+        FROM PURCHASELIST_TB
+        WHERE USER_ID = #{user_id}
+    </select>
+
 </mapper>
 
 
