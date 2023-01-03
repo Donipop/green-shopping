@@ -120,4 +120,9 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
     public List<HashMap<String, Object>> getOrderConfirmModal(int purchaseId) {
         return sqlSession.selectList("SellerCenter.getOrderConfirmModal", purchaseId);
     }
+
+    @Override
+    public List<HashMap<String, Object>> getProductTbByMarketName(String marketName) {
+        return sqlSession.selectList("SellerCenter.getProductTbByMarketName", marketName);
+    }
 }

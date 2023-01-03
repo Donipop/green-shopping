@@ -33,7 +33,6 @@ public class IndexController {
     @Autowired
     LoginService loginService;
 
-
     @GetMapping("/name")
     public List<UserVo> index() {
     List<UserVo> a = loginService.test();

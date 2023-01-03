@@ -84,6 +84,21 @@
         FROM PURCHASEDETAILLIST_TB A, PRODUCTDETAIL_TB B
         WHERE A.purchaselistid = #{purchaselistid} and a.productdetailid = b.id
     </select>
+
+    <resultMap id="ProductTbMapList" type="java.util.HashMap">
+        <result property="id" column="id"/>
+        <result property="marketName" column="market_name"/>
+        <result property="category" column="category"/>
+        <result property="title" column="title"/>
+        <result property="cont" column="cont" jdbcType="CLOB" javaType="java.lang.String"/>
+        <result property="event" column="event"/>
+        <result property="deletecheck" column="deletecheck"/>
+    </resultMap>
+
+    <select id="getProductTbByMarketName" parameterType="String" resultType="java.util.HashMap" resultMap="ProductTbMapList">
+        select * from product_tb
+        where deletecheck = 0 and market_name = #{marketName}
+    </select>
 </mapper>
 
 

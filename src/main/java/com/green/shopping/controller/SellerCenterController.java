@@ -83,4 +83,8 @@ public class SellerCenterController {
     public List<HashMap<String,Object>> getOrderConfirmModal(@RequestParam(value = "purchaseId") int purchaseId) {
         return sellerCenterService.getOrderConfirmModal(purchaseId);
     }
+    @GetMapping("/getproducttb")
+    public List<HashMap<String,Object>> getProductTb(@RequestParam(value = "marketName") String marketName) {
+        return sellerCenterService.getProductTbByMarketName(marketName);
+    }
 }

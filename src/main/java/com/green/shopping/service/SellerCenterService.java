@@ -124,4 +124,8 @@ public class SellerCenterService {
     public List<HashMap<String,Object>> getOrderConfirmModal(int purchaseNum) {
         return sellerCenterDaoImpl.getOrderConfirmModal(purchaseNum);
     }
+
+    public List<HashMap<String,Object>> getProductTbByMarketName(String marketName) {
+        return sellerCenterDaoImpl.getProductTbByMarketName(marketName);
+    }
 }
