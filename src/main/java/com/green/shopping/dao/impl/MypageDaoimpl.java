@@ -1,15 +1,13 @@
 package com.green.shopping.dao.impl;
 
 import com.green.shopping.dao.MypageDao;
-import com.green.shopping.vo.CouponVo;
-import com.green.shopping.vo.PurchaselistVo;
-import com.green.shopping.vo.ReviewVo;
-import com.green.shopping.vo.Shopping_basketVo;
+import com.green.shopping.vo.*;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class MypageDaoimpl implements MypageDao {
@@ -42,5 +40,10 @@ public class MypageDaoimpl implements MypageDao {
     @Override
     public List<PurchaselistVo> mypruchaseinquiry(String user_id) {
         return sqlSession.selectList("Mypage.mypruchaseinquiry", user_id);
+    }
+
+    @Override
+    public List<TestpostVo> invoiceNumberGet(int invoicenumber) {
+        return sqlSession.selectList("Mypage.invoiceNumberGet", invoicenumber);
     }
 }

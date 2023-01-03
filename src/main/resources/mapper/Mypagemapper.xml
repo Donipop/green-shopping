@@ -45,6 +45,16 @@
         WHERE USER_ID = #{user_id}
     </select>
 
+
+    <select id="invoiceNumberGet"
+           resultType="com.green.shopping.vo.TestpostVo">
+
+        SELECT *
+        FROM TESTPOST_TB
+
+
+    </select>
+
 </mapper>
 
 

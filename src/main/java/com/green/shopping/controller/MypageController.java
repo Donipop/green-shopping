@@ -1,16 +1,15 @@
 package com.green.shopping.controller;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.shopping.service.MypageService;
 import com.green.shopping.service.ReviewService;
-import com.green.shopping.vo.CouponVo;
-import com.green.shopping.vo.PurchaselistVo;
-import com.green.shopping.vo.ReviewVo;
-import com.green.shopping.vo.Shopping_basketVo;
+import com.green.shopping.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/mypage")
@@ -53,5 +52,10 @@ public class MypageController {
     @GetMapping("/MyPurchaseInquiry")
     public List<PurchaselistVo> mypurchaseinquiry(@RequestParam String user_id){
       return mypageService.mypruchaseinquiry(user_id);
+    }
+    @GetMapping("/MyPurchaseInquiry/{id}")
+    public List<TestpostVo> invoiceNumberGet(@PathVariable("id") int invoicenumber ){
+
+        return mypageService.invoiceNumberGet(invoicenumber);
     }
 }

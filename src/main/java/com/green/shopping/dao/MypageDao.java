@@ -1,11 +1,10 @@
 package com.green.shopping.dao;
 
-import com.green.shopping.vo.CouponVo;
-import com.green.shopping.vo.PurchaselistVo;
-import com.green.shopping.vo.ReviewVo;
-import com.green.shopping.vo.Shopping_basketVo;
+import com.green.shopping.vo.*;
+
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface MypageDao {
     List<CouponVo> Mypagecoupon();
@@ -15,4 +14,6 @@ public interface MypageDao {
     List<ReviewVo> myreview(String user_id);
 
     List<PurchaselistVo> mypruchaseinquiry(String user_id);
+
+    List<TestpostVo> invoiceNumberGet(int invoicenumber);
 }

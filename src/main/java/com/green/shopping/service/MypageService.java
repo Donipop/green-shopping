@@ -1,15 +1,13 @@
 package com.green.shopping.service;
 
 import com.green.shopping.dao.MypageDao;
-import com.green.shopping.vo.CouponVo;
-import com.green.shopping.vo.PurchaselistVo;
-import com.green.shopping.vo.ReviewVo;
+import com.green.shopping.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.green.shopping.vo.Shopping_basketVo;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MypageService {
@@ -41,5 +39,9 @@ public class MypageService {
 
     public List<PurchaselistVo> mypruchaseinquiry(String user_id) {
         return mypageDao.mypruchaseinquiry(user_id);
+    }
+
+    public List<TestpostVo> invoiceNumberGet(int invoicenumber) {
+        return mypageDao.invoiceNumberGet(invoicenumber);
     }
 }
