@@ -2,6 +2,7 @@ package com.green.shopping.dao.impl;
 
 import com.green.shopping.dao.SellerCenterDao;
 import com.green.shopping.vo.CategoryVo;
+import com.green.shopping.vo.ReviewVo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -109,5 +110,9 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
         insertPostInfoMap.put("companyName", companyName);
         insertPostInfoMap.put("purchaseNum", purchaseNum);
         sqlSession.insert("SellerCenter.insertPostInfo", insertPostInfoMap);
+    }
+
+    public List<ReviewVo> getReviewListCount(HashMap<String, Object> map) {
+        return sqlSession.selectList("SellerCenter.getReviewListCount", map);
     }
 }

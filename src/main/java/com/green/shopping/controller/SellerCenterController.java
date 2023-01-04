@@ -5,10 +5,12 @@ import com.green.shopping.service.FileService;
 import com.green.shopping.service.SellerCenterService;
 import com.green.shopping.vo.CategoryVo;
 import com.green.shopping.vo.ProductVo;
+import com.green.shopping.vo.ReviewVo;
 import com.green.shopping.vo.SellerCenterCreateVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.OptionalInt;
@@ -68,5 +70,9 @@ public class SellerCenterController {
     @PostMapping("/updateorderstatus")
     public void updateOrderStatus(@RequestBody Map<String, Integer> map) {
         sellerCenterService.updateOrderStatus(map.get("Id"), map.get("status"));
+    }
+    @GetMapping("/reviewmanagement/reviewlist")
+    public List<ReviewVo> getReviewListCount(@RequestParam HashMap<String, Object> map) {
+        return sellerCenterService.getReviewListCount(map);
     }
 }

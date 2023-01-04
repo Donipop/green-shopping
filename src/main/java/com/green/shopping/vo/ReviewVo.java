@@ -15,7 +15,6 @@ public class ReviewVo {
     private int product_num;
     private String user_id;
     private int star;
-
     private String regdate;
     public ReviewVo() {
     }

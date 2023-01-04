@@ -72,6 +72,13 @@
         insert into post_tb(invoice_number,companyname,purcharselistid)
         values (#{invoiceNum},#{companyName},#{purchaseNum})
     </insert>
+
+    <select id="getReviewListCount" resultType="com.green.shopping.vo.ReviewVo">
+        SELECT (R.STAR)
+        FROM MARKET_TB M JOIN PRODUCT_TB P ON M.NAME = P.MARKET_NAME JOIN REVIEW_TB R
+        ON P.ID = R.PRODUCT_NUM
+        WHERE SELLERID = #{user_id} AND R.TIME BETWEEN TO_DATE(#{start}, 'yyyy-mm-dd') AND TO_DATE(#{end}, 'yyyy-mm-dd')
+    </select>
 </mapper>
 
 

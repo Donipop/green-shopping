@@ -4,11 +4,13 @@ import com.green.shopping.dao.SellerCenterDao;
 import com.green.shopping.dao.impl.SellerCenterDaoImpl;
 import com.green.shopping.vo.CategoryVo;
 import com.green.shopping.vo.ProductVo;
+import com.green.shopping.vo.ReviewVo;
 import com.green.shopping.vo.SellerCenterCreateVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -109,5 +111,9 @@ public class SellerCenterService {
     }
     public void insertPostInfo(String invoiceNum, String companyName, int purchaseNum) {
         sellerCenterDaoImpl.insertPostInfo(invoiceNum, companyName, purchaseNum);
+    }
+
+    public List<ReviewVo> getReviewListCount(HashMap<String, Object> map) {
+        return sellerCenterDaoImpl.getReviewListCount(map);
     }
 }
