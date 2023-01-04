@@ -53,8 +53,8 @@ public class MypageController {
     public List<PurchaselistVo> mypurchaseinquiry(@RequestParam String user_id){
       return mypageService.mypruchaseinquiry(user_id);
     }
-    @GetMapping("/MyPurchaseInquiry/{id}")
-    public List<TestpostVo> invoiceNumberGet(@PathVariable("id") int invoicenumber ){
+    @GetMapping("/MyPurchaseInquiry/deliverytracking")
+    public TestpostVo invoiceNumberGet(@RequestParam long invoicenumber ){
 
         return mypageService.invoiceNumberGet(invoicenumber);
     }

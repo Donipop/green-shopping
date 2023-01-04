@@ -9,14 +9,14 @@ import lombok.ToString;
 @ToString
 public class TestpostVo {
 
-    private int invoicenumber;
+    private long invoicenumber;
     private String content;
 
 
     public TestpostVo() {
     }
 
-    public TestpostVo(int invoicenumber, String content) {
+    public TestpostVo(long invoicenumber, String content) {
         this.invoicenumber = invoicenumber;
         this.content = content;
     }

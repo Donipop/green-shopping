@@ -43,7 +43,7 @@ public class MypageDaoimpl implements MypageDao {
     }
 
     @Override
-    public List<TestpostVo> invoiceNumberGet(int invoicenumber) {
-        return sqlSession.selectList("Mypage.invoiceNumberGet", invoicenumber);
+    public TestpostVo invoiceNumberGet(long invoicenumber) {
+        return sqlSession.selectOne("Mypage.invoiceNumberGet", invoicenumber);
     }
 }

@@ -41,7 +41,7 @@ public class MypageService {
         return mypageDao.mypruchaseinquiry(user_id);
     }
 
-    public List<TestpostVo> invoiceNumberGet(int invoicenumber) {
+    public TestpostVo  invoiceNumberGet(long invoicenumber) {
         return mypageDao.invoiceNumberGet(invoicenumber);
     }
 }

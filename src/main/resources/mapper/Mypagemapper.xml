@@ -49,9 +49,9 @@
     <select id="invoiceNumberGet"
            resultType="com.green.shopping.vo.TestpostVo">
 
-        SELECT *
-        FROM TESTPOST_TB
-
+        SELECT T.INVOICENUMBER AS invoiceNumber, T.CONTENT AS content
+        FROM POST_TB P LEFT JOIN TESTPOST_TB T ON P.INVOICENUMBER = T.INVOICENUMBER
+        WHERE PURCHARSELISTID = #{invoicenumber}
 
     </select>
 

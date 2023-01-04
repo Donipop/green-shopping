@@ -15,5 +15,5 @@ public interface MypageDao {
 
     List<PurchaselistVo> mypruchaseinquiry(String user_id);
 
-    List<TestpostVo> invoiceNumberGet(int invoicenumber);
+    TestpostVo invoiceNumberGet(long invoicenumber);
 }
