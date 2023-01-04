@@ -128,4 +128,7 @@ public class SellerCenterService {
     public List<HashMap<String,Object>> getProductTbByMarketName(String marketName) {
         return sellerCenterDaoImpl.getProductTbByMarketName(marketName);
     }
+    public HashMap<String,Object> getCategoryRoot(int num){
+        return sellerCenterDaoImpl.getCategoryRoot(num);
+    }
 }

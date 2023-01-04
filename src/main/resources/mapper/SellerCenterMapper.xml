@@ -99,6 +99,13 @@
         select * from product_tb
         where deletecheck = 0 and market_name = #{marketName}
     </select>
+
+    <select id="getCategoryRoot" parameterType="Integer" resultType="java.util.HashMap">
+        select listagg(name, '>') within group (order by level desc) as name, listagg(num, '>') within group (order by level desc) as num
+        from category_tb
+        start with num = #{num}
+        connect by num = prior parent_num
+    </select>
 </mapper>
 
 

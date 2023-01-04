@@ -21,4 +21,5 @@ public interface SellerCenterDao {
     List<HashMap<String, Object>> getOrderConfirm(String marketName);
     List<HashMap<String, Object>> getOrderConfirmModal(int purchaseId);
     List<HashMap<String,Object>> getProductTbByMarketName(String marketName);
+    HashMap<String,Object> getCategoryRoot(int num);
 }

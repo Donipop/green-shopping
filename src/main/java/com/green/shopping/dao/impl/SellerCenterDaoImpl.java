@@ -125,4 +125,9 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
     public List<HashMap<String, Object>> getProductTbByMarketName(String marketName) {
         return sqlSession.selectList("SellerCenter.getProductTbByMarketName", marketName);
     }
+
+    @Override
+    public HashMap<String, Object> getCategoryRoot(int num) {
+        return sqlSession.selectOne("SellerCenter.getCategoryRoot", num);
+    }
 }

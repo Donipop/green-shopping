@@ -87,4 +87,8 @@ public class SellerCenterController {
     public List<HashMap<String,Object>> getProductTb(@RequestParam(value = "marketName") String marketName) {
         return sellerCenterService.getProductTbByMarketName(marketName);
     }
+    @GetMapping("/getcategoryroot")
+    public HashMap<String,Object> getCategoryRoot(@RequestParam(value = "num") int num) {
+        return sellerCenterService.getCategoryRoot(num);
+    }
 }
