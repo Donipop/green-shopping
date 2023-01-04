@@ -131,4 +131,10 @@ public class SellerCenterService {
     public HashMap<String,Object> getCategoryRoot(int num){
         return sellerCenterDaoImpl.getCategoryRoot(num);
     }
+    public List<HashMap<String,Object>> getProductDetailByProductId(int productId){
+        return sellerCenterDaoImpl.getProductDetailByProductId(productId);
+    }
+    public List<HashMap<String,Object>> getProductImgByProductId(int productId){
+        return sellerCenterDaoImpl.getProductImgByProductId(productId);
+    }
 }

@@ -106,6 +106,16 @@
         start with num = #{num}
         connect by num = prior parent_num
     </select>
+
+    <select id="getProductDetailByProductId" parameterType="Integer" resultType="java.util.HashMap">
+        select * from productdetail_tb
+        where product_id = #{productId}
+    </select>
+
+    <select id="getProductImgByProductId" parameterType="Integer" resultType="java.util.HashMap">
+        select * from product_img_tb
+        where product_num = #{productId}
+    </select>
 </mapper>
 
 

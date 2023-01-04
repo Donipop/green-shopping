@@ -1,5 +1,6 @@
 package com.green.shopping.controller;
 
+import com.green.shopping.dao.impl.ViewDaoImpl;
 import com.green.shopping.service.FileService;
 import com.green.shopping.service.SellerCenterService;
 import com.green.shopping.vo.CategoryVo;
@@ -91,4 +92,17 @@ public class SellerCenterController {
     public HashMap<String,Object> getCategoryRoot(@RequestParam(value = "num") int num) {
         return sellerCenterService.getCategoryRoot(num);
     }
+    @GetMapping("/getproductdetailandimg")
+    public List<HashMap<String,Object>> getProductDetailByProductId(@RequestParam(value = "productId") int productId) {
+        List<HashMap<String,Object>> productDetail = sellerCenterService.getProductDetailByProductId(productId);
+        List<HashMap<String,Object>> productImage = sellerCenterService.getProductImgByProductId(productId);
+        //파일 이미지에 확장자 붙여주는 작업
+        for(HashMap<String,Object> map : productImage) {
+            HashMap<String,Object> fileMap = fileService.getFile(map.get("FILE_NAME").toString());
+            map.put("FILE_NAME",fileMap.get("NAME") + "." + fileMap.get("FILE_TYPE"));
+        }
+        productDetail.get(0).put("PRODUCTIMG",productImage);
+        return productDetail;
+    }
+
 }
