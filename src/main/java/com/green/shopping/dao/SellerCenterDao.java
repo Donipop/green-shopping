@@ -24,4 +24,7 @@ public interface SellerCenterDao {
     HashMap<String,Object> getCategoryRoot(int num);
     List<HashMap<String,Object>> getProductDetailByProductId(int productId);
     List<HashMap<String,Object>> getProductImgByProductId(int productId);
+    void updateProductTb(HashMap<String,Object> updateProductTbMap);
+    void updateProductDetailTb(HashMap<String,Object> updateProductDetailTbMap);
+    void updateProductImgTb(HashMap<String,Object> updateProductImgTbMap);
 }

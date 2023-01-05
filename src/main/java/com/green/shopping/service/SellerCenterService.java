@@ -8,6 +8,7 @@ import com.green.shopping.vo.SellerCenterCreateVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.transform.Source;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -136,5 +137,11 @@ public class SellerCenterService {
     }
     public List<HashMap<String,Object>> getProductImgByProductId(int productId){
         return sellerCenterDaoImpl.getProductImgByProductId(productId);
+    }
+    public void updateProduct(SellerCenterCreateVo sellerCenterCreateVo){
+        System.out.println(sellerCenterCreateVo);
+        //product_tb 수정
+        
+
     }
 }

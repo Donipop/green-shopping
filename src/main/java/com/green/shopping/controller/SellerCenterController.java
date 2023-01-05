@@ -1,5 +1,6 @@
 package com.green.shopping.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.shopping.dao.impl.ViewDaoImpl;
 import com.green.shopping.service.FileService;
 import com.green.shopping.service.SellerCenterService;
@@ -104,5 +105,8 @@ public class SellerCenterController {
         productDetail.get(0).put("PRODUCTIMG",productImage);
         return productDetail;
     }
-
+    @PostMapping("/updateproduct")
+    public void updateProduct(@RequestBody SellerCenterCreateVo sellerCenterCreateVo) {
+        sellerCenterService.updateProduct(sellerCenterCreateVo);
+    }
 }

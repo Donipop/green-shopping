@@ -140,4 +140,19 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
     public List<HashMap<String, Object>> getProductImgByProductId(int productId) {
         return sqlSession.selectList("SellerCenter.getProductImgByProductId", productId);
     }
+
+    @Override
+    public void updateProductTb(HashMap<String, Object> updateProductTbMap) {
+
+    }
+
+    @Override
+    public void updateProductDetailTb(HashMap<String, Object> updateProductDetailTbMap) {
+
+    }
+
+    @Override
+    public void updateProductImgTb(HashMap<String, Object> updateProductImgTbMap) {
+
+    }
 }

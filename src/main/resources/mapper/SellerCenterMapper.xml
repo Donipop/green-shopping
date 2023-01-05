@@ -108,7 +108,7 @@
     </select>
 
     <select id="getProductDetailByProductId" parameterType="Integer" resultType="java.util.HashMap">
-        select * from productdetail_tb
+        select ID,PRODUCT_ID,PRODUCT_NAME,PRODUCT_PRICE,PRODUCT_DISCOUNT,PRODUCT_COUNT,to_char(DATESTART,'YYYY-MM-DD') as DATESTART,to_char(DATEEND,'YYYY-MM-DD') as DATEEND,DELETECHECK from productdetail_tb
         where product_id = #{productId}
     </select>
 

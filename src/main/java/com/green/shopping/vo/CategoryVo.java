@@ -12,7 +12,6 @@ public class CategoryVo {
     private String Parent_Num;
     private String Num;
     private int Lv;
-
     public CategoryVo() {
     }
 }
