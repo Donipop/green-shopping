@@ -11,6 +11,12 @@
 
     </insert>
 
+    <select id="getFile" parameterType="String" resultType="java.util.HashMap">
+        SELECT *
+        FROM File_Tb
+        WHERE NAME = #{Name}
+    </select>
+
 </mapper>
 
 

@@ -10,6 +10,7 @@ import com.green.shopping.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.transform.Source;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -110,8 +111,40 @@ public class SellerCenterService {
     public void updateOrderStatus(int orderNum, int status) {
         sellerCenterDaoImpl.updateOrderStatus(orderNum, status);
     }
-    public void insertPostInfo(String invoiceNum, String companyName, int purchaseNum) {
-        sellerCenterDaoImpl.insertPostInfo(invoiceNum, companyName, purchaseNum);
+    public void insertPostInfo(List<Map<String,Object>> postInfoList) {
+        for (int i=0; i<postInfoList.size(); i++) {
+            //post_Tb에 추가
+            sellerCenterDaoImpl.insertPostInfo(postInfoList.get(i).get("invoiceNum").toString(), postInfoList.get(i).get("companyName").toString(),Integer.parseInt(postInfoList.get(i).get("purchaseNum").toString()));
+            //purchaselist_tb에 상태 3[배송중]으로 변경
+            sellerCenterDaoImpl.updateOrderStatus(Integer.parseInt(postInfoList.get(i).get("purchaseNum").toString()), 3);
+        }
+    }
+
+    public List<HashMap<String, Object>> getOrderConfirm(String marketName) {
+        return sellerCenterDaoImpl.getOrderConfirm(marketName);
+    }
+
+    public List<HashMap<String,Object>> getOrderConfirmModal(int purchaseNum) {
+        return sellerCenterDaoImpl.getOrderConfirmModal(purchaseNum);
+    }
+
+    public List<HashMap<String,Object>> getProductTbByMarketName(String marketName) {
+        return sellerCenterDaoImpl.getProductTbByMarketName(marketName);
+    }
+    public HashMap<String,Object> getCategoryRoot(int num){
+        return sellerCenterDaoImpl.getCategoryRoot(num);
+    }
+    public List<HashMap<String,Object>> getProductDetailByProductId(int productId){
+        return sellerCenterDaoImpl.getProductDetailByProductId(productId);
+    }
+    public List<HashMap<String,Object>> getProductImgByProductId(int productId){
+        return sellerCenterDaoImpl.getProductImgByProductId(productId);
+    }
+    public void updateProduct(SellerCenterCreateVo sellerCenterCreateVo){
+        System.out.println(sellerCenterCreateVo);
+        //product_tb 수정
+
+
     }
     public List<ReviewVo> getReviewListCount(HashMap<String, Object> map) {
         return sellerCenterDaoImpl.getReviewListCount(map);

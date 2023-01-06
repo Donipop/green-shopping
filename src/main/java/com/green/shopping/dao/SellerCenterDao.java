@@ -20,8 +20,15 @@ public interface SellerCenterDao {
     List<Map<String,Object>> getOrderDetail(int orderNum);
     void updateOrderStatus(int orderNum, int status);
     void insertPostInfo(String invoiceNum, String companyName, int purchaseNum);
-
     List<purchaseconfirmVo> getPurchaseConfirm(HashMap<String, String> map);
-
     List<PurchaseDetailVo> getPurchasedDetailInfo(HashMap<String, Object> map);
+    List<HashMap<String, Object>> getOrderConfirm(String marketName);
+    List<HashMap<String, Object>> getOrderConfirmModal(int purchaseId);
+    List<HashMap<String,Object>> getProductTbByMarketName(String marketName);
+    HashMap<String,Object> getCategoryRoot(int num);
+    List<HashMap<String,Object>> getProductDetailByProductId(int productId);
+    List<HashMap<String,Object>> getProductImgByProductId(int productId);
+    void updateProductTb(HashMap<String,Object> updateProductTbMap);
+    void updateProductDetailTb(HashMap<String,Object> updateProductDetailTbMap);
+    void updateProductImgTb(HashMap<String,Object> updateProductImgTbMap);
 }

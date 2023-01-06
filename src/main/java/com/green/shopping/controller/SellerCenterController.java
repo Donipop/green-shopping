@@ -18,10 +18,16 @@ import java.util.OptionalInt;
 @RequestMapping("/sellercenter")
 public class SellerCenterController {
     @Autowired
-    SellerCenterService sellerCenterService;
+    private final SellerCenterService sellerCenterService;
 
     @Autowired
-    FileService fileService;
+    private final FileService fileService;
+
+    public SellerCenterController(SellerCenterService sellerCenterService, FileService fileService) {
+        this.sellerCenterService = sellerCenterService;
+        this.fileService = fileService;
+    }
+
     @GetMapping("/getcategory")
     public List<CategoryVo> getCategory(@RequestParam(value = "parent_num", required = false) String parent_num) {
         if (parent_num == null || parent_num.equals("")) {
@@ -60,10 +66,9 @@ public class SellerCenterController {
     }
 
     @PostMapping("/insertpostinfo")
-    public void insertPostInfo(@RequestBody String RepostList) {
-
-//        sellerCenterService.insertPostInfo(postInfo.get("invoiceNum").toString(), postInfo.get("companyName").toString(), Integer.parseInt(postInfo.get("purchaseNum").toString()));
-        System.out.println(RepostList);
+    public void insertPostInfo(@RequestBody Map<String,Object> RepostList) {
+        List<Map<String,Object>> repoList = (List<Map<String, Object>>) RepostList.get("RepostList");
+        sellerCenterService.insertPostInfo(repoList);
     }
 
     @PostMapping("/updateorderstatus")
@@ -91,5 +96,39 @@ public class SellerCenterController {
         map.put("buyerid", buyerid);
         map.put("id", id);
         return sellerCenterService.getPurchasedDetailInfo(map);
+    }
+
+    @GetMapping("/getorderconfirm")
+    public List<HashMap<String,Object>> getOrderConfirm(@RequestParam(value = "marketName") String marketName) {
+        return sellerCenterService.getOrderConfirm(marketName);
+    }
+
+    @GetMapping("/getorderconfirmmodal")
+    public List<HashMap<String,Object>> getOrderConfirmModal(@RequestParam(value = "purchaseId") int purchaseId) {
+        return sellerCenterService.getOrderConfirmModal(purchaseId);
+    }
+    @GetMapping("/getproducttb")
+    public List<HashMap<String,Object>> getProductTb(@RequestParam(value = "marketName") String marketName) {
+        return sellerCenterService.getProductTbByMarketName(marketName);
+    }
+    @GetMapping("/getcategoryroot")
+    public HashMap<String,Object> getCategoryRoot(@RequestParam(value = "num") int num) {
+        return sellerCenterService.getCategoryRoot(num);
+    }
+    @GetMapping("/getproductdetailandimg")
+    public List<HashMap<String,Object>> getProductDetailByProductId(@RequestParam(value = "productId") int productId) {
+        List<HashMap<String,Object>> productDetail = sellerCenterService.getProductDetailByProductId(productId);
+        List<HashMap<String,Object>> productImage = sellerCenterService.getProductImgByProductId(productId);
+        //파일 이미지에 확장자 붙여주는 작업
+        for(HashMap<String,Object> map : productImage) {
+            HashMap<String,Object> fileMap = fileService.getFile(map.get("FILE_NAME").toString());
+            map.put("FILE_NAME",fileMap.get("NAME") + "." + fileMap.get("FILE_TYPE"));
+        }
+        productDetail.get(0).put("PRODUCTIMG",productImage);
+        return productDetail;
+    }
+    @PostMapping("/updateproduct")
+    public void updateProduct(@RequestBody SellerCenterCreateVo sellerCenterCreateVo) {
+        sellerCenterService.updateProduct(sellerCenterCreateVo);
     }
 }

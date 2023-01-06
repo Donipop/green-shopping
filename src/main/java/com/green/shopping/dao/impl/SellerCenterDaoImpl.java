@@ -6,6 +6,7 @@ import com.green.shopping.vo.ReviewVo;
 import com.green.shopping.vo.PurchaseDetailVo;
 import com.green.shopping.vo.purchaseconfirmVo;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -124,5 +125,48 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
     @Override
     public List<PurchaseDetailVo> getPurchasedDetailInfo(HashMap<String, Object> map) {
         return sqlSession.selectList("SellerCenter.getPurchasedDetailInfo", map);
+    }
+    @Override
+    public List<HashMap<String, Object>> getOrderConfirm(String marketName) {
+        return sqlSession.selectList("SellerCenter.getOrderConfirm", marketName);
+    }
+
+    @Override
+    public List<HashMap<String, Object>> getOrderConfirmModal(int purchaseId) {
+        return sqlSession.selectList("SellerCenter.getOrderConfirmModal", purchaseId);
+    }
+
+    @Override
+    public List<HashMap<String, Object>> getProductTbByMarketName(String marketName) {
+        return sqlSession.selectList("SellerCenter.getProductTbByMarketName", marketName);
+    }
+
+    @Override
+    public HashMap<String, Object> getCategoryRoot(int num) {
+        return sqlSession.selectOne("SellerCenter.getCategoryRoot", num);
+    }
+
+    @Override
+    public List<HashMap<String,Object>> getProductDetailByProductId(int productId) {
+        return sqlSession.selectList("SellerCenter.getProductDetailByProductId", productId);
+    }
+
+    @Override
+    public List<HashMap<String, Object>> getProductImgByProductId(int productId) {
+        return sqlSession.selectList("SellerCenter.getProductImgByProductId", productId);
+    }
+
+    @Override
+    public void updateProductTb(HashMap<String, Object> updateProductTbMap) {
+
+    }
+
+    @Override
+    public void updateProductDetailTb(HashMap<String, Object> updateProductDetailTbMap) {
+
+    }
+
+    @Override
+    public void updateProductImgTb(HashMap<String, Object> updateProductImgTbMap) {
     }
 }

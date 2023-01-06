@@ -69,7 +69,7 @@
     </update>
 
     <insert id="insertPostInfo" parameterType="java.util.HashMap">
-        insert into post_tb(invoice_number,companyname,purcharselistid)
+        insert into post_tb(invoicenumber,companyname,purcharselistid)
         values (#{invoiceNum},#{companyName},#{purchaseNum})
     </insert>
 
@@ -97,6 +97,50 @@
             FROM PURCHASEDETAILLIST_TB T LEFT JOIN PRODUCTDETAIL_TB P
             ON T.PRODUCTDETAILID = P.ID
             WHERE   PURCHASELISTID = #{id}
+    </select>
+    
+    <select id="getOrderConfirm" parameterType="String" resultType="java.util.HashMap">
+        select a.id,to_char(a.time,'YYYY-MM-DD hh24:mi:ss') as time,a.state,b.title,w.user_name,w.user_tel,w.user_address,w.user_email
+        from purchaselist_tb a, product_tb b, user_tb w
+        where state = 6 and b.market_name = #{marketName} and a.user_id = w.user_id
+    </select>
+    
+    <select id="getOrderConfirmModal" parameterType="Integer" resultType="java.util.HashMap">
+        SELECT A.PRICE,A.SALE,A.COUNT,B.PRODUCT_NAME AS PRODUCTNAME
+        FROM PURCHASEDETAILLIST_TB A, PRODUCTDETAIL_TB B
+        WHERE A.purchaselistid = #{purchaselistid} and a.productdetailid = b.id
+    </select>
+
+    <resultMap id="ProductTbMapList" type="java.util.HashMap">
+        <result property="id" column="id"/>
+        <result property="marketName" column="market_name"/>
+        <result property="category" column="category"/>
+        <result property="title" column="title"/>
+        <result property="cont" column="cont" jdbcType="CLOB" javaType="java.lang.String"/>
+        <result property="event" column="event"/>
+        <result property="deletecheck" column="deletecheck"/>
+    </resultMap>
+
+    <select id="getProductTbByMarketName" parameterType="String" resultType="java.util.HashMap" resultMap="ProductTbMapList">
+        select * from product_tb
+        where deletecheck = 0 and market_name = #{marketName}
+    </select>
+
+    <select id="getCategoryRoot" parameterType="Integer" resultType="java.util.HashMap">
+        select listagg(name, '>') within group (order by level desc) as name, listagg(num, '>') within group (order by level desc) as num
+        from category_tb
+        start with num = #{num}
+        connect by num = prior parent_num
+    </select>
+
+    <select id="getProductDetailByProductId" parameterType="Integer" resultType="java.util.HashMap">
+        select ID,PRODUCT_ID,PRODUCT_NAME,PRODUCT_PRICE,PRODUCT_DISCOUNT,PRODUCT_COUNT,to_char(DATESTART,'YYYY-MM-DD') as DATESTART,to_char(DATEEND,'YYYY-MM-DD') as DATEEND,DELETECHECK from productdetail_tb
+        where product_id = #{productId}
+    </select>
+
+    <select id="getProductImgByProductId" parameterType="Integer" resultType="java.util.HashMap">
+        select * from product_img_tb
+        where product_num = #{productId}
     </select>
 </mapper>
 

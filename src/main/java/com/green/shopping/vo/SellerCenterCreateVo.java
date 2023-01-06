@@ -20,4 +20,5 @@ public class SellerCenterCreateVo {
     public List<String> detailImg;
     public String userId;
     public int productId;
+    public int id;
 }
