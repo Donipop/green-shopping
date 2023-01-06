@@ -19,8 +19,7 @@
 
     <delete id="user_shopping_basket_delete" parameterType="HashMap">
         DELETE FROM SHOPPING_BASKET_TB
-        WHERE USER_ID = #{user_id}
-        AND PRODUCTDETAIL_NUM = #{productDetailId}
+        WHERE USER_ID = #{user_id} AND PRODUCTDETAIL_NUM = #{productDetailId}
 
     </delete>
 
@@ -29,31 +28,6 @@
 
         SELECT ID,NAME,CONDITION,DISCOUNT,DISCOUNTRATE
         FROM COUPON_TB
-    </select>
-
-    <select id="myreview"
-            resultType="com.green.shopping.vo.ReviewVo">
-        SELECT ID,USER_ID,TITLE,CONT,STAR,PRODUCT_NUM,TO_CHAR(REGDATE + 9/24, 'yyyy-mm-dd') AS REGDATE
-        FROM REVIEW_TB
-        WHERE USER_ID = #{user_id}
-        ORDER BY ID DESC
-    </select>
-
-    <select id="mypruchaseinquiry"
-            resultType="com.green.shopping.vo.PurchaselistVo">
-        SELECT ID,USER_ID,TOTALPRICE,PRODUCTID,STATE,DELIVERY,POSTADDRESSID,TO_CHAR(TIME + 9/24, 'yyyy-mm-dd') AS TIME
-        FROM PURCHASELIST_TB
-        WHERE USER_ID = #{user_id}
-    </select>
-
-
-    <select id="invoiceNumberGet"
-           resultType="com.green.shopping.vo.TestpostVo">
-
-        SELECT T.INVOICENUMBER AS invoiceNumber, T.CONTENT AS content
-        FROM POST_TB P LEFT JOIN TESTPOST_TB T ON P.INVOICENUMBER = T.INVOICENUMBER
-        WHERE PURCHARSELISTID = #{invoicenumber}
-
     </select>
 
 </mapper>
