@@ -140,10 +140,41 @@ public class SellerCenterService {
     public List<HashMap<String,Object>> getProductImgByProductId(int productId){
         return sellerCenterDaoImpl.getProductImgByProductId(productId);
     }
-    public void updateProduct(SellerCenterCreateVo sellerCenterCreateVo){
+    public void updateProduct(SellerCenterCreateVo sellerCenterCreateVo, HashMap<String,Object> productImg) {
         System.out.println(sellerCenterCreateVo);
         //product_tb 수정
-
+        HashMap<String,Object> productTb = new HashMap<>();
+        productTb.put("id", sellerCenterCreateVo.getId());
+        productTb.put("marketName", sellerCenterCreateVo.getMarket_name());
+        productTb.put("category", sellerCenterCreateVo.getCategory());
+        productTb.put("title", sellerCenterCreateVo.getTitle());
+        productTb.put("cont", sellerCenterCreateVo.getCont());
+        if(sellerCenterCreateVo.getEvent() == null || sellerCenterCreateVo.getEvent().equals("")) {
+            productTb.put("event", "0");
+        }else {
+            productTb.put("event", sellerCenterCreateVo.getEvent());
+        }
+        System.out.println(productTb);
+        //productDetailTb 수정
+        HashMap<String,Object> productDetailTb = new HashMap<>();
+        for(int i=0; i < sellerCenterCreateVo.getProduct().size(); i++){
+            productDetailTb.put("id", sellerCenterCreateVo.getProduct().get(i).getId());
+            productDetailTb.put("productId", sellerCenterCreateVo.getId());
+            productDetailTb.put("productName", sellerCenterCreateVo.getProduct().get(i).getProduct_name());
+            productDetailTb.put("productPrice", sellerCenterCreateVo.getProduct().get(i).getProduct_price());
+            productDetailTb.put("productDiscount", sellerCenterCreateVo.getProduct().get(i).getProduct_discount());
+            productDetailTb.put("productCount", sellerCenterCreateVo.getProduct().get(i).getProduct_count());
+            productDetailTb.put("dateStart", sellerCenterCreateVo.getProduct().get(i).getDateStart());
+            productDetailTb.put("dateEnd", sellerCenterCreateVo.getProduct().get(i).getDateEnd());
+            System.out.println(productDetailTb);
+        }
+        //productImgTb 수정
+        //detailImg
+        System.out.println(productImg);
+//        HashMap<String,Object> productImgTb = new HashMap<>();
+//        for(int i=0; i < sellerCenterCreateVo.getDetailImg().size(); i++){
+//
+//        }
 
     }
     public List<ReviewVo> getReviewListCount(HashMap<String, Object> map) {

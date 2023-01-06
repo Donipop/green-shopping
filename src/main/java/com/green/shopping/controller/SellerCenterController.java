@@ -1,5 +1,6 @@
 package com.green.shopping.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.shopping.service.FileService;
 import com.green.shopping.service.SellerCenterService;
 import com.green.shopping.vo.CategoryVo;
@@ -128,7 +129,13 @@ public class SellerCenterController {
         return productDetail;
     }
     @PostMapping("/updateproduct")
-    public void updateProduct(@RequestBody SellerCenterCreateVo sellerCenterCreateVo) {
-        sellerCenterService.updateProduct(sellerCenterCreateVo);
+    public void updateProduct(@RequestBody HashMap<String,Object> updateData) {
+        SellerCenterCreateVo sellerCenterCreateVo = new SellerCenterCreateVo();
+        ObjectMapper mapper = new ObjectMapper();
+        sellerCenterCreateVo = mapper.convertValue(updateData.get("sellerCenterCreateVo"), SellerCenterCreateVo.class);
+//        sellerCenterService.updateProduct(sellerCenterCreateVo, (HashMap<String, Object>) updateData.get("productImg"));
+        System.out.println(sellerCenterCreateVo);
+        System.out.println(updateData.get("productImg"));
     }
+
 }

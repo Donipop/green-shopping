@@ -1,10 +1,7 @@
 package com.green.shopping.dao.impl;
 
 import com.green.shopping.dao.SellerCenterDao;
-import com.green.shopping.vo.CategoryVo;
-import com.green.shopping.vo.ReviewVo;
-import com.green.shopping.vo.PurchaseDetailVo;
-import com.green.shopping.vo.purchaseconfirmVo;
+import com.green.shopping.vo.*;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -158,7 +155,7 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
 
     @Override
     public void updateProductTb(HashMap<String, Object> updateProductTbMap) {
-
+        sqlSession.update("SellerCenter.updateProductTb", updateProductTbMap);
     }
 
     @Override
