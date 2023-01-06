@@ -141,7 +141,7 @@ public class SellerCenterService {
     public void updateProduct(SellerCenterCreateVo sellerCenterCreateVo){
         System.out.println(sellerCenterCreateVo);
         //product_tb 수정
-        
+
 
     }
 }
