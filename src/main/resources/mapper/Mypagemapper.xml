@@ -19,7 +19,8 @@
 
     <delete id="user_shopping_basket_delete" parameterType="HashMap">
         DELETE FROM SHOPPING_BASKET_TB
-        WHERE USER_ID = #{user_id} AND PRODUCTDETAIL_NUM = #{productDetailId}
+        WHERE USER_ID = #{user_id}
+        AND PRODUCTDETAIL_NUM = #{productDetailId}
 
     </delete>
 

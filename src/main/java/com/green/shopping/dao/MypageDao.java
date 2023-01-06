@@ -16,4 +16,7 @@ public interface MypageDao {
     List<PurchaselistVo> mypruchaseinquiry(String user_id);
 
     TestpostVo invoiceNumberGet(long invoicenumber);
+
+    void user_shopping_basket_delete(HashMap<String, Object> map);
+
 }

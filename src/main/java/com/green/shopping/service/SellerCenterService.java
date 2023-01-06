@@ -6,6 +6,7 @@ import com.green.shopping.vo.CategoryVo;
 import com.green.shopping.vo.ProductVo;
 import com.green.shopping.vo.ReviewVo;
 import com.green.shopping.vo.SellerCenterCreateVo;
+import com.green.shopping.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -112,8 +113,14 @@ public class SellerCenterService {
     public void insertPostInfo(String invoiceNum, String companyName, int purchaseNum) {
         sellerCenterDaoImpl.insertPostInfo(invoiceNum, companyName, purchaseNum);
     }
-
     public List<ReviewVo> getReviewListCount(HashMap<String, Object> map) {
         return sellerCenterDaoImpl.getReviewListCount(map);
+    }
+    public List<purchaseconfirmVo> getPurchaseConfirm(HashMap<String, String> map) {
+        return sellerCenterDaoImpl.getPurchaseConfirm(map);
+    }
+
+    public List<PurchaseDetailVo> getPurchasedDetailInfo(HashMap<String, Object> map) {
+        return sellerCenterDaoImpl.getPurchasedDetailInfo(map);
     }
 }
