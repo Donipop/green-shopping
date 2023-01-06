@@ -29,7 +29,7 @@ public class MypageService {
         return user_shopping_basket;
     }
 
-    public void user_shopping_basket_delete(HashMap<String, String> map) {
+    public void user_shopping_basket_delete(HashMap<String, Object> map) {
         mypageDao.user_shopping_basket_delete(map);
     }
 }

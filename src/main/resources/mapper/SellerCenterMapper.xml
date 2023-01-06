@@ -72,6 +72,26 @@
         insert into post_tb(invoice_number,companyname,purcharselistid)
         values (#{invoiceNum},#{companyName},#{purchaseNum})
     </insert>
+
+    <select id="getPurchaseConfirm"
+            resultType="com.green.shopping.vo.purchaseconfirmVo">
+            SELECT  U.id as id , M.NAME as marketname, M.SELLERID as sellerid , P.TITLE as title, U.USER_ID as buyerid, U.TOTALPRICE as totalprice, U.DELIVERY as delivery, U.TIME as purchasetime, TO_CHAR(U.PURCHASECONFIRMTIME, 'YYYY-MM-DD HH24:MI:SS') as purchaseconfirmtime
+            FROM    MARKET_TB M LEFT JOIN PRODUCT_TB P
+            ON      M.NAME = P.MARKET_NAME
+            LEFT JOIN PURCHASELIST_TB U
+            ON      P.ID = U.PRODUCTID
+            WHERE   U.PURCHASECONFIRMTIME BETWEEN TO_DATE(#{start}, 'YYYY-MM-DD') AND LAST_DAY(TO_DATE(#{end}, 'YYYY-MM-DD'))
+            AND     M.SELLERID = #{user_id}
+    </select>
+
+    <select id="getPurchasedDetailInfo"
+            resultType="com.green.shopping.vo.PurchaseDetailVo">
+            SELECT T.ID as id, T.PRICE as price, T.COUNT as count, T.SALE as sale, T.PRODUCTDETAILID as productdetailid, T.PURCHASELISTID as purchaselistid, P.PRODUCT_NAME as product_name
+            FROM PURCHASEDETAILLIST_TB T LEFT JOIN PRODUCTDETAIL_TB P
+            ON T.PRODUCTDETAILID = P.ID
+            WHERE   PURCHASELISTID = #{id}
+
+    </select>
 </mapper>
 
 

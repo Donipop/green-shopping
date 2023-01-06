@@ -14,10 +14,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("/login")
@@ -147,14 +144,29 @@ public class LoginController {
         String qudtls = "ㄱㄱ";
         Object refreshToken = refreshTokens.get("refreshToken");
         // 로그인된 유저
-        System.out.println("login_userlist = " + login_userlist);
+        //System.out.println("login_userlist = " + login_userlist);
         // 로그인된 유저의 수
-        System.out.println("login_userlist.size() = " + login_userlist.size());
+        //System.out.println("login_userlist.size() = " + login_userlist.size());
 
         String accessToken = (String) login_userlist.get(refreshToken);
 
 
         return accessToken;
+    }
+
+    @PostMapping("/refreshTokenToAccessToken")
+    public HashMap<String, Object> refreshTokenToAccessToken(@RequestParam String refreshToken) throws JsonProcessingException {
+        String accessToken = (String) login_userlist.get(refreshToken);
+
+        ObjectMapper mapper = new ObjectMapper();
+        HashMap<String, Object> map = mapper.readValue(accessToken, HashMap.class);
+
+
+
+
+
+
+        return map;
     }
 
 

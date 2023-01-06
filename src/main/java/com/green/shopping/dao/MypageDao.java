@@ -8,5 +8,5 @@ import java.util.List;
 public interface MypageDao {
     List<CouponVo> Mypagecoupon();
     List<Shopping_basketVo> user_shopping_basket(String user_id);
-    void user_shopping_basket_delete(HashMap<String, String> map);
+    void user_shopping_basket_delete(HashMap<String, Object> map);
 }

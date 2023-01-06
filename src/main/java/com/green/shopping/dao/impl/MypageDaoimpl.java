@@ -6,6 +6,8 @@ import com.green.shopping.vo.Shopping_basketVo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,7 +29,7 @@ public class MypageDaoimpl implements MypageDao {
     }
 
     @Override
-    public void user_shopping_basket_delete(HashMap<String, String> map) {
+    public void user_shopping_basket_delete(HashMap<String,Object> map) {
         sqlSession.delete("Mypage.user_shopping_basket_delete", map);
     }
 }

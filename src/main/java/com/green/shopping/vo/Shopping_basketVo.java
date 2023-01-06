@@ -14,6 +14,4 @@ public class Shopping_basketVo {
     public String name;
     public String ProductId;
     public String marketName;
-    public boolean checked = true;
-
 }

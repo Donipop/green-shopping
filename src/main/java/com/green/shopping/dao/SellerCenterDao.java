@@ -1,7 +1,10 @@
 package com.green.shopping.dao;
 
 import com.green.shopping.vo.CategoryVo;
+import com.green.shopping.vo.PurchaseDetailVo;
+import com.green.shopping.vo.purchaseconfirmVo;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,4 +20,8 @@ public interface SellerCenterDao {
     List<Map<String,Object>> getOrderDetail(int orderNum);
     void updateOrderStatus(int orderNum, int status);
     void insertPostInfo(String invoiceNum, String companyName, int purchaseNum);
+
+    List<purchaseconfirmVo> getPurchaseConfirm(HashMap<String, String> map);
+
+    List<PurchaseDetailVo> getPurchasedDetailInfo(HashMap<String, Object> map);
 }
