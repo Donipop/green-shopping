@@ -1,19 +1,22 @@
 package com.green.shopping.controller;
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.green.shopping.service.FileService;
 import com.green.shopping.service.SellerCenterService;
 import com.green.shopping.vo.CategoryVo;
 import com.green.shopping.vo.ReviewVo;
 import com.green.shopping.vo.SellerCenterCreateVo;
 import com.green.shopping.vo.*;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.OptionalInt;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/sellercenter")
@@ -129,13 +132,9 @@ public class SellerCenterController {
         return productDetail;
     }
     @PostMapping("/updateproduct")
-    public void updateProduct(@RequestBody HashMap<String,Object> updateData) {
-        SellerCenterCreateVo sellerCenterCreateVo = new SellerCenterCreateVo();
-        ObjectMapper mapper = new ObjectMapper();
-        sellerCenterCreateVo = mapper.convertValue(updateData.get("sellerCenterCreateVo"), SellerCenterCreateVo.class);
-//        sellerCenterService.updateProduct(sellerCenterCreateVo, (HashMap<String, Object>) updateData.get("productImg"));
-        System.out.println(sellerCenterCreateVo);
-        System.out.println(updateData.get("productImg"));
+    public void updateProduct(@RequestBody HashMap<String,Object> updateData) throws Exception {
+        SellerCenterCreateVo sellerCenterCreateVo = new ObjectMapper().convertValue(updateData.get("sellerCenterCreateVo"), SellerCenterCreateVo.class);
+        sellerCenterService.updateProduct(sellerCenterCreateVo, updateData);
     }
 
 }

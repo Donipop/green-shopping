@@ -17,7 +17,6 @@ import java.util.Map;
 @Service
 public class FileService {
     private final FileDaoImpl fileDaoimpl;
-
     public FileService(FileDaoImpl fileDaoimpl) {
         this.fileDaoimpl = fileDaoimpl;
     }
@@ -33,7 +32,9 @@ public class FileService {
 
 
     }
-    public int fileDelete() {
+    public int fileDelete(String fileName) {
+        //이미지 서버에서 삭제
+        //DB에서 삭제
         return 0;
     }
     public int fileUpdate() {

@@ -1,6 +1,5 @@
 package com.green.shopping.service;
 
-import com.green.shopping.dao.SellerCenterDao;
 import com.green.shopping.dao.impl.SellerCenterDaoImpl;
 import com.green.shopping.vo.CategoryVo;
 import com.green.shopping.vo.ProductVo;
@@ -9,8 +8,8 @@ import com.green.shopping.vo.SellerCenterCreateVo;
 import com.green.shopping.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.xml.transform.Source;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -76,7 +75,6 @@ public class SellerCenterService {
             for (int i=0; i < sellerCenterCreateVo.getDetailImg().size(); i++){
                 if(sellerCenterCreateVo.getDetailImg().get(i).length() > 0){
                     String detailImgUpload = fileService.fileUpload(sellerCenterCreateVo.getDetailImg().get(i), sellerCenterCreateVo.getUserId());
-                    //System.out.println("detailImgUpload : " + detailImgUpload);
                     if(detailImgUpload != "error"){
                         sellerCenterDaoImpl.createProductImg(detailImgUpload, productCreate_and_Num, "0");
                     }
@@ -115,7 +113,6 @@ public class SellerCenterService {
         for (int i=0; i<postInfoList.size(); i++) {
             //post_Tb에 추가
             sellerCenterDaoImpl.insertPostInfo(postInfoList.get(i).get("invoiceNum").toString(), postInfoList.get(i).get("companyName").toString(),Integer.parseInt(postInfoList.get(i).get("purchaseNum").toString()));
-            //purchaselist_tb에 상태 3[배송중]으로 변경
             sellerCenterDaoImpl.updateOrderStatus(Integer.parseInt(postInfoList.get(i).get("purchaseNum").toString()), 3);
         }
     }
@@ -140,7 +137,8 @@ public class SellerCenterService {
     public List<HashMap<String,Object>> getProductImgByProductId(int productId){
         return sellerCenterDaoImpl.getProductImgByProductId(productId);
     }
-    public void updateProduct(SellerCenterCreateVo sellerCenterCreateVo, HashMap<String,Object> productImg) {
+    @Transactional
+    public void updateProduct(SellerCenterCreateVo sellerCenterCreateVo, Map productImg) {
         System.out.println(sellerCenterCreateVo);
         //product_tb 수정
         HashMap<String,Object> productTb = new HashMap<>();
@@ -169,13 +167,34 @@ public class SellerCenterService {
             System.out.println(productDetailTb);
         }
         //productImgTb 수정
-        //detailImg
-        System.out.println(productImg);
-//        HashMap<String,Object> productImgTb = new HashMap<>();
-//        for(int i=0; i < sellerCenterCreateVo.getDetailImg().size(); i++){
-//
-//        }
 
+        //이미지 변경 있는지 체크
+        //새로운 이미지 list에 담기
+        List<String> newProductImg = new ArrayList<>();
+        newProductImg.add(sellerCenterCreateVo.getMainImg());
+        newProductImg.addAll(sellerCenterCreateVo.getDetailImg());
+        //기존 이미지 list에 담기
+        List<String> existImg = new ArrayList<>();
+        for(HashMap<String,Object> map : (List<HashMap<String, Object>>) productImg.get("productImg")) {
+            existImg.add("http://donipop.com:3333/img/" + map.get("FILE_NAME").toString());
+        }
+        //기존 이미지와 새로운 이미지 비교
+        List<String> deleteImg = new ArrayList<>(existImg);
+        List<String> insertImg = new ArrayList<>(newProductImg);
+
+        deleteImg.removeAll(newProductImg);
+        insertImg.removeAll(existImg);
+        //삭제해야 하는 이미지
+        for (String img : deleteImg) {
+            System.out.println(img);
+//            fileService.fileDelete(img.split("img/")[1]);
+        }
+        System.out.println("===================================");
+        //추가해야 하는 이미지
+        for (String img : insertImg) {
+            System.out.println(img);
+//            fileService.fileUpload(img.split("img/")[1], sellerCenterCreateVo.getUserId());
+        }
     }
     public List<ReviewVo> getReviewListCount(HashMap<String, Object> map) {
         return sellerCenterDaoImpl.getReviewListCount(map);
