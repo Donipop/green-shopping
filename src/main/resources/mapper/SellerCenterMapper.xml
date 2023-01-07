@@ -142,6 +142,11 @@
         select * from product_img_tb
         where product_num = #{productId}
     </select>
+
+    <delete id="deleteProductImg" parameterType="String">
+        delete from product_img_tb
+        where product_num = #{filename}
+    </delete>
 </mapper>
 
 

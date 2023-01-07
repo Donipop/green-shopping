@@ -17,6 +17,10 @@
         WHERE NAME = #{Name}
     </select>
 
+    <delete id="deleteFile" parameterType="String">
+        DELETE FROM File_Tb
+        WHERE NAME = #{filename}
+    </delete>
 </mapper>
 
 

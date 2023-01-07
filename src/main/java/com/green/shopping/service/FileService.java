@@ -32,10 +32,42 @@ public class FileService {
 
 
     }
-    public int fileDelete(String fileName) {
+    public String fileDelete(String fileName) {
         //이미지 서버에서 삭제
+        try{
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("filename", fileName);
+            System.out.println(jsonObject.toString());
+            URL url = new URL("http://donipop.com:3333/single/delete");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            conn.setUseCaches(false);
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("Accept", "*/*");
+            conn.setRequestProperty("Accept-Charset", "UTF-8");
+            conn.setRequestProperty("Connection", "Keep-Alive");
+            conn.setRequestProperty("Cache-Control", "no-cache");
+            OutputStream os = conn.getOutputStream();
+            os.write(jsonObject.toString().getBytes("UTF-8"));
+            os.flush();
+            os.close();
+            conn.connect();
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
+            StringBuilder response = new StringBuilder();
+            String responseLine = null;
+            while ((responseLine = br.readLine()) != null) {
+                response.append(responseLine.trim());
+            }
+            conn.disconnect();
+            return response.toString();
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return e.toString();
+        }
         //DB에서 삭제
-        return 0;
     }
     public int fileUpdate() {
         return 0;

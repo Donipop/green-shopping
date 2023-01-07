@@ -27,8 +27,8 @@ public class FileDaoImpl implements FileDao {
     }
 
     @Override
-    public String deleteFile(String Id) {
-        return "";
+    public String deleteFile(String filename) {
+        return sqlSession.delete("File.deleteFile",filename) == 1 ? "success" : "fail";
     }
 
     @Override

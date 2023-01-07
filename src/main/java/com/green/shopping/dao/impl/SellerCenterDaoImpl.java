@@ -71,6 +71,11 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
     }
 
     @Override
+    public String deleteProductImg(String filename) {
+        return sqlSession.delete("SellerCenter.deleteProductImg",filename) == 1 ? "success" : "fail";
+    }
+
+    @Override
     public List<Object> getOrderList(String marketName) {
         return sqlSession.selectList("SellerCenter.getOrderList", marketName);
     }
