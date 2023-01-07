@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- Mapper를 사용하는 Repository의 전체 경로를 적어줘야함. -->
+<mapper namespace="search">
+    <select id="searchview"
+            resultType="Hashmap" >
+        select p.title
+        from product_tb p join category_tb c on p.category = c.num
+        where p.title like '%'||#{searchcont}||'%'
+    </select>
+</mapper>

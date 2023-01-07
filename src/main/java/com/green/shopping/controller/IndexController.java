@@ -39,11 +39,6 @@ public class IndexController {
         return a;
     }
 
-    @GetMapping("search")
-    public void search(@RequestParam HashMap<String, Object> map) {
-        System.out.println(map);
-        System.out.println(map.get("    searchcont"));
-    }
 
 
 
