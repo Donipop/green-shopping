@@ -3,7 +3,10 @@ package com.green.shopping.dao.impl;
 import com.green.shopping.dao.SellerCenterDao;
 import com.green.shopping.vo.CategoryVo;
 import com.green.shopping.vo.ReviewVo;
+import com.green.shopping.vo.PurchaseDetailVo;
+import com.green.shopping.vo.purchaseconfirmVo;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -111,8 +114,59 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
         insertPostInfoMap.put("purchaseNum", purchaseNum);
         sqlSession.insert("SellerCenter.insertPostInfo", insertPostInfoMap);
     }
-
     public List<ReviewVo> getReviewListCount(HashMap<String, Object> map) {
         return sqlSession.selectList("SellerCenter.getReviewListCount", map);
+    }
+    @Override
+    public List<purchaseconfirmVo> getPurchaseConfirm(HashMap<String, String> map) {
+        return sqlSession.selectList("SellerCenter.getPurchaseConfirm", map);
+    }
+
+    @Override
+    public List<PurchaseDetailVo> getPurchasedDetailInfo(HashMap<String, Object> map) {
+        return sqlSession.selectList("SellerCenter.getPurchasedDetailInfo", map);
+    }
+    @Override
+    public List<HashMap<String, Object>> getOrderConfirm(String marketName) {
+        return sqlSession.selectList("SellerCenter.getOrderConfirm", marketName);
+    }
+
+    @Override
+    public List<HashMap<String, Object>> getOrderConfirmModal(int purchaseId) {
+        return sqlSession.selectList("SellerCenter.getOrderConfirmModal", purchaseId);
+    }
+
+    @Override
+    public List<HashMap<String, Object>> getProductTbByMarketName(String marketName) {
+        return sqlSession.selectList("SellerCenter.getProductTbByMarketName", marketName);
+    }
+
+    @Override
+    public HashMap<String, Object> getCategoryRoot(int num) {
+        return sqlSession.selectOne("SellerCenter.getCategoryRoot", num);
+    }
+
+    @Override
+    public List<HashMap<String,Object>> getProductDetailByProductId(int productId) {
+        return sqlSession.selectList("SellerCenter.getProductDetailByProductId", productId);
+    }
+
+    @Override
+    public List<HashMap<String, Object>> getProductImgByProductId(int productId) {
+        return sqlSession.selectList("SellerCenter.getProductImgByProductId", productId);
+    }
+
+    @Override
+    public void updateProductTb(HashMap<String, Object> updateProductTbMap) {
+
+    }
+
+    @Override
+    public void updateProductDetailTb(HashMap<String, Object> updateProductDetailTbMap) {
+
+    }
+
+    @Override
+    public void updateProductImgTb(HashMap<String, Object> updateProductImgTbMap) {
     }
 }

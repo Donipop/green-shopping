@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -32,5 +33,23 @@ class SellerCenterServiceTest {
             }
         }
         System.out.println("totalOrderList : " + totalOrderList);
+    }
+
+    @Test
+    @Transactional
+    void getOrderConfirm() {
+        List<HashMap<String,Object>> list = sellerCenterDaoImpl.getOrderConfirm("아이유당근마켓");
+        for(HashMap<String,Object> a : list){
+            System.out.println(a);
+        }
+    }
+
+    @Test
+    @Transactional
+    void getOrderConfirmModal() {
+        List<HashMap<String,Object>> list = sellerCenterDaoImpl.getOrderConfirmModal(5);
+        for(HashMap<String,Object> a : list){
+            System.out.println(a);
+        }
     }
 }

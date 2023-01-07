@@ -84,4 +84,7 @@ public class FileService {
             return "error";
         }
     }
+    public HashMap<String,Object> getFile(String fileName) {
+        return fileDaoimpl.getFile(fileName);
+    }
 }

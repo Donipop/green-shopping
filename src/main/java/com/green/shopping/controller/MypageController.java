@@ -1,15 +1,13 @@
 package com.green.shopping.controller;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.shopping.service.MypageService;
-import com.green.shopping.service.ReviewService;
 import com.green.shopping.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/mypage")
@@ -36,11 +34,18 @@ public class MypageController {
     }
 
     @PostMapping("/delete_shopping_basket")
-    public void user_shopping_basket_delete(@RequestParam String user_id, @RequestParam List<Integer> shoppingBasket_deleteList) {
+    public void user_shopping_basket_delete(@RequestParam String user_id, @RequestParam String shoppingBasket_deleteList) {
 
-        System.out.println("dd");
-        System.out.println(shoppingBasket_deleteList);
-        System.out.println(user_id);
+        String[] shoppingBasket_deleteListArray = shoppingBasket_deleteList.split(",");
+        List<String> shoppingBasket_deleteListArray2 = List.of(shoppingBasket_deleteListArray);
+
+        HashMap<String, Object> map = new HashMap<>();
+
+        for (int i = 0; i < shoppingBasket_deleteListArray2.size(); i++) {
+            map.put("user_id", user_id);
+            map.put("productDetailId", shoppingBasket_deleteListArray2.get(i));
+            mypageService.user_shopping_basket_delete(map);
+        }
 
     }
 
