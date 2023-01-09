@@ -16,11 +16,40 @@ public class SearchDaoImpl implements SearchDao {
     private SqlSession sqlSession;
 
     @Override
-    public  List<String> searchview(HashMap<String, Object> map) {
-        List<String> a =  sqlSession.selectList("search.searchview", map);
+    public List<HashMap<String, Object>> Categorysearch(HashMap<String, Object> map) {
+        List<HashMap<String, Object>> Categorysearch =  sqlSession.selectList("search.searchview", map);
 
-        return a;
+        return Categorysearch;
 
+    }
+
+    @Override
+    public List<HashMap<String, Object>> Allcategorysearch(HashMap<String, Object> map) {
+        List<HashMap<String, Object>> Allcategorysearch = sqlSession.selectList("search.Allcategorysearch", map);
+        return Allcategorysearch;
+    }
+
+    @Override
+    public  HashMap<String, Object> searchview1(HashMap<String, Object> map) {
+        HashMap<String, Object> b = sqlSession.selectOne("search.searchview1", map);
+        return b;
+
+    }
+
+    @Override
+    public  HashMap<String, Object> searchview2(HashMap<String, Object> map) {
+        HashMap<String, Object> c = sqlSession.selectOne("search.searchview2", map);
+        return c;
+    }
+
+    @Override
+    public HashMap<String, Object> getProductImgByProductId(String id) {
+        return sqlSession.selectOne("search.getProductImgByProductId", id);
+    }
+
+    @Override
+    public HashMap<String, Object> getFile(String file_name) {
+        return sqlSession.selectOne("search.getFile", file_name);
     }
 }
 
