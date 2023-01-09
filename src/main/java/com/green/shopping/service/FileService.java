@@ -37,7 +37,6 @@ public class FileService {
         try{
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("filename", fileName);
-            System.out.println(jsonObject.toString());
             URL url = new URL("http://donipop.com:3333/single/delete");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");

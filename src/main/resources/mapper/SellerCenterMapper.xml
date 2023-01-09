@@ -145,8 +145,20 @@
 
     <delete id="deleteProductImg" parameterType="String">
         delete from product_img_tb
-        where product_num = #{filename}
+        where file_name = #{filename}
     </delete>
+
+    <update id="updateProductTb" parameterType="java.util.HashMap">
+        update product_tb
+        set title = #{title}, cont = #{cont}, event = #{event}, category = #{category}
+        where id = #{id}
+    </update>
+
+    <update id="updateProductDetailTb" parameterType="java.util.HashMap">
+        update productdetail_tb
+        set product_name = #{productName}, product_price = #{productPrice}, product_discount = #{productDiscount}, product_count = #{productCount}, datestart = to_date(#{dateStart}, 'YYYY-MM-DD'), dateend = to_date(#{dateEnd}, 'YYYY-MM-DD')
+        where id = #{id}
+    </update>
 </mapper>
 
 

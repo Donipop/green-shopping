@@ -165,7 +165,7 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
 
     @Override
     public void updateProductDetailTb(HashMap<String, Object> updateProductDetailTbMap) {
-
+        sqlSession.update("SellerCenter.updateProductDetailTb", updateProductDetailTbMap);
     }
 
     @Override
