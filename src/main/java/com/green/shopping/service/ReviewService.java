@@ -82,4 +82,12 @@ public class ReviewService {
     public void answerUpdate(HashMap<String, Object> map) {
         reviewDao.answerUpdate(map);
     }
+
+    public void QuestionHardDelete(HashMap<String, Object> map) {
+        reviewDao.QuestionHardDelete(map);
+    }
+
+    public String getProductName(int page) {
+        return reviewDao.getProductName(page);
+    }
 }
