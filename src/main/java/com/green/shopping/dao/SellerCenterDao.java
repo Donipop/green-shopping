@@ -32,4 +32,5 @@ public interface SellerCenterDao {
     void updateProductTb(HashMap<String,Object> updateProductTbMap);
     void updateProductDetailTb(HashMap<String,Object> updateProductDetailTbMap);
     void updateProductImgTb(HashMap<String,Object> updateProductImgTbMap);
+    void deleteProductDetailTb(String id);
 }

@@ -139,125 +139,126 @@ public class SellerCenterService {
     @Transactional
     public void updateProduct(SellerCenterCreateVo sellerCenterCreateVo, Map productMap) {
 //        System.out.println(sellerCenterCreateVo);
-        //product_tb 수정
-//        HashMap<String,Object> productTb = new HashMap<>();
-//        productTb.put("id", sellerCenterCreateVo.getId());
-//        productTb.put("marketName", sellerCenterCreateVo.getMarket_name());
-//        productTb.put("category", sellerCenterCreateVo.getCategory());
-//        productTb.put("title", sellerCenterCreateVo.getTitle());
-//        productTb.put("cont", sellerCenterCreateVo.getCont());
-//        if(sellerCenterCreateVo.getEvent() == null || sellerCenterCreateVo.getEvent().equals("")) {
-//            productTb.put("event", "0");
-//        }else {
-//            productTb.put("event", sellerCenterCreateVo.getEvent());
-//        }
-//        sellerCenterDaoImpl.updateProductTb(productTb);
+//        product_tb 수정
+        HashMap<String,Object> productTb = new HashMap<>();
+        productTb.put("id", sellerCenterCreateVo.getId());
+        productTb.put("marketName", sellerCenterCreateVo.getMarket_name());
+        productTb.put("category", sellerCenterCreateVo.getCategory());
+        productTb.put("title", sellerCenterCreateVo.getTitle());
+        productTb.put("cont", sellerCenterCreateVo.getCont());
+        if(sellerCenterCreateVo.getEvent() == null || sellerCenterCreateVo.getEvent().equals("")) {
+            productTb.put("event", "0");
+        }else {
+            productTb.put("event", sellerCenterCreateVo.getEvent());
+        }
+        sellerCenterDaoImpl.updateProductTb(productTb);
 
-        System.out.println(productMap.get("deleteProductId"));
-        List<Optional<String>> deleteProductIdList = (List<Optional<String>>) productMap.get("deleteProductId");
-        System.out.println(deleteProductIdList.size());
-        System.out.println(deleteProductIdList.get(0).get().length());
-
+        List<String> deleteProductIdList = List.of(String.valueOf(productMap.get("deleteProductId")).split(","));
+        for(int i = 0; i< deleteProductIdList.size(); i++){
+            if(deleteProductIdList.get(i).replaceAll("[\\[\\]]","").trim().equals("") || deleteProductIdList.get(i).replaceAll("[\\[\\]]","").trim().equals("null")) continue;
+//            System.out.println(deleteProductIdList.get(i).replaceAll("[\\[\\]]","").trim() + "삭제");
+            sellerCenterDaoImpl.deleteProductDetailTb(deleteProductIdList.get(i).replaceAll("[\\[\\]]","").trim());
+        }
         //productDetailTb 수정
         HashMap<String,Object> productDetailTb = new HashMap<>();
-//        for(int i=0; i < sellerCenterCreateVo.getProduct().size(); i++){
+        for(int i=0; i < sellerCenterCreateVo.getProduct().size(); i++){
 //            System.out.println(sellerCenterCreateVo.getProduct().get(i));
-//            if(sellerCenterCreateVo.getProduct().get(i).getId() == 0){
+            if(sellerCenterCreateVo.getProduct().get(i).getId() == 0){
 //                System.out.println(sellerCenterCreateVo.getProduct().get(i).getProduct_name());
-//                // id == 0 추가
-//                sellerCenterDaoImpl.createProductDetail(sellerCenterCreateVo.getId(),
-//                        sellerCenterCreateVo.getProduct().get(i).getProduct_name(),
-//                        sellerCenterCreateVo.getProduct().get(i).getProduct_price(),
-//                        sellerCenterCreateVo.getProduct().get(i).getProduct_discount(),
-//                        sellerCenterCreateVo.getProduct().get(i).getProduct_count(),
-//                        sellerCenterCreateVo.getProduct().get(i).getDateStart(),
-//                        sellerCenterCreateVo.getProduct().get(i).getDateEnd());
-//            }else{
-//                //id != 0 업데이트
-//                productDetailTb.put("id", sellerCenterCreateVo.getProduct().get(i).getId());
-//                productDetailTb.put("productId", sellerCenterCreateVo.getId());
-//                productDetailTb.put("productName", sellerCenterCreateVo.getProduct().get(i).getProduct_name());
-//                productDetailTb.put("productPrice", sellerCenterCreateVo.getProduct().get(i).getProduct_price());
-//                productDetailTb.put("productDiscount", sellerCenterCreateVo.getProduct().get(i).getProduct_discount());
-//                productDetailTb.put("productCount", sellerCenterCreateVo.getProduct().get(i).getProduct_count());
-//                productDetailTb.put("dateStart", sellerCenterCreateVo.getProduct().get(i).getDateStart());
-//                productDetailTb.put("dateEnd", sellerCenterCreateVo.getProduct().get(i).getDateEnd());
-////                sellerCenterDaoImpl.updateProductDetailTb(productDetailTb);
-//            }
+                // id == 0 추가
+                sellerCenterDaoImpl.createProductDetail(sellerCenterCreateVo.getId(),
+                        sellerCenterCreateVo.getProduct().get(i).getProduct_name(),
+                        sellerCenterCreateVo.getProduct().get(i).getProduct_price(),
+                        sellerCenterCreateVo.getProduct().get(i).getProduct_discount(),
+                        sellerCenterCreateVo.getProduct().get(i).getProduct_count(),
+                        sellerCenterCreateVo.getProduct().get(i).getDateStart(),
+                        sellerCenterCreateVo.getProduct().get(i).getDateEnd());
+            }else{
+                //id != 0 업데이트
+                productDetailTb.put("id", sellerCenterCreateVo.getProduct().get(i).getId());
+                productDetailTb.put("productId", sellerCenterCreateVo.getId());
+                productDetailTb.put("productName", sellerCenterCreateVo.getProduct().get(i).getProduct_name());
+                productDetailTb.put("productPrice", sellerCenterCreateVo.getProduct().get(i).getProduct_price());
+                productDetailTb.put("productDiscount", sellerCenterCreateVo.getProduct().get(i).getProduct_discount());
+                productDetailTb.put("productCount", sellerCenterCreateVo.getProduct().get(i).getProduct_count());
+                productDetailTb.put("dateStart", sellerCenterCreateVo.getProduct().get(i).getDateStart());
+                productDetailTb.put("dateEnd", sellerCenterCreateVo.getProduct().get(i).getDateEnd());
+//                sellerCenterDaoImpl.updateProductDetailTb(productDetailTb);
+            }
 //            System.out.println(productDetailTb);
-//        }
+        }
 
-        //productImgTb 수정
+//        productImgTb 수정
 
-        //////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////
 
-//        //이미지 변경 있는지 체크
-//        //새로운 이미지 list에 담기
-//        List<String> newProductImg = new ArrayList<>();
-//        newProductImg.add(sellerCenterCreateVo.getMainImg());
-//        newProductImg.addAll(sellerCenterCreateVo.getDetailImg());
-//        //기존 이미지 list에 담기
-//        List<String> existImg = new ArrayList<>();
-//        for(HashMap<String,Object> map : (List<HashMap<String, Object>>) productMap.get("productImg")) {
-//            existImg.add("http://donipop.com:3333/img/" + map.get("FILE_NAME").toString());
-//        }
-//        //기존 이미지와 새로운 이미지 비교
-//        List<String> deleteImg = new ArrayList<>(existImg);
-//        List<String> insertImg = new ArrayList<>(newProductImg);
-//
-//        deleteImg.removeAll(newProductImg);
-//        insertImg.removeAll(existImg);
-//        //삭제해야 하는 이미지
-//        for (String img : deleteImg) {
-//            String imageServer = fileService.fileDelete(img.split("img/")[1]);
-////            System.out.println("img/1 : " + img.split("img/")[1]);
-////            System.out.println("img/2 : " + img.split("img/")[1].split("\\.")[0]);
-//            if(imageServer.equals("ok")){
-//                String a = sellerCenterDaoImpl.deleteProductImg(img.split("img/")[1].split("\\.")[0]);
-//                if( a == "success"){
-////                    System.out.println("img_Tb삭제 성공");
-//                }else{
-////                    System.out.println("img_Tb삭제 실패");
-//                }
-//
-//                if(fileDaoImpl.deleteFile(img.split("img/")[1].split("\\.")[0]) == "success"){
-////                    System.out.println("file_Tb삭제 성공");
-//                }else{
-////                    System.out.println("file_Tb삭제 실패");
-//                }
-////                System.out.println("이미지서버 파일 삭제 성공");
-//            }else{
-////                System.out.println("이미지서버 파일 삭제 실패");
-//            }
-//        }
-////        System.out.println("===================================");
-//        //추가해야 하는 이미지
-//        for (String img : insertImg) {
-////            System.out.println("insert IMG : " + img);
-////            System.out.println("(^_^)");
-//            String imgSrc = img.split("___")[0];
-////            System.out.println("imgSrc : " + imgSrc);
-//            String isMain = img.split("___")[1];
-////            System.out.println("isMain : " + isMain);
-//            if(imgSrc == sellerCenterCreateVo.getMainImg()) {
-//                String mainImgUpload = fileService.fileUpload(imgSrc, sellerCenterCreateVo.getUserId());
-//                if (mainImgUpload != "error") {
-////                    System.out.println("이미지서버 파일 업로드 성공");
-//                    sellerCenterDaoImpl.createProductImg(mainImgUpload, sellerCenterCreateVo.getId(), isMain);
-//                } else {
-////                    System.out.println("이미지서버 파일 업로드 실패");
-//                }
-//            }else{
-//                String detailImgUpload = fileService.fileUpload(imgSrc, sellerCenterCreateVo.getUserId());
-//                if (detailImgUpload != "error") {
-////                    System.out.println("이미지서버 파일 업로드 성공" + detailImgUpload);
-////                    System.out.println(sellerCenterCreateVo.getId());
-//                    sellerCenterDaoImpl.createProductImg(detailImgUpload, sellerCenterCreateVo.getId(), isMain);
-//                } else {
-////                    System.out.println("이미지서버 파일 업로드 실패");
-//                }
-//            }
-//        }
+        //이미지 변경 있는지 체크
+        //새로운 이미지 list에 담기
+        List<String> newProductImg = new ArrayList<>();
+        newProductImg.add(sellerCenterCreateVo.getMainImg());
+        newProductImg.addAll(sellerCenterCreateVo.getDetailImg());
+        //기존 이미지 list에 담기
+        List<String> existImg = new ArrayList<>();
+        for(HashMap<String,Object> map : (List<HashMap<String, Object>>) productMap.get("productImg")) {
+            existImg.add("http://donipop.com:3333/img/" + map.get("FILE_NAME").toString());
+        }
+        //기존 이미지와 새로운 이미지 비교
+        List<String> deleteImg = new ArrayList<>(existImg);
+        List<String> insertImg = new ArrayList<>(newProductImg);
+
+        deleteImg.removeAll(newProductImg);
+        insertImg.removeAll(existImg);
+        //삭제해야 하는 이미지
+        for (String img : deleteImg) {
+            String imageServer = fileService.fileDelete(img.split("img/")[1]);
+//            System.out.println("img/1 : " + img.split("img/")[1]);
+//            System.out.println("img/2 : " + img.split("img/")[1].split("\\.")[0]);
+            if(imageServer.equals("ok")){
+                String imageServerRes = sellerCenterDaoImpl.deleteProductImg(img.split("img/")[1].split("\\.")[0]);
+                if( imageServerRes == "success"){
+//                    System.out.println("img_Tb삭제 성공");
+                }else{
+//                    System.out.println("img_Tb삭제 실패");
+                }
+
+                if(fileDaoImpl.deleteFile(img.split("img/")[1].split("\\.")[0]) == "success"){
+//                    System.out.println("file_Tb삭제 성공");
+                }else{
+//                    System.out.println("file_Tb삭제 실패");
+                }
+//                System.out.println("이미지서버 파일 삭제 성공");
+            }else{
+//                System.out.println("이미지서버 파일 삭제 실패");
+            }
+        }
+//        System.out.println("===================================");
+        //추가해야 하는 이미지
+        for (String img : insertImg) {
+//            System.out.println("insert IMG : " + img);
+//            System.out.println("(^_^)");
+            String imgSrc = img.split("___")[0];
+//            System.out.println("imgSrc : " + imgSrc);
+            String isMain = img.split("___")[1];
+//            System.out.println("isMain : " + isMain);
+            if(imgSrc == sellerCenterCreateVo.getMainImg()) {
+                String mainImgUpload = fileService.fileUpload(imgSrc, sellerCenterCreateVo.getUserId());
+                if (mainImgUpload != "error") {
+//                    System.out.println("이미지서버 파일 업로드 성공");
+                    sellerCenterDaoImpl.createProductImg(mainImgUpload, sellerCenterCreateVo.getId(), isMain);
+                } else {
+//                    System.out.println("이미지서버 파일 업로드 실패");
+                }
+            }else{
+                String detailImgUpload = fileService.fileUpload(imgSrc, sellerCenterCreateVo.getUserId());
+                if (detailImgUpload != "error") {
+//                    System.out.println("이미지서버 파일 업로드 성공" + detailImgUpload);
+//                    System.out.println(sellerCenterCreateVo.getId());
+                    sellerCenterDaoImpl.createProductImg(detailImgUpload, sellerCenterCreateVo.getId(), isMain);
+                } else {
+//                    System.out.println("이미지서버 파일 업로드 실패");
+                }
+            }
+        }
     }
     public List<ReviewVo> getReviewListCount(HashMap<String, Object> map) {
         return sellerCenterDaoImpl.getReviewListCount(map);

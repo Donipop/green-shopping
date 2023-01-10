@@ -171,4 +171,9 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
     @Override
     public void updateProductImgTb(HashMap<String, Object> updateProductImgTbMap) {
     }
+
+    @Override
+    public void deleteProductDetailTb(String id) {
+        sqlSession.delete("SellerCenter.deleteProductDetailTb", id);
+    }
 }

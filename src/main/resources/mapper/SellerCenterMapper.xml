@@ -159,6 +159,12 @@
         set product_name = #{productName}, product_price = #{productPrice}, product_discount = #{productDiscount}, product_count = #{productCount}, datestart = to_date(#{dateStart}, 'YYYY-MM-DD'), dateend = to_date(#{dateEnd}, 'YYYY-MM-DD')
         where id = #{id}
     </update>
+
+    <delete id="deleteProductDetailTb" parameterType="String">
+        delete from productdetail_tb
+        where id = #{id}
+    </delete>
+
 </mapper>
 
 
