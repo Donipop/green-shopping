@@ -77,7 +77,6 @@ public class SellerCenterController {
     }
     @GetMapping("/reviewmanagement/reviewlist")
     public List<ReviewVo> getReviewListCount(@RequestParam HashMap<String, Object> map) {
-        System.out.println(map);
         return sellerCenterService.getReviewListCount(map);
     }
     @PostMapping("/getpurchaseconfirm")
