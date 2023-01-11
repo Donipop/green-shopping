@@ -9,10 +9,7 @@ import com.green.shopping.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.OptionalInt;
+import java.util.*;
 
 @RestController
 @RequestMapping("/sellercenter")
@@ -129,5 +126,21 @@ public class SellerCenterController {
     @PostMapping("/updateproduct")
     public void updateProduct(@RequestBody SellerCenterCreateVo sellerCenterCreateVo) {
         sellerCenterService.updateProduct(sellerCenterCreateVo);
+    }
+    @GetMapping("/canclecostsettle")
+    public  List<HashMap<String, Object>>  cancleCostSettle(@RequestParam HashMap<String,Object> map) {
+        ;
+        HashMap<String, Object> putbasket = new HashMap<>();
+        List<HashMap<String, Object>> SettelValue = new ArrayList<>();
+        HashMap<String, Object> a =  sellerCenterService.PurchaseConfirmCount(map);
+        HashMap<String, Object> b =  sellerCenterService.beforeSettleSum(map);
+        HashMap<String, Object> c =  sellerCenterService.afterSettleSum(map);
+        putbasket.put("count",a.get("COUNT"));
+        putbasket.put("beforeSettleSum",b.get("BEFORESETTLESUM"));
+        putbasket.put("afterSettleSum",c.get("AFTERSETTLESUM"));
+        SettelValue.add(putbasket);
+
+        return SettelValue;
+
     }
 }

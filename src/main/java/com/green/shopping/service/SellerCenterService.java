@@ -156,4 +156,16 @@ public class SellerCenterService {
     public List<PurchaseDetailVo> getPurchasedDetailInfo(HashMap<String, Object> map) {
         return sellerCenterDaoImpl.getPurchasedDetailInfo(map);
     }
+
+    public  HashMap<String, Object> PurchaseConfirmCount(HashMap<String, Object> map) {
+        return sellerCenterDaoImpl.PurchaseConfirmCount(map);
+    }
+
+    public HashMap<String, Object> beforeSettleSum(HashMap<String, Object> map) {
+        return sellerCenterDaoImpl.beforeSettleSum(map);
+    }
+
+    public HashMap<String, Object> afterSettleSum(HashMap<String, Object> map) {
+        return sellerCenterDaoImpl.afterSettleSum(map);
+    }
 }

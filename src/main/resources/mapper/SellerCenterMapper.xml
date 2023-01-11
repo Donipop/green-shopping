@@ -143,6 +143,32 @@
         where product_num = #{productId}
     </select>
 
+    <select id="PurchaseConfirmCount" parameterType="String" resultType="java.util.HashMap">
+        SELECT COUNT(P.TOTALPRICE) as count
+        FROM PURCHASELIST_TB P LEFT JOIN PRODUCT_TB R
+        ON P.PRODUCTID = R.ID
+        LEFT JOIN MARKET_TB M
+        ON R.MARKET_NAME = M.NAME
+        WHERE P.PURCHASECONFIRMTIME BETWEEN TO_DATE('20000101', 'YYYY-MM-DD') AND TO_DATE('20231201', 'YYYY-MM-DD')
+        AND M.SELLERID = #{id}
+    </select>
+
+    <select id="beforeSettleSum" parameterType="String" resultType="java.util.HashMap">
+        SELECT SUM(P.TOTALPRICE) as beforeSettleSum
+        FROM PURCHASELIST_TB P LEFT JOIN PRODUCT_TB R
+        ON P.PRODUCTID = R.ID
+        LEFT JOIN MARKET_TB M
+        ON R.MARKET_NAME = M.NAME
+        WHERE SETTLECHECK = 0
+        AND P.PURCHASECONFIRMTIME BETWEEN TO_DATE('20000101', 'YYYY-MM-DD') AND TO_DATE('20231201', 'YYYY-MM-DD')
+        AND M.SELLERID = #{id}
+    </select>
+
+    <select id="afterSettleSum" parameterType="String" resultType="java.util.HashMap">
+        SELECT ALLMONEY as afterSettleSum
+        FROM SELLER_TB
+        WHERE USER_ID = #{id}
+    </select>
 
 </mapper>
 

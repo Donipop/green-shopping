@@ -169,4 +169,21 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
     @Override
     public void updateProductImgTb(HashMap<String, Object> updateProductImgTbMap) {
     }
+
+    @Override
+    public  HashMap<String, Object> PurchaseConfirmCount(HashMap<String, Object> map) {
+        HashMap<String, Object> a = sqlSession.selectOne("SellerCenter.PurchaseConfirmCount", map);
+        return a;
+    }
+
+    @Override
+    public HashMap<String, Object> beforeSettleSum(HashMap<String, Object> map) {
+        HashMap<String, Object> b = sqlSession.selectOne("SellerCenter.beforeSettleSum", map);
+        return b;
+    }
+
+    public HashMap<String, Object> afterSettleSum(HashMap<String, Object> map) {
+        HashMap<String, Object> c = sqlSession.selectOne("SellerCenter.afterSettleSum", map);
+        return c;
+    }
 }
