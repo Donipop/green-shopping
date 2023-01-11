@@ -186,4 +186,9 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
         HashMap<String, Object> c = sqlSession.selectOne("SellerCenter.afterSettleSum", map);
         return c;
     }
+
+    public List<Integer> salesStatus(HashMap<String, Object> map) {
+        List<Integer> d = sqlSession.selectList("SellerCenter.salesStatus", map);
+        return d;
+    }
 }

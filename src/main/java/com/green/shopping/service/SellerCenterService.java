@@ -168,4 +168,8 @@ public class SellerCenterService {
     public HashMap<String, Object> afterSettleSum(HashMap<String, Object> map) {
         return sellerCenterDaoImpl.afterSettleSum(map);
     }
+
+    public List<Integer> salesStatus(HashMap<String, Object> map) {
+        return sellerCenterDaoImpl.salesStatus(map);
+    }
 }

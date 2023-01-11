@@ -143,4 +143,11 @@ public class SellerCenterController {
         return SettelValue;
 
     }
+
+    @GetMapping("/salesstatus")
+    public List<Integer> salesStatus(@RequestParam HashMap<String,Object> map) {
+        System.out.println(map);
+        return sellerCenterService.salesStatus(map);
+
+    }
 }

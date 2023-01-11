@@ -170,6 +170,17 @@
         WHERE USER_ID = #{id}
     </select>
 
+    <select id="salesStatus"  resultType="Integer">
+        SELECT SUM(P.TOTALPRICE) as Sales, TO_CHAR(P.PURCHASECONFIRMTIME, 'YYYY-MM-DD') as datee
+        FROM PURCHASELIST_TB P LEFT JOIN PRODUCT_TB R
+        ON P.PRODUCTID = R.ID
+        LEFT JOIN MARKET_TB M
+        ON R.MARKET_NAME = M.NAME
+        WHERE P.PURCHASECONFIRMTIME BETWEEN TO_DATE(#{start}, 'YYYY-MM-DD') AND TO_DATE(#{end}, 'YYYY-MM-DD')
+        AND M.SELLERID = #{id}
+        GROUP BY TO_CHAR(P.PURCHASECONFIRMTIME, 'YYYY-MM-DD')
+        ORDER BY datee ASC
+    </select>
 </mapper>
 
 
