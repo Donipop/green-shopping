@@ -4,6 +4,10 @@ spring:
     password: Green1234567
     driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@tcps://adb.ap-seoul-1.oraclecloud.com/g0a67b711a0f3b1_zuztnsnmj1nhn4dm_high.adb.oraclecloud.com
+  data:
+    mongodb:
+      uri: mongodb+srv://donipop:ehslvkq123@cluster0.tqn2bie.mongodb.net/?retryWrites=true&w=majority
+      database: greenshop
 
 server:
   servlet:
