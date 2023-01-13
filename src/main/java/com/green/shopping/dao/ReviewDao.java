@@ -40,4 +40,9 @@ public interface ReviewDao  {
     void QuestionUpdate(HashMap<String, Object> map);
 
     void answerUpdate(HashMap<String, Object> map);
+
+    void QuestionHardDelete(HashMap<String, Object> map);
+
+    String getProductName(int page);
+
 }

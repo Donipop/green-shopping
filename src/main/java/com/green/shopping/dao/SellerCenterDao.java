@@ -33,4 +33,10 @@ public interface SellerCenterDao {
     void updateProductDetailTb(HashMap<String,Object> updateProductDetailTbMap);
     void updateProductImgTb(HashMap<String,Object> updateProductImgTbMap);
     void deleteProductDetailTb(String id);
+
+    HashMap<String, Object> PurchaseConfirmCount(HashMap<String, Object> map);
+
+    HashMap<String, Object> beforeSettleSum(HashMap<String, Object> map);
+
+    HashMap<String, Object> afterSettleSum(HashMap<String, Object> map);
 }

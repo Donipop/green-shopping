@@ -57,8 +57,13 @@ public class ReviewController {
     public void QuestionWrite(@RequestBody HashMap<String, Object> map){
 
         reviewService.QuestionWrite(map);
-            System.out.println(map);
         }
+
+    //질문 팝업창 띄울 시 product_name가져오는 메서드
+    @GetMapping("/view/QnA/write/getproductname/{page}")
+    public String getProductName(@PathVariable("page") int page){
+        return reviewService.getProductName(page);
+    }
 
 
     //질문 리스트
@@ -72,7 +77,6 @@ public class ReviewController {
     //답변하기 클릭 시 질문내용 들고오기
    @GetMapping("/QnA/reply/{page}/{id}")
    public QnAVo QuestionOneList (@RequestParam HashMap<String ,Object> map){
-       System.out.println(map);
      return reviewService.QuestionOneList(map);
 
    }
@@ -80,7 +84,6 @@ public class ReviewController {
    //질문 수정 시 질문내용 들고오는 곳
     @GetMapping("/QnA/QuestionList/{page}/{id}")
     public QnAVo QuestionUpdateForm(@RequestParam HashMap<String ,Object> map){
-        System.out.println(map);
         return reviewService.QuestionUpdateForm(map);
 
     }
@@ -115,6 +118,12 @@ public class ReviewController {
          reviewService.QuestionDelete(map);
 
      }
+
+    @PostMapping("/view/QnA/QuestionHardDelete/{page}/{id}")
+    public void QuestionHardDelete(@RequestBody HashMap<String, Object> map){
+        reviewService.QuestionHardDelete(map);
+
+    }
 
     @PostMapping("/view/QnA/answerDelete/{page}/{id}")
     public void answerDelete(@RequestBody HashMap<String, Object> map){

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- Mapper를 사용하는 Repository의 전체 경로를 적어줘야함. -->
+<mapper namespace="search">
+    <select id="searchview"
+            resultType="HashMap" >
+        select p.title,p.id
+        from product_tb p
+        where p.title like '%'||#{searchcont}||'%' and p.category In (
+        select num
+        from category_tb c
+        start with c.name = #{name}
+        connect by prior c.num = c.parent_num
+        )
+    </select>
+
+    <select id="searchview1"
+            resultType="HashMap">
+    select distinct(product_price),product_discount
+    from productdetail_tb
+    where product_id = #{ID} and product_price = (
+    select min(product_price)
+    from productdetail_tb
+    where product_id = #{ID}
+    )
+
+    </select>
+
+    <select id="searchview2"
+            resultType="HashMap">
+        select sum(star) as star, count(star) as starcount
+        from review_tb
+        where product_num = #{ID}
+    </select>
+
+    <select id="Allcategorysearch"
+            resultType="HashMap">
+        select p.title,p.id
+        from product_tb p
+        where p.title like '%'||#{searchcont}||'%' and p.category In (
+        select num
+        from category_tb
+        start with parent_num is null
+        connect by prior num = parent_num )
+
+    </select>
+
+    <select id="getProductImgByProductId"
+            resultType="HashMap">
+        select *
+        from product_img_tb
+        where product_num = #{id} and ismain = 1
+    </select>
+
+    <select id="getFile"
+            resultType="HashMap">
+        SELECT *
+        FROM File_Tb
+        WHERE NAME = #{file_name}
+    </select>
+</mapper>

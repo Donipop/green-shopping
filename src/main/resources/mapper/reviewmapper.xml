@@ -88,6 +88,12 @@
         WHERE ID = #{id} and PRODUCT_NUM = #{product_num}
     </update>
 
+    <delete id="QuestionHardDelete">
+        DELETE
+        FROM QNA_TB
+        WHERE ID = #{id} and PRODUCT_NUM = #{product_num}
+    </delete>
+
     <delete id="answerDelete">
         Delete
         FROM QNA_TB
@@ -115,6 +121,14 @@
         CONT = #{cont}
         WHERE ID = #{id} and PRODUCT_NUM = #{product_num}
     </update>
+
+    <select id="getProductName"
+            resultType="String">
+        SELECT TITLE
+        FROM PRODUCT_TB
+        WHERE id = #{page}
+
+    </select>
 
 
 

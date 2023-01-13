@@ -92,5 +92,15 @@ public class ReviewDaoimpl implements ReviewDao {
         sqlSession.update("Review.answerUpdate", map);
     }
 
+    @Override
+    public void QuestionHardDelete(HashMap<String, Object> map) {
+        sqlSession.delete("Review.QuestionHardDelete", map);
+    }
+
+    @Override
+    public String getProductName(int page) {
+        return sqlSession.selectOne("Review.getProductName", page);
+    }
+
 
 }

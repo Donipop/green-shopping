@@ -81,7 +81,6 @@ public class SellerCenterController {
     }
     @GetMapping("/reviewmanagement/reviewlist")
     public List<ReviewVo> getReviewListCount(@RequestParam HashMap<String, Object> map) {
-        System.out.println(map);
         return sellerCenterService.getReviewListCount(map);
     }
     @PostMapping("/getpurchaseconfirm")
@@ -135,6 +134,29 @@ public class SellerCenterController {
     public void updateProduct(@RequestBody HashMap<String,Object> updateData) throws Exception {
         SellerCenterCreateVo sellerCenterCreateVo = new ObjectMapper().convertValue(updateData.get("sellerCenterCreateVo"), SellerCenterCreateVo.class);
         sellerCenterService.updateProduct(sellerCenterCreateVo, updateData);
+    }
+    @GetMapping("/canclecostsettle")
+    public  List<HashMap<String, Object>>  cancleCostSettle(@RequestParam HashMap<String,Object> map) {
+        ;
+        HashMap<String, Object> putbasket = new HashMap<>();
+        List<HashMap<String, Object>> SettelValue = new ArrayList<>();
+        HashMap<String, Object> a =  sellerCenterService.PurchaseConfirmCount(map);
+        HashMap<String, Object> b =  sellerCenterService.beforeSettleSum(map);
+        HashMap<String, Object> c =  sellerCenterService.afterSettleSum(map);
+        putbasket.put("count",a.get("COUNT"));
+        putbasket.put("beforeSettleSum",b.get("BEFORESETTLESUM"));
+        putbasket.put("afterSettleSum",c.get("AFTERSETTLESUM"));
+        SettelValue.add(putbasket);
+
+        return SettelValue;
+
+    }
+
+    @GetMapping("/salesstatus")
+    public List<Integer> salesStatus(@RequestParam HashMap<String,Object> map) {
+        System.out.println(map);
+        return sellerCenterService.salesStatus(map);
+
     }
 
 }
