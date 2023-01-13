@@ -16,5 +16,6 @@ public interface MypageDao {
     List<PurchaselistVo> mypruchaseinquiry(String user_id);
 
     TestpostVo invoiceNumberGet(long invoicenumber);
-
+    
+    int check_duplicate_nick(String user_nick);
 }

@@ -159,4 +159,121 @@ public class SellerCenterController {
 
     }
 
+
+    @PostMapping("/getmarketnamelist")
+    public List<String> getMarketNameList(@RequestParam String user_id) {
+        List<String> MarketNameList = sellerCenterService.getMarketNameList(user_id);
+        return MarketNameList;
+    }
+
+    @PostMapping("/getsellerinfo")
+    public List<Object> getSellerInfo(@RequestParam String user_id) {
+        List<Object> SellerInfo = sellerCenterService.getSellerInfo(user_id);
+        return SellerInfo;
+    }
+
+    @PostMapping("/getbeforesettlement")
+    public List<Object> getBeforeSettlement(@RequestParam String user_id, @RequestParam String market_name) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("user_id", user_id);
+        map.put("market_name", market_name);
+        List<Object> BeforeSettlement = sellerCenterService.getBeforeSettlement(map);
+        return BeforeSettlement;
+    }
+
+    @PostMapping("/settleup")
+    public int settleUp(@RequestBody HashMap<String, Object> DetailInfo) {
+        LinkedHashMap<String, Object> map = (LinkedHashMap<String, Object>) DetailInfo.get("DetailInfo");
+        String idlist = (String) map.get("id");
+        String[] id = idlist.split(",");
+        List realidlist = new ArrayList();                      // id리스트
+        for (int i = 0; i < id.length; i++) {
+            realidlist.add(id[i]);
+        }
+
+
+
+        String user_id = (String) map.get("user_id");           //판매자 아이디
+        String market_name = (String) map.get("market_name");   //마켓명
+        int totalprice = (int) map.get("totalprice");           //총 결제금액
+        long bank_account = (long) map.get("bank_account");       //계좌번호
+        String bank_name = (String) map.get("bank_name");       //은행명
+        String bank_accountowner = (String) map.get("bank_accountowner"); //예금주
+        String format_today = (String) map.get("format_today"); //정산시간 yyyy-mm-dd hh:mi:ss
+
+
+        int error1 = 0;
+        int error2 = 0;
+        int error3 = 0;
+        int checkall = 0;
+
+
+        // 주문내역 테이블로 가서 주문번호를 조회 후 settlecheck를 1로 변경한다 ///////////////////////////////
+
+        try {
+            for(int i=0; i<realidlist.size(); i++) {
+                int number = Integer.parseInt(realidlist.get(i).toString());
+                sellerCenterService.updateSettleCheck(number);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            error1 = 1;
+        }
+
+
+
+        // seller_Tb로 가서 allmoney = allmoney + 정산금액 하기 ////////////////////////////////////
+        HashMap<String, Object> map2 = new HashMap<>();
+        map2.put("user_id", user_id);
+        map2.put("market_name", market_name);
+        map2.put("totalprice", totalprice);
+
+        try {
+            sellerCenterService.updateAllMoney(map2);
+        } catch (Exception e) {
+            e.printStackTrace();
+            error2 = 1;
+        }
+
+
+        // 정산내역 테이블에 insert 하기 /////////////////////////////////////////////////////////////
+        HashMap<String, Object> map3 = new HashMap<>();
+        map3.put("user_id", user_id);
+        map3.put("market_name", market_name);
+        map3.put("totalprice", totalprice);
+        map3.put("bank_account", bank_account);
+        map3.put("bank_name", bank_name);
+        map3.put("bank_accountowner", bank_accountowner);
+        map3.put("format_today", format_today);
+        map3.put("idlist", idlist);
+
+        try {
+            sellerCenterService.insertSettlement(map3);
+        } catch (Exception e) {
+            e.printStackTrace();
+            error3 = 1;
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////
+
+        if(error1 == 1 || error2 == 1 || error3 == 1) {
+            checkall = 0;
+        } else {
+            checkall = 1;
+        }
+
+
+
+        return checkall;
+    }
+
+    @PostMapping("/getalreadysettlement")
+    public List<AlreadySettlementVo> getAlreadySettlement(@RequestParam String user_id, @RequestParam String start,
+                                                          @RequestParam String end) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("user_id", user_id);
+        map.put("start", start);
+        map.put("end", end);
+        List<AlreadySettlementVo> AlreadySettlement = sellerCenterService.getAlreadySettlement(map);
+        return AlreadySettlement;
+    }
 }

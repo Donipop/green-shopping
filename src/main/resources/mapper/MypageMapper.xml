@@ -12,8 +12,8 @@
         SELECT S.PRODUCTDETAIL_NUM as productDetailID, S.COUNT as count, P.PRODUCT_PRICE as price , P.PRODUCT_NAME as name, P.PRODUCT_ID as productId, R.MARKET_NAME as marketName
         FROM SHOPPING_BASKET_TB S LEFT JOIN PRODUCTDETAIL_TB P
         ON S.PRODUCTDETAIL_NUM = P.ID
-            LEFT JOIN PRODUCT_TB R
-            ON P.PRODUCT_ID = R. ID
+        LEFT JOIN PRODUCT_TB R
+        ON P.PRODUCT_ID = R. ID
         WHERE S.USER_ID = #{user_id}
     </select>
 
@@ -56,5 +56,10 @@
 
     </select>
 
-</mapper>
+    <select id="check_duplicate_nick"
+            resultType="int">
+            SELECT COUNT(*) FROM USER_TB WHERE USER_NICK = #{user_nick}
+    </select>
 
+
+</mapper>

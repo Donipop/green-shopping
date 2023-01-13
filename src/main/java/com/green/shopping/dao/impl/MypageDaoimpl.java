@@ -34,6 +34,11 @@ public class MypageDaoimpl implements MypageDao {
     }
 
     @Override
+    public int check_duplicate_nick(String user_nick) {
+        return sqlSession.selectOne("Mypage.check_duplicate_nick", user_nick);
+    }
+
+    @Override
     public List<ReviewVo> myreview(String user_id) {
 
         return sqlSession.selectList("Mypage.myreview", user_id);
