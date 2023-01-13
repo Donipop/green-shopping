@@ -142,6 +142,74 @@
         select * from product_img_tb
         where product_num = #{productId}
     </select>
+
+    <select id="getMarketNameList"
+            resultType="java.lang.String">
+            SELECT NAME
+            FROM MARKET_TB
+            WHERE SELLERID = #{user_id}
+    </select>
+
+    <select id="getSellerInfo"
+            resultType="hashmap">
+            SELECT BANK_NAME, BANK_ACCOUNT, BANK_ACCOUNTOWNER, BUSINESS_NUMBER, ALLMONEY, MARKET_NAME
+            FROM SELLER_TB
+            WHERE USER_ID = #{user_id}
+    </select>
+
+    <select id="getBeforeSettlement"
+            parameterType="java.util.HashMap"
+            resultType="java.util.HashMap">
+            SELECT P.id as id, P.TotalPrice as totalprice, M.NAME as name, P.SETTLECHECK as settlecheck, M.SELLERID as sellerid
+            FROM PURCHASELIST_TB P LEFT JOIN PRODUCT_TB R
+            ON P.PRODUCTID = R.ID
+            LEFT JOIN MARKET_TB M
+            ON R.MARKET_NAME = M.NAME
+            WHERE SETTLECHECK = 0
+            AND P.PURCHASECONFIRMTIME IS NOT NULL
+            AND M.NAME = #{market_name}
+            AND M.SELLERID = #{user_id}
+    </select>
+
+    <update id="updateSettleCheck"
+            parameterType="int">
+            UPDATE PURCHASELIST_TB
+            SET SETTLECHECK = 1
+            WHERE ID = #{id}
+    </update>
+
+    <update id="updateAllMoney"
+            parameterType="java.util.HashMap">
+            UPDATE SELLER_TB
+            SET ALLMONEY = ALLMONEY + #{totalprice}
+            WHERE USER_ID = #{user_id}
+            AND MARKET_NAME = #{market_name}
+    </update>
+
+    <insert id="insertSettlement"
+            parameterType="java.util.HashMap">
+            INSERT INTO SETTLEHISTORY_TB
+            VALUES (SETTLEHISTORY_TB_SEQ.NEXTVAL,
+        #{user_id},
+        #{market_name},
+        #{totalprice},
+        #{bank_account},
+        #{bank_name},
+        #{bank_accountowner},
+        TO_DATE(#{format_today}, 'YYYY-MM-DD HH24:MI:SS'),
+        #{idlist})
+
+    </insert>
+
+    <select id="getAlreadySettlement"
+            parameterType="java.util.HashMap"
+            resultType="com.green.shopping.vo.AlreadySettlementVo">
+
+            SELECT ID, USER_ID, MARKET_NAME, TOTALPRICE, BANK_ACCOUNT, BANK_NAME, BANK_ACCOUNTOWNER, SETTLE_DATE, IDLIST
+            FROM SETTLEHISTORY_TB
+            WHERE USER_ID = #{user_id}
+            AND SETTLE_DATE BETWEEN TO_DATE(#{start}, 'YYYY-MM-DD') AND TO_DATE(#{end}, 'YYYY-MM-DD')
+    </select>
 </mapper>
 
 

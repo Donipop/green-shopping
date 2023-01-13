@@ -144,9 +144,9 @@ public class LoginController {
         String qudtls = "ㄱㄱ";
         Object refreshToken = refreshTokens.get("refreshToken");
         // 로그인된 유저
-        //System.out.println("login_userlist = " + login_userlist);
+        System.out.println("login_userlist = " + login_userlist);
         // 로그인된 유저의 수
-        //System.out.println("login_userlist.size() = " + login_userlist.size());
+        System.out.println("login_userlist.size() = " + login_userlist.size());
 
         String accessToken = (String) login_userlist.get(refreshToken);
 
@@ -155,18 +155,27 @@ public class LoginController {
     }
 
     @PostMapping("/refreshTokenToAccessToken")
-    public HashMap<String, Object> refreshTokenToAccessToken(@RequestParam String refreshToken) throws JsonProcessingException {
-        String accessToken = (String) login_userlist.get(refreshToken);
+    public HashMap<String, Object> refreshTokenToAccessToken(@RequestBody String refreshToken) throws JsonProcessingException {
 
         ObjectMapper mapper = new ObjectMapper();
-        HashMap<String, Object> map = mapper.readValue(accessToken, HashMap.class);
+        HashMap<String, Object> test = mapper.readValue(refreshToken, HashMap.class);
 
+        String RealrefreshToken = (String) test.get("refreshToken");
 
+        if( RealrefreshToken == null) {
+            return null;
+        }
+        else {
+            String accessToken = (String) login_userlist.get(RealrefreshToken);
+            if( accessToken == null) {
+                return null;
+            }
+            else {
 
-
-
-
-        return map;
+                HashMap<String, Object> map = mapper.readValue(accessToken, HashMap.class);
+                return map;
+            }
+        }
     }
 
 

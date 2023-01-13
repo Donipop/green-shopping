@@ -1,5 +1,6 @@
 package com.green.shopping.dao;
 
+import com.green.shopping.vo.AlreadySettlementVo;
 import com.green.shopping.vo.CategoryVo;
 import com.green.shopping.vo.PurchaseDetailVo;
 import com.green.shopping.vo.purchaseconfirmVo;
@@ -31,4 +32,18 @@ public interface SellerCenterDao {
     void updateProductTb(HashMap<String,Object> updateProductTbMap);
     void updateProductDetailTb(HashMap<String,Object> updateProductDetailTbMap);
     void updateProductImgTb(HashMap<String,Object> updateProductImgTbMap);
+
+    List<String> getMarketNameList(String user_id);
+
+    List<Object> getSellerInfo(String user_id);
+
+    List<Object> getBeforeSettlement(HashMap<String, Object> map);
+
+    void updateSettleCheck(int number);
+
+    void updateAllMoney(HashMap<String, Object> map2);
+
+    void insertSettlement(HashMap<String, Object> map3);
+
+    List<AlreadySettlementVo> getAlreadySettlement(HashMap<String, Object> map);
 }

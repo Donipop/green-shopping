@@ -63,4 +63,19 @@ public class MypageController {
 
         return mypageService.invoiceNumberGet(invoicenumber);
     }
+
+    @PostMapping("/checkduplicatenick")
+    public Boolean check_duplicate_nick(@RequestParam String user_nick){
+        int count = mypageService.check_duplicate_nick(user_nick);
+        if(count == 0){
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    @PostMapping("/myinfoUpdate")
+    public void myinfoUpdate(@RequestBody  )
+
 }

@@ -44,4 +44,8 @@ public class MypageService {
     public TestpostVo  invoiceNumberGet(long invoicenumber) {
         return mypageDao.invoiceNumberGet(invoicenumber);
     }
+
+    public int check_duplicate_nick(String user_nick) {
+        return mypageDao.check_duplicate_nick(user_nick);
+    }
 }

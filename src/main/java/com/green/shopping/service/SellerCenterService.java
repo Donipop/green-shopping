@@ -1,6 +1,5 @@
 package com.green.shopping.service;
 
-import com.green.shopping.dao.SellerCenterDao;
 import com.green.shopping.dao.impl.SellerCenterDaoImpl;
 import com.green.shopping.vo.CategoryVo;
 import com.green.shopping.vo.ProductVo;
@@ -10,7 +9,6 @@ import com.green.shopping.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.xml.transform.Source;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -155,5 +153,37 @@ public class SellerCenterService {
 
     public List<PurchaseDetailVo> getPurchasedDetailInfo(HashMap<String, Object> map) {
         return sellerCenterDaoImpl.getPurchasedDetailInfo(map);
+    }
+
+    public List<String> getMarketNameList(String user_id) {
+        List<String> MarketNameList = sellerCenterDaoImpl.getMarketNameList(user_id);
+        return MarketNameList;
+    }
+
+    public List<Object> getSellerInfo(String user_id) {
+        List<Object> SellerInfo = sellerCenterDaoImpl.getSellerInfo(user_id);
+        return SellerInfo;
+    }
+
+    public List<Object> getBeforeSettlement(HashMap<String, Object> map) {
+        List<Object> BeforeSettlement = sellerCenterDaoImpl.getBeforeSettlement(map);
+        return BeforeSettlement;
+    }
+
+    public void updateSettleCheck(int number) {
+        sellerCenterDaoImpl.updateSettleCheck(number);
+    }
+
+    public void updateAllMoney(HashMap<String, Object> map2) {
+        sellerCenterDaoImpl.updateAllMoney(map2);
+    }
+
+    public void insertSettlement(HashMap<String, Object> map3) {
+        sellerCenterDaoImpl.insertSettlement(map3);
+    }
+
+    public List<AlreadySettlementVo> getAlreadySettlement(HashMap<String, Object> map) {
+        List<AlreadySettlementVo> AlreadySettlement = sellerCenterDaoImpl.getAlreadySettlement(map);
+        return AlreadySettlement;
     }
 }

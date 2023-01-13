@@ -9,7 +9,6 @@ import java.util.Map;
 public interface MypageDao {
     List<CouponVo> Mypagecoupon();
     List<Shopping_basketVo> user_shopping_basket(String user_id);
-    void user_shopping_basket_delete(HashMap<String, String> map);
 
     List<ReviewVo> myreview(String user_id);
 
@@ -19,4 +18,5 @@ public interface MypageDao {
 
     void user_shopping_basket_delete(HashMap<String, Object> map);
 
+    int check_duplicate_nick(String user_nick);
 }
