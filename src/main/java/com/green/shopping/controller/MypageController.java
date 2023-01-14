@@ -75,7 +75,4 @@ public class MypageController {
 
     }
 
-    @PostMapping("/myinfoUpdate")
-    public void myinfoUpdate(@RequestBody  )
-
 }

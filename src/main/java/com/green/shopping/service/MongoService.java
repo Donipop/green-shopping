@@ -10,4 +10,12 @@ import java.util.Optional;
 @Service
 public class MongoService {
 
+    public void insertMessage(){
+
+    }
+
+    public void getMessage(){
+
+    }
+    
 }
