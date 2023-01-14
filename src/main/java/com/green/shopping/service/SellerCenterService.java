@@ -318,4 +318,8 @@ public class SellerCenterService {
     public List<Integer> salesStatus(HashMap<String, Object> map) {
         return sellerCenterDaoImpl.salesStatus(map);
     }
+
+    public List<Integer> deliveryState(HashMap<String, Object> map) {
+        return sellerCenterDaoImpl.deliveryState(map);
+    }
 }

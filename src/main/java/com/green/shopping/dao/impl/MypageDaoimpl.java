@@ -39,6 +39,11 @@ public class MypageDaoimpl implements MypageDao {
     }
 
     @Override
+    public int countBasket(String user_id) {
+        return sqlSession.selectOne("Mypage.countBasket", user_id);
+    }
+
+    @Override
     public List<ReviewVo> myreview(String user_id) {
 
         return sqlSession.selectList("Mypage.myreview", user_id);

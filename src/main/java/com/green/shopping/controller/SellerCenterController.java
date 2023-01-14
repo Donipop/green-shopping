@@ -48,6 +48,7 @@ public class SellerCenterController {
 
     @GetMapping("/getorderlist")
     public List<Map<String, Object>> getOrderList(@RequestParam(value = "marketName") String marketName) {
+        System.out.println(sellerCenterService.getOrderList(marketName));
         return sellerCenterService.getOrderList(marketName);
     }
 
@@ -154,7 +155,7 @@ public class SellerCenterController {
 
     @GetMapping("/salesstatus")
     public List<Integer> salesStatus(@RequestParam HashMap<String,Object> map) {
-        System.out.println(map);
+        List<Integer> salesStatus = sellerCenterService.salesStatus(map);
         return sellerCenterService.salesStatus(map);
 
     }
@@ -275,5 +276,10 @@ public class SellerCenterController {
         map.put("end", end);
         List<AlreadySettlementVo> AlreadySettlement = sellerCenterService.getAlreadySettlement(map);
         return AlreadySettlement;
+    }
+    @GetMapping("/deliverystate")
+    public List<Integer> deliveryState(@RequestParam HashMap<String,Object> map) {
+        List<Integer> deliveryState = sellerCenterService.deliveryState(map);
+        return deliveryState;
     }
 }

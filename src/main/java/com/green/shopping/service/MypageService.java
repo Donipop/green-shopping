@@ -48,4 +48,7 @@ public class MypageService {
     public int check_duplicate_nick(String user_nick) {
         return mypageDao.check_duplicate_nick(user_nick);
     }
-}
+
+    public int countBasket(String user_id) { return mypageDao.countBasket(user_id); }
+    }
+

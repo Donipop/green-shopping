@@ -236,4 +236,8 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
         List<AlreadySettlementVo> AlreadySettlement = sqlSession.selectList("SellerCenter.getAlreadySettlement", map);
         return AlreadySettlement;
     }
+
+    public List<Integer> deliveryState(HashMap<String, Object> map) {
+        return sqlSession.selectList("SellerCenter.deliveryState", map);
+    }
 }

@@ -15,6 +15,7 @@ public class MypageController {
 
     @Autowired
     private final MypageService mypageService;
+
     public MypageController(MypageService mypageService) {
         this.mypageService = mypageService;
     }
@@ -24,6 +25,7 @@ public class MypageController {
         return mypageService.Mypagecoupon();
 
     }
+
     @PostMapping("/user_shopping_basket")
     public List<Shopping_basketVo> user_shopping_basket(@RequestParam String user_id) {
 
@@ -50,32 +52,36 @@ public class MypageController {
     }
 
     @GetMapping("/myreview")
-    public List<ReviewVo> myreview(@RequestParam String user_id){
+    public List<ReviewVo> myreview(@RequestParam String user_id) {
         return mypageService.myreview(user_id);
 
     }
+
     @GetMapping("/MyPurchaseInquiry")
-    public List<PurchaselistVo> mypurchaseinquiry(@RequestParam String user_id){
-      return mypageService.mypruchaseinquiry(user_id);
+    public List<PurchaselistVo> mypurchaseinquiry(@RequestParam String user_id) {
+        return mypageService.mypruchaseinquiry(user_id);
     }
+
     @GetMapping("/MyPurchaseInquiry/deliverytracking")
-    public TestpostVo invoiceNumberGet(@RequestParam long invoicenumber ){
+    public TestpostVo invoiceNumberGet(@RequestParam long invoicenumber) {
 
         return mypageService.invoiceNumberGet(invoicenumber);
     }
 
     @PostMapping("/checkduplicatenick")
-    public Boolean check_duplicate_nick(@RequestParam String user_nick){
+    public Boolean check_duplicate_nick(@RequestParam String user_nick) {
         int count = mypageService.check_duplicate_nick(user_nick);
-        if(count == 0){
+        if (count == 0) {
             return true;
         } else {
             return false;
         }
 
     }
-
-    @PostMapping("/myinfoUpdate")
-    public void myinfoUpdate(@RequestBody  )
-
+    @GetMapping("countBasket")
+    public int countBasket(@RequestParam String user_id){
+        return mypageService.countBasket(user_id);
+    }
 }
+
+
