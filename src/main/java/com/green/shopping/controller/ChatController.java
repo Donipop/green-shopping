@@ -19,9 +19,16 @@ import java.util.Objects;
 @Slf4j
 public class ChatController {
 
+//    @MessageMapping("/topic")
+//    public void publishChat(String chatMessage) {
+//        log.info("publishChat : {}", chatMessage);
+//    }
+
     @MessageMapping("/topic")
-    public void publishChat(String chatMessage) {
-        log.info("publishChat : {}", chatMessage);
+    @SendTo("/topic/user")
+    public String sendMessage(String message){
+        log.info("message : {}",message);
+        return "하이";
     }
 
     @EventListener(SessionConnectEvent.class)
