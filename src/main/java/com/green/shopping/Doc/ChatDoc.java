@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Document(collection = "chat")
 @Getter
@@ -17,5 +18,5 @@ import java.util.List;
 public class ChatDoc {
     @Id
     private String _id;
-    private List<String> messageList;
+    private List<Map> messageList;
 }
