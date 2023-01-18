@@ -2,6 +2,7 @@ package com.green.shopping.controller;
 
 import com.green.shopping.Doc.ChatDoc;
 import com.green.shopping.dao.ChatMongoDbDao;
+import com.green.shopping.dao.impl.TalkDaoImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
@@ -21,66 +22,49 @@ import java.util.*;
 @RestController
 @Slf4j
 public class ChatController {
-    private final SimpMessagingTemplate simpMessagingTemplate;
     private final List<String> sessionIdList = new ArrayList<>();
     private final Map<String, List<Map>> chatListMap = new HashMap<>();
-    private final List<String> mongoDbIdList = new ArrayList<>();
-    @Autowired
     private final ChatMongoDbDao chatMongoDbDao;
-    public ChatController(SimpMessagingTemplate simpMessagingTemplate, ChatMongoDbDao chatMongoDbDao) {
+    private final SimpMessagingTemplate simpMessagingTemplate;
+    private final TalkDaoImpl talkDaoImpl;
+    public ChatController(SimpMessagingTemplate simpMessagingTemplate, ChatMongoDbDao chatMongoDbDao, TalkDaoImpl talkDaoImpl) {
         this.simpMessagingTemplate = simpMessagingTemplate;
         this.chatMongoDbDao = chatMongoDbDao;
+        this.talkDaoImpl = talkDaoImpl;
     }
 
-    @MessageMapping("/topic/")
-    @SendTo("/topic/user")
-    public String sendMessage(String message){
-        log.info("message : {}",message);
-        return "하이";
+    @MessageMapping("/user")
+    @SendToUser("/user/queue/message")
+    public void sendMessage(Map message, SimpMessageHeaderAccessor messageHeaderAccessor) {
+        //접속 메세지를 받았기에 이전 채팅 내역을 보내준다
+        log.info("connectMessage : {}", message);
+        log.info("sessionId : {}", messageHeaderAccessor.getSessionId());
+        List<Map> chatDocList = chatListMap.get(message.get("uuid").toString());
+        Map<String,Object> sendMessageMap = new HashMap<>();
+        sendMessageMap.put("type","connect");
+        sendMessageMap.put("chatList",chatDocList);
+
+        simpMessagingTemplate.convertAndSendToUser(messageHeaderAccessor.getSessionId(), "/queue/message",sendMessageMap,createHeaders(messageHeaderAccessor.getSessionId()));
     }
 
     @MessageMapping("/queue")
-    @SendToUser("/queue/user")
+    @SendTo("/queue/user")
     public void sendMessageToUser(Map message, SimpMessageHeaderAccessor messageHeaderAccessor){
-
-        if(sessionIdList.contains(messageHeaderAccessor.getSessionId())){
-            log.info("messageToUser : {}",message);
-            log.info("messageHeaderAccessor : {}",messageHeaderAccessor);
-            log.info("sessionId : {}",messageHeaderAccessor.getSessionId());
-            log.info(message.get("uuid").toString());
-            simpMessagingTemplate.convertAndSend("/queue/user/" + message.get("uuid").toString() ,message);
+        //세션에 등록된 아이디
+        if(sessionIdList.contains(messageHeaderAccessor.getSessionId())) {
+            log.info("messageToUser : {}", message);
+//            log.info("messageHeaderAccessor : {}", messageHeaderAccessor);
+//            log.info("sessionId : {}", messageHeaderAccessor.getSessionId());
+//            log.info(message.get("uuid").toString());
+            simpMessagingTemplate.convertAndSend("/queue/user/" + message.get("uuid").toString(), message);
+            String uuid = message.get("uuid").toString();
             Map<String, String> mongoDbDataMap = new HashMap<>();
-            mongoDbDataMap.put("sender",message.get("userId").toString());
-            mongoDbDataMap.put("message",message.get("message").toString());
-            mongoDbDataMap.put("time",new Date().toString());
-            chatListMap.get(message.get("uuid").toString()).add(mongoDbDataMap);
-            log.info("chatListMap : {}",chatListMap);
-            //mongoDb 작업
-            //Db에 있는지 확인
-            Optional<ChatDoc> result = chatMongoDbDao.findById(message.get("uuid").toString());
-            if(mongoDbIdList.contains(message.get("uuid").toString())){
-                //있으면 업데이트
-                if(result.isPresent()){
-                    ChatDoc chatDoc1 = result.get();
-                    chatDoc1.setMessageList(chatListMap.get(message.get("uuid").toString()));
-                    chatMongoDbDao.save(chatDoc1);
-                }
-            }else{
-                if(result.isEmpty()) {
-                    log.info("없음");
-                    ChatDoc chatDoc = new ChatDoc();
-                    chatDoc.setMessageList(chatListMap.get(message.get("uuid").toString()));
-                    chatDoc.set_id(message.get("uuid").toString());
-                    chatMongoDbDao.save(chatDoc);
-                }else{
-                    log.info("있음");
-                    log.info("result : {}",result.get());
-                }
-                mongoDbIdList.add(message.get("uuid").toString());
-            }
-
-        }else{
-            simpMessagingTemplate.convertAndSend("/queue/user/" + message.get("uuid").toString() ,"로그인이 필요합니다.");
+            mongoDbDataMap.put("sender", message.get("userId").toString());
+            mongoDbDataMap.put("message", message.get("message").toString());
+            mongoDbDataMap.put("time", new Date().toString());
+            chatListMap.get(uuid).add(mongoDbDataMap);
+            chatMongoDbDao.save(new ChatDoc(uuid, chatListMap.get(uuid)));
+//            log.info("chatListMap : {}", chatListMap);
         }
 
     }
@@ -92,26 +76,30 @@ public class ChatController {
         String userId = String.valueOf(headerMap.get("userId")).replaceAll("[\\[\\]]","");
         String marketOwner = String.valueOf(headerMap.get("marketOwner")).replaceAll("[\\[\\]]","");
         String uuid = String.valueOf(headerMap.get("uuid")).replaceAll("[\\[\\]]","");
-        log.info("userID : {}",userId);
-        log.info("marketOwner: {}",marketOwner);
-        log.info("uuid : {}", uuid);
-        log.info("[connect] connections : {}", sessionId);
+        log.info("[connect] connections : {} ", headerMap);
 
-
-
-        //로그인 되어 있다면 리스트에 추가
-        if(uuid.equals("123")){
+        //로그인 되어 있다면
+        if(true){
             //유저가 로그인 되어있는지 확인
-            log.info("로그인 ok");
+            log.info("로그인 되어있음 sessionId : {}",sessionId);
             sessionIdList.add(sessionId);
-            log.info("sessionIdList : {}",sessionIdList);
-            chatListMap.put(uuid,new ArrayList<>());
-            log.info("채팅방 리스트 만듦");
+            //정상적인 주소로 접근 했는지 확인
+
+            //DB에 자료가 이전 채팅내역이 있는지 확인하는 과정
+            Optional<Object> result = Optional.of(chatMongoDbDao.findById(uuid));
+            if(!result.get().equals(Optional.empty())) {
+                Optional<ChatDoc> chatDoc = (Optional<ChatDoc>) result.get();
+                chatListMap.put(uuid, chatDoc.get().getMessageList());
+                log.info("chatListMap => {} 업데이트", uuid);
+//                log.info("result : {}", chatDoc.get().getMessageList());
+            }else{
+                log.info("DB에 {}에 대한 채팅내역이 없습니다.",uuid);
+                chatListMap.put(uuid, new ArrayList<>());
+            }
         }else{
+            //로그인 되어있지 않다면
             log.info("로그인 no");
         }
-
-
     }
 
     @EventListener(SessionDisconnectEvent.class)

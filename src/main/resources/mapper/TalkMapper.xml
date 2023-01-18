@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- Mapper를 사용하는 Repository의 전체 경로를 적어줘야함. -->
+<mapper namespace="Talk">
+
+    <insert id="insert" parameterType="java.util.Map">
+        insert into Talk_Tb (ID,USERID,MARKETOWNER)
+        values (#{id},#{userId},#{marketOwner})
+    </insert>
+
+    <select id="getIdByUserIdAndMarketOwner" parameterType="java.util.Map" resultType="String">
+        select ID from Talk_Tb
+        where USERID = #{userId} and MARKETOWNER = #{marketOwner}
+    </select>
+
+</mapper>
+
+

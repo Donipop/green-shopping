@@ -19,4 +19,9 @@ public class ChatDoc {
     @Id
     private String _id;
     private List<Map> messageList;
+
+    public ChatDoc(String _id, List<Map> messageList) {
+        this._id = _id;
+        this.messageList = messageList;
+    }
 }
