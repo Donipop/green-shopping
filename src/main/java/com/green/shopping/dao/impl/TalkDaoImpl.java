@@ -28,7 +28,7 @@ public class TalkDaoImpl implements TalkDao {
 
     @Override
     public Map select(String _id) {
-        return null;
+        return sqlSession.selectOne("Talk.select", _id);
     }
 
     @Override

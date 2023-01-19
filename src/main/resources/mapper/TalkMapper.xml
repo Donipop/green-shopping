@@ -8,7 +8,7 @@
 
     <insert id="insert" parameterType="java.util.Map">
         insert into Talk_Tb (ID,USERID,MARKETOWNER)
-        values (#{id},#{userId},#{marketOwner})
+        values (#{_id},#{userId},#{marketOwner})
     </insert>
 
     <select id="getIdByUserIdAndMarketOwner" parameterType="java.util.Map" resultType="String">
@@ -16,6 +16,10 @@
         where USERID = #{userId} and MARKETOWNER = #{marketOwner}
     </select>
 
+    <select id="select" parameterType="String" resultType="java.util.Map">
+        select * from Talk_Tb
+        where ID = #{_id}
+    </select>
 </mapper>
 
 
