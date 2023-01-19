@@ -41,7 +41,7 @@ public class MypageService {
         return mypageDao.mypruchaseinquiry(user_id);
     }
 
-    public TestpostVo  invoiceNumberGet(long invoicenumber) {
+    public TestpostVo invoiceNumberGet(long invoicenumber) {
         return mypageDao.invoiceNumberGet(invoicenumber);
     }
 
@@ -51,5 +51,9 @@ public class MypageService {
 
     public void myinfoUpdate(HashMap<String, Object> myinfo2) {
         mypageDao.myinfoUpdate(myinfo2);
+    }
+
+    public int countBasket(String user_id) {
+        return mypageDao.countBasket(user_id);
     }
 }

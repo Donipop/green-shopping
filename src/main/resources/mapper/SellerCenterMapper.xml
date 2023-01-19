@@ -239,15 +239,24 @@
     </select>
 
     <select id="salesStatus"  resultType="Integer">
-        SELECT SUM(P.TOTALPRICE) as Sales, TO_CHAR(P.PURCHASECONFIRMTIME, 'YYYY-MM-DD') as datee
+        SELECT NVL(SUM(a.TOTALPRICE),0) AS SUM, TO_CHAR(b.dt, 'YYYY-MM-DD') AS DATEE
+        FROM (SELECT SUM(P.TOTALPRICE) as TOTALPRICE, TO_CHAR(P.PURCHASECONFIRMTIME, 'YYYY-MM-DD') as adate
         FROM PURCHASELIST_TB P LEFT JOIN PRODUCT_TB R
         ON P.PRODUCTID = R.ID
         LEFT JOIN MARKET_TB M
         ON R.MARKET_NAME = M.NAME
         WHERE P.PURCHASECONFIRMTIME BETWEEN TO_DATE(#{start}, 'YYYY-MM-DD') AND TO_DATE(#{end}, 'YYYY-MM-DD')
-        AND M.SELLERID = #{id}
-        GROUP BY TO_CHAR(P.PURCHASECONFIRMTIME, 'YYYY-MM-DD')
-        ORDER BY datee ASC
+        AND M.SELLERID = 'admin'
+        GROUP BY TO_CHAR(P.PURCHASECONFIRMTIME, 'YYYY-MM-DD')) a,
+        (SELECT TO_DATE(#{start}, 'YYYY-MM-DD') + LEVEL -1 AS DT
+        FROM DUAL
+        <![CDATA[
+        CONNECT BY LEVEL <= (TO_DATE(#{end}, 'YYYY-MM-DD')
+        - TO_DATE(#{start}, 'YYYY-MM-DD') + 1)]]>
+        ) b
+        where b.dt = a.adate(+)
+        GROUP BY TO_CHAR(b.dt, 'YYYY-MM-DD')
+        ORDER BY TO_CHAR(b.dt, 'YYYY-MM-DD') ASC
     </select>
 
     <delete id="deleteProductImg" parameterType="String">
@@ -272,6 +281,12 @@
         where id = #{id}
     </delete>
 
+    <select id="deliveryState" resultType="Integer">
+        SELECT PL.STATE
+        FROM MARKET_TB M JOIN PRODUCT_TB P ON M.NAME = P.MARKET_NAME JOIN PURCHASELIST_TB PL ON
+        PL.PRODUCTID = P.ID
+        WHERE SELLERID = 'admin'
+    </select>
 </mapper>
 
 

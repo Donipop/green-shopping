@@ -20,4 +20,5 @@ public interface MypageDao {
     int check_duplicate_nick(String user_nick);
 
     void myinfoUpdate(HashMap<String, Object> myinfo2);
+    int countBasket(String user_id);
 }

@@ -74,5 +74,12 @@
     </update>
 
 
+    <select id="countBasket"
+            resultType="int">
+    SELECT COUNT(USER_ID)
+    FROM SHOPPING_BASKET_TB
+    WHERE USER_ID = 'admin'
+
+    </select>
 
 </mapper>
