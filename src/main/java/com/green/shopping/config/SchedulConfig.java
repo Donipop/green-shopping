@@ -16,9 +16,8 @@ public class SchedulConfig {
     @Autowired
     IndexService indexService;
 
-//    @Scheduled(cron = "*/10 * * * * *")
-//    public void  randomitemlist() {
-//        List<HashMap<String, Object>> a = indexService.randomitemlist();
-//
-//    }
+    @Scheduled(cron = "*/10 * * * * *")
+    public void  randomitemlist() {
+       indexService.randomitemlist();
+    }
 }
