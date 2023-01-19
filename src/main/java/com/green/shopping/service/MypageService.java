@@ -48,4 +48,8 @@ public class MypageService {
     public int check_duplicate_nick(String user_nick) {
         return mypageDao.check_duplicate_nick(user_nick);
     }
+
+    public void myinfoUpdate(HashMap<String, Object> myinfo2) {
+        mypageDao.myinfoUpdate(myinfo2);
+    }
 }

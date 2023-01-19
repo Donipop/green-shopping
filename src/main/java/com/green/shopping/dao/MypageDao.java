@@ -18,4 +18,6 @@ public interface MypageDao {
     TestpostVo invoiceNumberGet(long invoicenumber);
     
     int check_duplicate_nick(String user_nick);
+
+    void myinfoUpdate(HashMap<String, Object> myinfo2);
 }
