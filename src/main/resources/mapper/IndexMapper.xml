@@ -3,10 +3,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Index">
-
     <select id="randomitemlist" resultType="HashMap">
-      SELECT *
-        FROM PRODUCT_TB
-
+        SELECT P.MAINIMAGE,P.ID
+        FROM PRODUCT_TB P JOIN TODAYITEMLIST_TB T ON P.ID = T.PRODUCT_ID
+        WHERE T.ID  BETWEEN (SELECT (LAST_NUMBER) -22
+        FROM USER_SEQUENCES
+        WHERE SEQUENCE_NAME = 'TODAYITEMLIST_TB_SEQ') AND
+        (SELECT
+        (LAST_NUMBER) -14
+        FROM
+        USER_SEQUENCES
+        WHERE
+        SEQUENCE_NAME = 'TODAYITEMLIST_TB_SEQ')
     </select>
+
+    <insert id="insertRandomItem">
+        INSERT INTO TODAYITEMLIST_TB(ID,PRODUCT_ID)
+        SELECT TODAYITEMLIST_TB_SEQ.NEXTVAL,ID
+        FROM(SELECT ID
+        FROM PRODUCT_TB
+        ORDER BY DBMS_RANDOM.VALUE)
+        WHERE ROWNUM  <![CDATA[<= 9 ]]>
+    </insert>
 </mapper>

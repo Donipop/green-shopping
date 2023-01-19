@@ -12,7 +12,11 @@ import java.util.List;
 public class IndexService {
     @Autowired
     IndexDao indexDao;
-    public List<HashMap<String, Object>> randomitemlist() {
+    public  List<HashMap<String, Object>> randomitemlist() {
         return indexDao.randomitemlist();
+    }
+
+    public void insertRandomItem() {
+        indexDao.insertRandomItem();
     }
 }

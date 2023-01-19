@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface IndexDao {
 
-     List<HashMap<String, Object>> randomitemlist();
+    List<HashMap<String, Object>> randomitemlist();
+
+    void insertRandomItem();
 }
