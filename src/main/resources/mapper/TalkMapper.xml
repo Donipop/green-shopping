@@ -20,6 +20,16 @@
         select * from Talk_Tb
         where ID = #{_id}
     </select>
+
+    <select id="getIdByMarketOwner" parameterType="String" resultType="String">
+        select ID from Talk_Tb
+        where MARKETOWNER = #{marketOwner}
+    </select>
+
+    <select id="getIdByUserId" parameterType="String" resultType="String">
+        select ID from Talk_Tb
+        where USERID = #{userId}
+    </select>
 </mapper>
 
 

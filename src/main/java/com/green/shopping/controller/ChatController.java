@@ -12,6 +12,8 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageType;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.socket.messaging.SessionConnectEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
@@ -204,5 +206,21 @@ public class ChatController {
         headerAccessor.setSessionId(sessionId);
         headerAccessor.setLeaveMutable(true);
         return headerAccessor.getMessageHeaders();
+    }
+    /*==================================================================*/
+    /*==========================  채팅방 API  ==============================*/
+    /*==================================================================*/
+    @GetMapping("/chat/getChatList")
+    public List<Map<String,Object>> getChatList(@RequestParam String marketOwner){
+        //마켓오너가 가지고 있는 채팅방 리스트를 가져온다
+        List<String> chatList = talkDaoImpl.getIdByMarketOwner(marketOwner);
+        List<Map<String,Object>> chatListMap = new ArrayList<>();
+        for(String uuid : chatList){
+            Map<String,Object> chatMap = new HashMap<>();
+            chatMap.put("uuid",uuid);
+            chatMap.put("chatList",chatMongoDbDao.findById(uuid).get().getMessageList());
+            chatListMap.add(chatMap);
+        }
+        return chatListMap;
     }
 }

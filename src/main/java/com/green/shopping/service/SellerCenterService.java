@@ -85,14 +85,18 @@ public class SellerCenterService {
     }
 
     public List<Map<String,Object>> getOrderList(String marketName){
+        //내 마켓에 있는 모든 제품에 대한 정보
         List<Map<String,Object>> productNumAndTitleList = sellerCenterDaoImpl.getProductIdAndTitleListByMarketName(marketName);
         List<Map<String,Object>> purchaseList = new ArrayList<>();
         List<Map<String, Object>> totalOrderList = new ArrayList<>();
+        Map<String,Object> purchaseMap = new HashMap<>();
         for (int i=0; i<productNumAndTitleList.size(); i++) {
-            purchaseList.addAll(sellerCenterDaoImpl.getPurchasedListByProductId(productNumAndTitleList.get(i).get("ID")));
-            for (Map<String, Object> purchase : purchaseList) {
-                purchase.put("product_Title", productNumAndTitleList.get(i).get("TITLE"));
-                totalOrderList.add(purchase);
+            if(sellerCenterDaoImpl.getPurchasedListByProductId(productNumAndTitleList.get(i).get("ID")).size() > 0){
+                purchaseList.addAll(sellerCenterDaoImpl.getPurchasedListByProductId(productNumAndTitleList.get(i).get("ID")));
+                for (Map<String, Object> purchase : purchaseList) {
+                    purchase.put("product_Title", productNumAndTitleList.get(i).get("TITLE"));
+                    totalOrderList.add(purchase);
+                }
             }
         }
         return totalOrderList;

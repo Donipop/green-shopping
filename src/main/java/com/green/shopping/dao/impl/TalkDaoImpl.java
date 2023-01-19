@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 @Repository
 public class TalkDaoImpl implements TalkDao {
@@ -32,13 +33,13 @@ public class TalkDaoImpl implements TalkDao {
     }
 
     @Override
-    public Map getIdByUserId(String userId) {
-        return null;
+    public List<Map> getIdByUserId(String userId) {
+        return sqlSession.selectList("Talk.getIdByUserId", userId);
     }
 
     @Override
-    public Map getIdByMarketOwner(String marketOwner) {
-        return null;
+    public List<String> getIdByMarketOwner(String marketOwner) {
+        return sqlSession.selectList("Talk.getIdByMarketOwner", marketOwner);
     }
 
     @Override
