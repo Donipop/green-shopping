@@ -61,5 +61,18 @@
             SELECT COUNT(*) FROM USER_TB WHERE USER_NICK = #{user_nick}
     </select>
 
+    <update id="myinfoUpdate"
+            parameterType="java.util.HashMap">
+
+            UPDATE USER_TB
+            SET USER_ADDRESS = #{user_address},
+                USER_EMAIL = #{user_email},
+                USER_NICK = #{user_nick},
+                USER_PASSWORD = #{user_password},
+                USER_TEL = #{user_tel}
+            WHERE USER_ID = #{user_id}
+    </update>
+
+
 
 </mapper>

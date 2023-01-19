@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.SimpleTimeZone;
 
 @RestController
 @RequestMapping("/mypage")
@@ -15,6 +16,11 @@ public class MypageController {
 
     @Autowired
     private final MypageService mypageService;
+
+    @Autowired
+    LoginController loginController;
+
+
     public MypageController(MypageService mypageService) {
         this.mypageService = mypageService;
     }
@@ -76,6 +82,21 @@ public class MypageController {
     }
 
     @PostMapping("/myinfoUpdate")
-    public void myinfoUpdate(@RequestBody  )
+    public int myinfoUpdate(@RequestBody HashMap<String, Object> myinfo) {
+
+        HashMap<String, Object> myinfo2 = (HashMap<String, Object>) myinfo.get("myinfo");
+        String refreshToken = (String) myinfo.get("refreshToken");
+        System.out.println(myinfo2);
+        System.out.println(refreshToken);
+
+        try {
+            mypageService.myinfoUpdate(myinfo2);
+            return 1;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+
 
 }
