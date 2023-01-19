@@ -7,7 +7,7 @@
 <mapper namespace="search">
     <select id="searchview"
             resultType="HashMap" >
-        select p.title,p.id
+        select p.title,p.id,p.mainimage
         from product_tb p
         where p.title like '%'||#{searchcont}||'%' and p.category In (
         select num
@@ -38,7 +38,7 @@
 
     <select id="Allcategorysearch"
             resultType="HashMap">
-        select p.title,p.id
+        select p.title,p.id,p.mainimage
         from product_tb p
         where p.title like '%'||#{searchcont}||'%' and p.category In (
         select num

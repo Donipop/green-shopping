@@ -43,6 +43,7 @@ public class SearchController {
                 SearchPut.put("star", f.get("STAR"));
                 SearchPut.put("title", Allcategorysearch.get(i).get("TITLE"));
                 SearchPut.put("id", Allcategorysearch.get(i).get("ID"));
+                SearchPut.put("mainimage", Allcategorysearch.get(i).get("MAINIMAGE"));
                 SearchPut.put("starcount", f.get("STARCOUNT"));
 
                 SearchValue.add(SearchPut);
@@ -69,6 +70,7 @@ public class SearchController {
                 SearchPut.put("star", f.get("STAR"));
                 SearchPut.put("title", Categorysearch.get(i).get("TITLE"));
                 SearchPut.put("id", Categorysearch.get(i).get("ID"));
+                SearchPut.put("mainimage", Categorysearch.get(i).get("MAINIMAGE"));
                 SearchPut.put("starcount", f.get("STARCOUNT"));
 
                 SearchValue.add(SearchPut);
