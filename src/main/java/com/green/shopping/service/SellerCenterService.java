@@ -7,6 +7,7 @@ import com.green.shopping.vo.ProductVo;
 import com.green.shopping.vo.ReviewVo;
 import com.green.shopping.vo.SellerCenterCreateVo;
 import com.green.shopping.vo.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 @Service
+@Slf4j
 public class SellerCenterService {
     @Autowired
     private final SellerCenterDaoImpl sellerCenterDaoImpl;
@@ -85,21 +87,28 @@ public class SellerCenterService {
     }
 
     public List<Map<String,Object>> getOrderList(String marketName){
-        //내 마켓에 있는 모든 제품에 대한 정보
-        List<Map<String,Object>> productNumAndTitleList = sellerCenterDaoImpl.getProductIdAndTitleListByMarketName(marketName);
-        List<Map<String,Object>> purchaseList = new ArrayList<>();
-        List<Map<String, Object>> totalOrderList = new ArrayList<>();
-        Map<String,Object> purchaseMap = new HashMap<>();
-        for (int i=0; i<productNumAndTitleList.size(); i++) {
-            if(sellerCenterDaoImpl.getPurchasedListByProductId(productNumAndTitleList.get(i).get("ID")).size() > 0){
-                purchaseList.addAll(sellerCenterDaoImpl.getPurchasedListByProductId(productNumAndTitleList.get(i).get("ID")));
-                for (Map<String, Object> purchase : purchaseList) {
-                    purchase.put("product_Title", productNumAndTitleList.get(i).get("TITLE"));
-                    totalOrderList.add(purchase);
-                }
-            }
+        //주문정보 테이블에 있는 내 상점의 주문정보를 가져온다.
+        List<PurchaselistVo> purchaselistVoList = sellerCenterDaoImpl.getPurchaseList(marketName);
+//        log.info(purchaselistVoList.toString());
+        //제품 테이블에 있는 내 상점의 제품정보를 가져온다.
+        Map<String,Object> productVoList = sellerCenterDaoImpl.getProductIdAndTitleMapByMarketName(marketName);
+//        log.info(productVoList.toString());
+        List<Map<String,Object>> totalList = new ArrayList<>();
+        //가지고 온 주문정보를 하나씩 돌면서 Map에 담는다.
+        for (PurchaselistVo p : purchaselistVoList){;
+            Map<String,Object> map = (Map<String, Object>) productVoList.get(String.valueOf(p.getProductid()));
+//            log.info("p : {} a : {}",p.getProductid(),map.get("TITLE"));
+            Map<String,Object> totalMap = new HashMap<>();
+            totalMap.put("STATE", p.getState());
+            totalMap.put("ID", p.getId());
+            totalMap.put("TIME", p.getTime());
+            totalMap.put("product_Title", map.get("TITLE"));
+            totalMap.put("PRODUCTID", p.getProductid());
+            totalMap.put("POSTADDRESSID", p.getPostaddressid());
+            totalList.add(totalMap);
         }
-        return totalOrderList;
+//        log.info(productVoList.get("700"));
+        return totalList;
     }
 
     public Map<String, Object> getPostAddress(int postNum) {

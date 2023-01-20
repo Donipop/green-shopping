@@ -13,8 +13,8 @@ import java.util.List;
 @Component
 @EnableScheduling
 public class SchedulConfig {
-    @Autowired
-    IndexService indexService;
+//    @Autowired
+//    IndexService indexService;
 
 //    @Scheduled(cron = "*/10 * * * * *")
 //    public void  randomitemlist() {

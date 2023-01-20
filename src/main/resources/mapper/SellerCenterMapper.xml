@@ -287,6 +287,19 @@
         PL.PRODUCTID = P.ID
         WHERE SELLERID = 'admin'
     </select>
+
+    <select id="getPurchaseList" parameterType="String" resultType="com.green.shopping.vo.PurchaselistVo">
+        SELECT *
+        FROM PURCHASELIST_TB
+        WHERE marketName = #{marketName}
+    </select>
+
+    <select id="getProductIdAndTitleMapByMarketName" parameterType="String" resultType="java.util.HashMap">
+        SELECT to_char(ID) as ID, TITLE
+        FROM PRODUCT_TB
+        WHERE MARKET_NAME = #{marketName}
+    </select>
+
 </mapper>
 
 

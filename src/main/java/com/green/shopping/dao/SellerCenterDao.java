@@ -1,9 +1,6 @@
 package com.green.shopping.dao;
 
-import com.green.shopping.vo.AlreadySettlementVo;
-import com.green.shopping.vo.CategoryVo;
-import com.green.shopping.vo.PurchaseDetailVo;
-import com.green.shopping.vo.purchaseconfirmVo;
+import com.green.shopping.vo.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -52,6 +49,8 @@ public interface SellerCenterDao {
     void updateAllMoney(HashMap<String, Object> map2);
 
     void insertSettlement(HashMap<String, Object> map3);
-
     List<AlreadySettlementVo> getAlreadySettlement(HashMap<String, Object> map);
+    List<PurchaselistVo> getPurchaseList(String marketName);
+    Map<String,Object> getProductIdAndTitleMapByMarketName(String marketName);
+
 }

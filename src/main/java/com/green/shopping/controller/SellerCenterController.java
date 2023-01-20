@@ -47,8 +47,7 @@ public class SellerCenterController {
     }
 
     @GetMapping("/getorderlist")
-    public List<Map<String, Object>> getOrderList(@RequestParam(value = "marketName") String marketName) {
-//        System.out.println(sellerCenterService.getOrderList(marketName));
+    public List<Map<String,Object>> getOrderList(@RequestParam(value = "marketName") String marketName) {
         return sellerCenterService.getOrderList(marketName);
     }
 

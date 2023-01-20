@@ -237,6 +237,16 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
         return AlreadySettlement;
     }
 
+    @Override
+    public List<PurchaselistVo> getPurchaseList(String marketName) {
+        return sqlSession.selectList("SellerCenter.getPurchaseList", marketName);
+    }
+
+    @Override
+    public Map<String, Object> getProductIdAndTitleMapByMarketName(String marketName) {
+        return sqlSession.selectMap("SellerCenter.getProductIdAndTitleMapByMarketName", marketName, "ID");
+    }
+
     public List<Integer> deliveryState(HashMap<String, Object> map) {
         return sqlSession.selectList("SellerCenter.deliveryState", map);
     }
