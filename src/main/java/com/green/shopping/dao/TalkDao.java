@@ -9,4 +9,12 @@ public interface TalkDao {
     public List<Map> getIdByUserId(String userId);
     public List<String> getIdByMarketOwner(String marketOwner);
     public String getIdByUserIdAndMarketOwner(String userId,String marketOwner);
+    public void updateMarketOwnerCount(String uuid);
+    public void updateUserIdCount(String uuid);
+    public void updateCurrentCount(String uuid);
+    public void updateBothCount(String uuid);
+    public void updateMarketOwnerCountToCurrent(String uuid);
+    public void updateUserCountToCurrent(String uuid);
+    public int getMarketOwnerCountByUuid(String uuid);
+    public int getUserIdCountByUuid(String uuid);
 }

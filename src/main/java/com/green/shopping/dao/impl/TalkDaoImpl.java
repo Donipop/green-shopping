@@ -49,4 +49,44 @@ public class TalkDaoImpl implements TalkDao {
         getIdByUserIdAndMarketOwnerMap.put("marketOwner", marketOwner);
         return sqlSession.selectOne("Talk.getIdByUserIdAndMarketOwner", getIdByUserIdAndMarketOwnerMap);
     }
+
+    @Override
+    public void updateMarketOwnerCount(String uuid) {
+        sqlSession.update("Talk.updateMarketOwnerCount", uuid);
+    }
+
+    @Override
+    public void updateUserIdCount(String uuid) {
+        sqlSession.update("Talk.updateUserIdCount", uuid);
+    }
+
+    @Override
+    public void updateCurrentCount(String uuid) {
+        sqlSession.update("Talk.updateCurrentCount", uuid);
+    }
+
+    @Override
+    public void updateBothCount(String uuid) {
+        sqlSession.update("Talk.updateBothCount", uuid);
+    }
+
+    @Override
+    public void updateMarketOwnerCountToCurrent(String uuid) {
+        sqlSession.update("Talk.updateMarketOwnerCountToCurrent", uuid);
+    }
+
+    @Override
+    public void updateUserCountToCurrent(String uuid) {
+        sqlSession.update("Talk.updateUserCountToCurrent", uuid);
+    }
+
+    @Override
+    public int getMarketOwnerCountByUuid(String uuid) {
+        return sqlSession.selectOne("Talk.getMarketOwnerCountByUuid", uuid);
+    }
+
+    @Override
+    public int getUserIdCountByUuid(String uuid) {
+        return sqlSession.selectOne("Talk.getUserIdCountByUuid", uuid);
+    }
 }

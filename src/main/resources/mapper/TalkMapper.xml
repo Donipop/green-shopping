@@ -30,6 +30,56 @@
         select ID from Talk_Tb
         where USERID = #{userId}
     </select>
+
+    <update id="updateMarketOwnerCount" parameterType="String">
+        update Talk_Tb
+        set MARKETOWNERTHISTORY = CURRENT_ + 1,
+            CURRENT_ = CURRENT_ + 1
+        where ID = #{uuid}
+    </update>
+
+    <update id="updateUserIdCount" parameterType="String">
+        update Talk_Tb
+        set USERHISTORY = CURRENT_ + 1,
+            CURRENT_ = CURRENT_ + 1
+        where ID = #{uuid}
+    </update>
+
+    <update id="updateCurrentCount" parameterType="String">
+        update Talk_Tb
+        set CURRENT_ = CURRENT_ + 1
+        where ID = #{uuid}
+    </update>
+
+    <update id="updateBothCount" parameterType="String">
+        update Talk_Tb
+        set MARKETOWNERTHISTORY = CURRENT_ + 1,
+            USERHISTORY = CURRENT_ + 1,
+            CURRENT_ = CURRENT_ + 1
+        where ID = #{uuid}
+    </update>
+
+    <update id="updateMarketOwnerCountToCurrent" parameterType="String">
+        update Talk_Tb
+        set MARKETOWNERTHISTORY = CURRENT_
+        where ID = #{uuid}
+    </update>
+
+    <update id="updateUserCountToCurrent" parameterType="String">
+        update Talk_Tb
+        set USERHISTORY = CURRENT_
+        where ID = #{uuid}
+    </update>
+
+    <select id="getMarketOwnerCountByUuid" parameterType="String" resultType="int">
+        select SUM(CURRENT_ - MARKETOWNERTHISTORY) from Talk_Tb
+        where ID = #{uuid}
+    </select>
+
+    <select id="getUserIdCountByUuid" parameterType="String" resultType="int">
+        select SUM(CURRENT_ - USERHISTORY) from Talk_Tb
+        where ID = #{uuid}
+    </select>
 </mapper>
 
 
