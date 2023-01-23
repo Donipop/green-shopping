@@ -137,7 +137,7 @@ public class SellerCenterController {
     }
     @GetMapping("/canclecostsettle")
     public  List<HashMap<String, Object>>  cancleCostSettle(@RequestParam HashMap<String,Object> map) {
-        ;
+
         HashMap<String, Object> putbasket = new HashMap<>();
         List<HashMap<String, Object>> SettelValue = new ArrayList<>();
         HashMap<String, Object> a =  sellerCenterService.PurchaseConfirmCount(map);

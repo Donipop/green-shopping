@@ -90,4 +90,12 @@ public class ReviewService {
     public String getProductName(int page) {
         return reviewDao.getProductName(page);
     }
+
+    public String getmarketName(HashMap<String, Object> map) {
+        return reviewDao.getmarketName(map);
+    }
+
+    public String getmarketNamebyproductid(HashMap<String, Object> map) {
+        return reviewDao.getmarketNamebyproductid(map);
+    }
 }

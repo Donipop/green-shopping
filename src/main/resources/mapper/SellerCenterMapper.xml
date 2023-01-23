@@ -246,7 +246,7 @@
         LEFT JOIN MARKET_TB M
         ON R.MARKET_NAME = M.NAME
         WHERE P.PURCHASECONFIRMTIME BETWEEN TO_DATE(#{start}, 'YYYY-MM-DD') AND TO_DATE(#{end}, 'YYYY-MM-DD')
-        AND M.SELLERID = 'admin'
+        AND M.SELLERID = #{id}
         GROUP BY TO_CHAR(P.PURCHASECONFIRMTIME, 'YYYY-MM-DD')) a,
         (SELECT TO_DATE(#{start}, 'YYYY-MM-DD') + LEVEL -1 AS DT
         FROM DUAL
@@ -285,7 +285,7 @@
         SELECT PL.STATE
         FROM MARKET_TB M JOIN PRODUCT_TB P ON M.NAME = P.MARKET_NAME JOIN PURCHASELIST_TB PL ON
         PL.PRODUCTID = P.ID
-        WHERE SELLERID = 'admin'
+        WHERE SELLERID = #{id}
     </select>
 </mapper>
 

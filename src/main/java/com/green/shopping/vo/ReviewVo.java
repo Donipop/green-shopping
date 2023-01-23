@@ -16,10 +16,14 @@ public class ReviewVo {
     private String user_id;
     private int star;
     private String regdate;
+
+    private String mainimage;
+    private String product_title;
     public ReviewVo() {
     }
 
-    public ReviewVo(int id, String title, String cont, String time, int product_num, String user_id, int star, String regdate) {
+    public ReviewVo(int id, String title, String cont, String time, int product_num, String user_id, int star, String regdate, String product_title,String mainimage
+    ) {
         this.id = id;
         this.title = title;
         this.cont = cont;
@@ -28,5 +32,7 @@ public class ReviewVo {
         this.user_id = user_id;
         this.star = star;
         this.regdate = regdate;
+        this.product_title = product_title;
+        this.mainimage = mainimage;
     }
 }
