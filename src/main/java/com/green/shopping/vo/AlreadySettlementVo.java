@@ -11,7 +11,7 @@ public class AlreadySettlementVo {
     private int id;
     private String user_id;
     private String market_name;
-    private String totalprice;
+    private int totalprice;
     private long bank_account;
     private String bank_name;
     private String bank_accountowner;

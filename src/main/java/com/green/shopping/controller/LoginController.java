@@ -114,7 +114,6 @@ public class LoginController {
 
         return test123;
     }
-
     @PostMapping("/logout")
     @ResponseBody
     public String logout(HttpServletRequest request, HttpSession session,@RequestBody HashMap<String, Object> refreshTokens ) {
@@ -130,7 +129,6 @@ public class LoginController {
 
         return result;
     }
-
     @PostMapping("/sellersignup")
     public void Sellersignup(@RequestBody HashMap<String, Object> map){
         ObjectMapper objectMapper = new ObjectMapper();
@@ -138,22 +136,6 @@ public class LoginController {
         loginService.seller_sign_up(sellerVo);
         //파일 넘기는건 아직 안함
     }
-
-    @PostMapping("/viewmap")
-    public String tlqkf(@RequestBody HashMap<String, Object> refreshTokens){
-        String qudtls = "ㄱㄱ";
-        Object refreshToken = refreshTokens.get("refreshToken");
-        // 로그인된 유저
-        System.out.println("login_userlist = " + login_userlist);
-        // 로그인된 유저의 수
-        System.out.println("login_userlist.size() = " + login_userlist.size());
-
-        String accessToken = (String) login_userlist.get(refreshToken);
-
-
-        return accessToken;
-    }
-
     @PostMapping("/refreshTokenToAccessToken")
     public HashMap<String, Object> refreshTokenToAccessToken(@RequestBody String refreshToken) throws JsonProcessingException {
 
@@ -171,7 +153,6 @@ public class LoginController {
                 return null;
             }
             else {
-
                 HashMap<String, Object> map = mapper.readValue(accessToken, HashMap.class);
                 return map;
             }
