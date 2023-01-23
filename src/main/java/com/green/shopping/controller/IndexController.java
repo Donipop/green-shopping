@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.shopping.config.SchedulConfig;
 import com.green.shopping.interceptor.AuthInterceptor;
+import com.green.shopping.service.IndexService;
 import com.green.shopping.service.LoginService;
 import com.green.shopping.vo.SignUp;
 import com.green.shopping.vo.UserVo;
@@ -33,7 +34,7 @@ public class IndexController {
     @Autowired
     LoginService loginService;
     @Autowired
-    public SchedulConfig schedulConfig;
+    IndexService indexService;
 
     @GetMapping("/name")
     public List<UserVo> index() {
@@ -41,11 +42,11 @@ public class IndexController {
         return a;
     }
 
-//    @GetMapping("/randomitemlist")
-//    public List<HashMap<String, Object>> randomitemlist() {
-//        List<HashMap<String, Object>> a = schedulConfig.randomitemlist();
-//       return a;
-//
-//    }
+    @GetMapping("/randomitemlist")
+    public List<HashMap<String, Object>> randomitemlist() {
+        List<HashMap<String, Object>> a = indexService.randomitemlist();
+       return a;
+
+    }
 
 }

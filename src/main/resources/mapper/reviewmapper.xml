@@ -130,7 +130,19 @@
 
     </select>
 
+    <select id="getmarketName" resultType="String">
+        SELECT NAME
+        FROM MARKET_TB
+        WHERE SELLERID = #{user_id}
 
+    </select>
+
+    <select id="getmarketNamebyproductid" resultType="String">
+        SELECT MARKET_NAME
+        FROM PRODUCT_TB
+        WHERE ID = #{page}
+
+    </select>
 
 
 

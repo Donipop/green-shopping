@@ -10,9 +10,15 @@ import java.util.List;
 
 @Service
 public class IndexService {
-//    @Autowired
-//    IndexDao indexDao;
-//    public List<HashMap<String, Object>> randomitemlist() {
-//        return indexDao.randomitemlist();
-//    }
+
+    @Autowired
+    IndexDao indexDao;
+
+    public List<HashMap<String, Object>> randomitemlist() {
+        return indexDao.randomitemlist();
+    }
+
+    public void insertRandomItem() {
+        indexDao.insertRandomItem();
+    }
 }
