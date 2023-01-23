@@ -98,5 +98,3 @@ public class MypageController {
         return mypageService.countBasket(user_id);
     }
 }
-
-

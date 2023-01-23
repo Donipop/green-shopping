@@ -11,6 +11,7 @@ import com.green.shopping.vo.CategoryVo;
 import com.green.shopping.vo.ReviewVo;
 import com.green.shopping.vo.SellerCenterCreateVo;
 import com.green.shopping.vo.*;
+import lombok.extern.java.Log;
 import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -14,7 +14,7 @@ public class NoticeBoardController {
     BoardService boardService;
 
 
-    @GetMapping("/Notice")
+    @GetMapping("/notice")
     public List<NoticeVo> BoardList(){
         return boardService.BoardList();
 
