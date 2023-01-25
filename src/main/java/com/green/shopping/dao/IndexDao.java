@@ -10,4 +10,9 @@ public interface IndexDao {
     List<HashMap<String, Object>> randomitemlist();
 
     void insertRandomItem();
+
+    List<HashMap<String, Object>> recommenditemlist();
+
+    HashMap<String, Object> starCount(HashMap<String, Object> map);
+
 }

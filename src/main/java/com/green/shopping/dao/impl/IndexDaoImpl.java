@@ -16,14 +16,25 @@ public class IndexDaoImpl implements IndexDao {
 
     @Override
     public  List<HashMap<String, Object>> randomitemlist() {
-        List<HashMap<String, Object>> a = sqlSession.selectList("Index.randomitemlist");
+        List<HashMap<String, Object>> selectList = sqlSession.selectList("Index.randomitemlist");
 
-        return a;
+        return selectList;
     }
 
     @Override
     public void insertRandomItem() {
         sqlSession.insert("Index.insertRandomItem");
+    }
+
+    @Override
+    public List<HashMap<String, Object>> recommenditemlist() {
+        return sqlSession.selectList("Index.recommenditemlist");
+
+    }
+
+    @Override
+    public HashMap<String, Object> starCount(HashMap<String, Object> map) {
+        return sqlSession.selectOne("Index.starCount", map);
     }
 }
 
