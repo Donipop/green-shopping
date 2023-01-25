@@ -256,8 +256,7 @@ public class SellerCenterService {
 //        System.out.println("===================================");
         //추가해야 하는 이미지
         for (String img : insertImg) {
-//            System.out.println("insert IMG : " + img);
-//            System.out.println("(^_^)");
+            if(img.equals("")){ continue; }
             String imgSrc = img.split("___")[0];
 //            System.out.println("imgSrc : " + imgSrc);
             String isMain = img.split("___")[1];

@@ -161,7 +161,7 @@ public class SellerCenterController {
     }
 
 
-    @PostMapping("/getmarketnamelist")
+    @GetMapping("/getmarketnamelist")
     public List<String> getMarketNameList(@RequestParam String user_id) {
         List<String> MarketNameList = sellerCenterService.getMarketNameList(user_id);
         return MarketNameList;
