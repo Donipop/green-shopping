@@ -7,10 +7,10 @@
     <insert id="insertPurchaseList"
             parameterType="java.util.HashMap">
         INSERT INTO PurchaseList_Tb(
-            id,User_Id,TotalPrice,ProductId,Delivery
+            id,User_Id,TotalPrice,ProductId,Delivery,PostAddressID
         )
         VALUES(
-            purchaselist_tb_seq.nextval,#{userId},#{totalPrice},#{productId},#{delivery}
+            purchaselist_tb_seq.nextval,#{userId},#{totalPrice},#{productId},#{delivery},#{postAddress}
         )
         <selectKey keyProperty="id" resultType="Integer" order="AFTER">
             select purchaselist_tb_seq.currval from dual
@@ -30,6 +30,10 @@
         </selectKey>
     </insert>
 
+    <select id="getAddress" parameterType="String" resultType="HashMap">
+        select * from postaddress_tb
+        where userid = #{userId}
+    </select>
 
 </mapper>
 

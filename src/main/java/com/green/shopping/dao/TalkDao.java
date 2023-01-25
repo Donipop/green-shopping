@@ -17,4 +17,5 @@ public interface TalkDao {
     public void updateUserCountToCurrent(String uuid);
     public int getMarketOwnerCountByUuid(String uuid);
     public int getUserIdCountByUuid(String uuid);
+    public String getMarketOwnerByUuid(String uuid);
 }

@@ -89,4 +89,9 @@ public class TalkDaoImpl implements TalkDao {
     public int getUserIdCountByUuid(String uuid) {
         return sqlSession.selectOne("Talk.getUserIdCountByUuid", uuid);
     }
+
+    @Override
+    public String getMarketOwnerByUuid(String uuid) {
+        return sqlSession.selectOne("Talk.getMarketOwnerByUuid", uuid);
+    }
 }

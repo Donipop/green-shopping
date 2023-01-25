@@ -47,7 +47,7 @@ public class ChatController {
         String marketOwner = message.get("marketOwner").toString();
         String uuid = message.get("uuid").toString();
 
-        List<Map> chatDocList = chatListMap.get(message.get("uuid").toString());
+
         Map<String,Object> sendMessageMap = new HashMap<>();
         sendMessageMap.put("type","error");
         //정상적인 주소로 접근 했는지 확인
@@ -57,6 +57,14 @@ public class ChatController {
             sendMessageMap.put("code","1");
             simpMessagingTemplate.convertAndSendToUser(sessionId, "/queue/message",sendMessageMap,createHeaders(sessionId));
             return;
+        }
+        log.info("marketOnwer : {}",marketOwner);
+        if(marketOwner.equals("")){
+            log.info("marketOwner가 없음");
+            marketOwner = talkDaoImpl.getMarketOwnerByUuid(uuid);
+            sendMessageMap.put("type", "marketOwner");
+            sendMessageMap.put("marketOwner", marketOwner);
+            simpMessagingTemplate.convertAndSendToUser(sessionId, "/queue/message",sendMessageMap,createHeaders(sessionId));
         }
         if(userId.equals(marketOwner)) {
             //유저아이디랑 마켓오너가 같을때 uuid유효성 검사
@@ -106,14 +114,16 @@ public class ChatController {
                 Optional<ChatDoc> chatDoc = (Optional<ChatDoc>) result.get();
                 chatListMap.put(uuid, chatDoc.get().getMessageList());
                 log.info("chatListMap => {} 업데이트", uuid);
+                //채팅내용 가져옴
+                List<Map> chatDocList = chatListMap.get(message.get("uuid").toString());
+                sendMessageMap.put("type","connect");
+                sendMessageMap.put("chatList",chatDocList);
+                simpMessagingTemplate.convertAndSendToUser(messageHeaderAccessor.getSessionId(), "/queue/message",sendMessageMap,createHeaders(messageHeaderAccessor.getSessionId()));
 //                log.info("result : {}", chatDoc.get().getMessageList());
             }else{
                 log.info("DB에 {}에 대한 채팅내역이 없습니다.",uuid);
                 chatListMap.put(uuid, new ArrayList<>());
             }
-            sendMessageMap.put("type","connect");
-            sendMessageMap.put("chatList",chatDocList);
-            simpMessagingTemplate.convertAndSendToUser(messageHeaderAccessor.getSessionId(), "/queue/message",sendMessageMap,createHeaders(messageHeaderAccessor.getSessionId()));
 
         }
 
@@ -147,15 +157,16 @@ public class ChatController {
         String sessionId = event.getMessage().getHeaders().get("simpSessionId").toString();
         Map<String, Objects> headerMap = (Map<String, Objects>) event.getMessage().getHeaders().get("nativeHeaders");
         String userId = String.valueOf(headerMap.get("userId")).replaceAll("[\\[\\]]","");
-        String marketOwner = String.valueOf(headerMap.get("marketOwner")).replaceAll("[\\[\\]]","");
         String uuid = String.valueOf(headerMap.get("uuid")).replaceAll("[\\[\\]]","");
+        String marketOwner = talkDaoImpl.getMarketOwnerByUuid(uuid);
+        String loginCheck = String.valueOf(headerMap.get("loginCheck")).replaceAll("[\\[\\]]","");
+        log.info("sessionId : {} , userId : {} , uuid : {} , marketOwner : {} , loginCheck : {}",sessionId,userId,uuid,marketOwner,loginCheck);
         log.info("[connect] connections : {} ", headerMap);
 
         Map<String,Object> sendMessageMap = new HashMap<>();
         sendMessageMap.put("type","error");
-
         //로그인 되어 있다면
-        if(true){
+        if(loginCheck.equals("true")) {
             //유저가 로그인 되어있는지 확인
             log.info("로그인 되어있음 sessionId : {}",sessionId);
             sessionIdList.add(sessionId);

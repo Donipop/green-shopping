@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
@@ -22,7 +24,7 @@ public class PayMentService {
     }
 
     @Transactional
-    public String insertPurchase(PaymentVo paymentVo){
+    public String insertPurchase(PaymentVo paymentVo, Optional<String> userId, int postAddress) {
         try{
             //총결제금액 구하기
             int totalPrice = 0;
@@ -32,7 +34,7 @@ public class PayMentService {
             totalPrice += paymentVo.getDelivery();
 
             //purcharseList_Tb insert
-            int purchaseListId = payMentDaoImpl.insertPurchaseList("test",totalPrice,paymentVo.getProductId(),paymentVo.getDelivery());
+            int purchaseListId = payMentDaoImpl.insertPurchaseList(userId.get(),totalPrice,paymentVo.getProductId(),paymentVo.getDelivery(),postAddress);
 
             //purcharseDetailList_Tb insert
             for (PaymentListItemVo item : paymentVo.getListItem()) {
@@ -48,4 +50,7 @@ public class PayMentService {
 
     }
 
+    public HashMap<String,Object> getAddress(String userId) {
+        return payMentDaoImpl.getAddress(userId);
+    }
 }

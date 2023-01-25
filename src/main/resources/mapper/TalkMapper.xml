@@ -80,6 +80,11 @@
         select SUM(CURRENT_ - USERHISTORY) from Talk_Tb
         where ID = #{uuid}
     </select>
+
+    <select id="getMarketOwnerByUuid" parameterType="String" resultType="String">
+        select MARKETOWNER from Talk_Tb
+        where ID = #{uuid}
+    </select>
 </mapper>
 
 
