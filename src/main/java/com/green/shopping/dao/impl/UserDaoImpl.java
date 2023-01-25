@@ -26,4 +26,6 @@ public class UserDaoImpl implements UserDao {
     public void update_userinformation(Map<String, Object> map1) {
         sqlSession.update("User.update_userinformation", map1);
     }
+
+
 }

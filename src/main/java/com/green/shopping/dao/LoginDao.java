@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface LoginDao {
 
+
+
     List<UserVo> getList();
 
     void user_sign_up(SignUp signUp);
@@ -16,4 +18,9 @@ public interface LoginDao {
     UserVo login(HashMap<String, String> map);
 
     void seller_sign_up(SellerVo sellerVo);
+
+
+    String findId(HashMap<String, Object> NameAndTel);
+
+    String findPassword(HashMap<String, Object> idAndEmail);
 }

@@ -39,6 +39,8 @@ public class LoginController {
 
 
 
+
+
         HashMap<String, String> map2 = mapper.readValue(vo1, HashMap.class);
 
 
@@ -158,6 +160,25 @@ public class LoginController {
             }
         }
     }
+
+    @PostMapping("/findId")
+    public String findId(@RequestParam String user_name, @RequestParam String user_tel) {
+        HashMap<String, Object> NameAndTel = new HashMap<>();
+        NameAndTel.put("user_name", user_name);
+        NameAndTel.put("user_tel", user_tel);
+        String user_id = loginService.findId(NameAndTel);
+        return user_id;
+    }
+    @PostMapping("/findPassword")
+    public String findPassword(@RequestParam String user_id, @RequestParam String user_email) {
+        HashMap<String, Object> IdAndEmail = new HashMap<>();
+        IdAndEmail.put("user_id", user_id);
+        IdAndEmail.put("user_email", user_email);
+        String user_password = loginService.findPassword(IdAndEmail);
+        return user_password;
+    }
+
+
 
 
 
