@@ -49,22 +49,7 @@
         VALUES ( 'admin4', #{bank_name}, #{bank_account}, #{bank_accountowner}, #{description}, #{business_number}, #{market_name})
 
         </insert>
-        <select id="findId"
-                parameterType="HashMap"
-                resultType="String">
-                SELECT USER_ID
-                FROM USER_TB
-                WHERE USER_NAME = #{user_name}
-                ANd USER_TEL = #{user_tel}
-        </select>
-        <select id="findPassword"
-                parameterType="HashMap"
-                resultType="String">
-                SELECT USER_PASSWORD
-                FROM USER_TB
-                WHERE USER_ID = #{user_id}
-                AND USER_EMAIL = #{user_email}
-        </select>
+
 
 
         </mapper>

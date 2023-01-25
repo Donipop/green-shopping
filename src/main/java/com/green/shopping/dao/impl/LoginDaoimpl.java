@@ -38,16 +38,4 @@ public class LoginDaoimpl implements LoginDao {
     public void seller_sign_up(SellerVo sellerVo) {
         sqlSession.insert("Login.seller_sign_up", sellerVo);
     }
-
-    @Override
-    public String findId(HashMap<String, Object> NameAndTel) {
-        return sqlSession.selectOne("Login.findId", NameAndTel);
-    }
-
-    @Override
-    public String findPassword(HashMap<String, Object> IdAndEmail) {
-        return sqlSession.selectOne("Login.findPassword", IdAndEmail);
-    }
-
-
 }

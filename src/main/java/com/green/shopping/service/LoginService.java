@@ -40,12 +40,4 @@ public class LoginService {
          loginDao.seller_sign_up(sellerVo);
     }
 
-
-    public String findId(HashMap<String, Object> NameAndTel) {
-        return loginDao.findId(NameAndTel);
-    }
-
-    public String findPassword(HashMap<String, Object> IdAndEmail) {
-        return loginDao.findPassword(IdAndEmail);
-    }
 }
