@@ -253,4 +253,8 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
     public List<Integer> deliveryState(HashMap<String, Object> map) {
         return sqlSession.selectList("SellerCenter.deliveryState", map);
     }
+
+    public String getMarketNamebySellerid(String user_id) {
+        return sqlSession.selectOne("SellerCenter.getMarketNamebySellerid", user_id);
+    }
 }

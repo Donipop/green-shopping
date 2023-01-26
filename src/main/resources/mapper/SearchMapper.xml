@@ -52,7 +52,7 @@
             resultType="HashMap">
         select *
         from product_img_tb
-        where product_num = #{id} and ismain = 1
+        where product_num = #{id}  and ismain = 1
     </select>
 
     <select id="getFile"
@@ -61,4 +61,6 @@
         FROM File_Tb
         WHERE NAME = #{file_name}
     </select>
+
+
 </mapper>

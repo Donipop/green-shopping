@@ -1,6 +1,7 @@
 package com.green.shopping.controller;
 
 
+import com.green.shopping.service.FileService;
 import com.green.shopping.service.MypageService;
 import com.green.shopping.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ public class MypageController {
     private final MypageService mypageService;
     @Autowired
     LoginController loginController;
+
     public MypageController(MypageService mypageService) {
         this.mypageService = mypageService;
     }
@@ -53,13 +55,30 @@ public class MypageController {
 
     @GetMapping("/myreview")
     public List<ReviewVo> myreview(@RequestParam String user_id) {
-        return mypageService.myreview(user_id);
-
+        List<ReviewVo> myReviewList = mypageService.myreview(user_id);
+        for (int i = 0; i < myReviewList.size(); i++) {
+            HashMap<String, Object> productImage = mypageService.getProductImgByProductId(myReviewList.get(i).getProduct_num());
+            System.out.println(productImage);
+            if (productImage != null) {
+                HashMap<String, Object> fileMap = mypageService.getFile(productImage.get("FILE_NAME").toString());
+                myReviewList.get(i).setProductimage(fileMap.get("NAME") + "." + fileMap.get("FILE_TYPE"));
+            }
+        }
+        return myReviewList;
     }
 
     @GetMapping("/MyPurchaseInquiry")
-    public List<PurchaselistVo> mypurchaseinquiry(@RequestParam String user_id) {
-        return mypageService.mypruchaseinquiry(user_id);
+    public List<MyPurchaseInquiryVo> mypurchaseinquiry(@RequestParam String user_id) {
+        List<MyPurchaseInquiryVo> mypurchaseinquirylist = mypageService.mypruchaseinquiry(user_id);
+        for(int i=0; i<mypurchaseinquirylist.size(); i++){
+            HashMap<String,Object> productImage = mypageService.getProductImgByProductId(mypurchaseinquirylist.get(i).getProductid());
+            if(productImage != null){
+                HashMap<String,Object> fileMap = mypageService.getFile(productImage.get("FILE_NAME").toString());
+                mypurchaseinquirylist.get(i).setProductimage(fileMap.get("NAME") + "." + fileMap.get("FILE_TYPE"));
+            }
+        }
+
+        return mypurchaseinquirylist;
     }
 
     @GetMapping("/MyPurchaseInquiry/deliverytracking")

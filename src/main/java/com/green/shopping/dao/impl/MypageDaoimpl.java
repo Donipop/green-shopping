@@ -48,13 +48,34 @@ public class MypageDaoimpl implements MypageDao {
     }
 
     @Override
+    public String getmainImageByproductId(int productid) {
+        return sqlSession.selectOne("Mypage.getmainImageByproductId", productid);
+    }
+
+    @Override
+    public String getproductNameByproductId(int productid) {
+        return sqlSession.selectOne("Mypage.getproductNameByproductId", productid);
+    }
+
+    @Override
+    public HashMap<String, Object> getProductImgByProductId(int productid) {
+
+        return sqlSession.selectOne("Mypage.getProductImgByProductId", productid);
+    }
+
+    @Override
+    public HashMap<String, Object> getFile(String file_name) {
+        return sqlSession.selectOne("Mypage.getFile", file_name);
+    }
+
+    @Override
     public List<ReviewVo> myreview(String user_id) {
 
         return sqlSession.selectList("Mypage.myreview", user_id);
     }
 
     @Override
-    public List<PurchaselistVo> mypruchaseinquiry(String user_id) {
+    public List<MyPurchaseInquiryVo> mypruchaseinquiry(String user_id) {
         return sqlSession.selectList("Mypage.mypruchaseinquiry", user_id);
     }
 

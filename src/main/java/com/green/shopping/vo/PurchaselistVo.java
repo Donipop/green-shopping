@@ -17,11 +17,13 @@ public class PurchaselistVo {
     private String time;
     private int postaddressid;
     private String marketName;
+    private String mainimage;
+    private String title;
 
     public PurchaselistVo() {
     }
 
-    public PurchaselistVo(int id, String user_id, int totalprice, int productid, int state, int delivery, String time, int postaddressid, String marketName) {
+    public PurchaselistVo(int id, String user_id, int totalprice, int productid, int state, int delivery, String time, int postaddressid, String marketName, String mainimage,String title) {
         this.id = id;
         this.user_id = user_id;
         this.totalprice = totalprice;
@@ -31,5 +33,7 @@ public class PurchaselistVo {
         this.time = time;
         this.postaddressid = postaddressid;
         this.marketName = marketName;
+        this.mainimage = mainimage;
+        this.title = title;
     }
 }

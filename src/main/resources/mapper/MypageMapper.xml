@@ -40,9 +40,10 @@
     </select>
 
     <select id="mypruchaseinquiry"
-            resultType="com.green.shopping.vo.PurchaselistVo">
-        SELECT ID,USER_ID,TOTALPRICE,PRODUCTID,STATE,DELIVERY,POSTADDRESSID,TO_CHAR(TIME + 9/24, 'yyyy-mm-dd') AS TIME
-        FROM PURCHASELIST_TB
+            resultType="com.green.shopping.vo.MyPurchaseInquiryVo">
+        SELECT PP.PRODUCT_NAME as title,PD.COUNT,TO_CHAR(P.TIME + 9/24, 'yyyy-mm-dd') AS TIME,P.STATE,PDD.MAINIMAGE,P.ID,P.USER_ID,P.TOTALPRICE,P.PRODUCTID
+        FROM PURCHASELIST_TB P JOIN PURCHASEDETAILLIST_TB PD
+        ON P.ID = PD.PURCHASELISTID JOIN PRODUCTDETAIL_TB PP ON PP.ID = PD.PRODUCTDETAILID JOIN PRODUCT_TB PDD ON PDD.ID = P.PRODUCTID
         WHERE USER_ID = #{user_id}
     </select>
 
@@ -80,6 +81,35 @@
     FROM SHOPPING_BASKET_TB
     WHERE USER_ID = #{user_id}
 
+    </select>
+
+    <select id="getmainImageByproductId"
+            resultType="String">
+    SELECT MAINIMAGE,TITLE
+    FROM PRODUCT_TB
+    WHERE ID = #{productId}
+
+    </select>
+
+    <select id="getproductNameByproductId"
+            resultType="String">
+        SELECT TITLE
+        FROM PRODUCT_TB
+        WHERE ID = #{productId}
+    </select>
+
+    <select id="getProductImgByProductId"
+            resultType="HashMap">
+        select *
+        from product_img_tb
+        where product_num = #{productid} and ismain = 1
+    </select>
+
+    <select id="getFile"
+            resultType="HashMap">
+        SELECT *
+        FROM File_Tb
+        WHERE NAME = #{file_name}
     </select>
 
 </mapper>

@@ -290,4 +290,10 @@ public class SellerCenterController {
         List<Integer> deliveryState = sellerCenterService.deliveryState(map);
         return deliveryState;
     }
+
+    @GetMapping("/getmarketNamebySellerid")
+    public String getMarketNamebySellerid(@RequestParam String user_id){
+        String marketName = sellerCenterService.getMarketNamebySellerid(user_id);
+        return marketName;
+    }
 }

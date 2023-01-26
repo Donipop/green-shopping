@@ -37,7 +37,7 @@ public class MypageService {
         return mypageDao.myreview(user_id);
     }
 
-    public List<PurchaselistVo> mypruchaseinquiry(String user_id) {
+    public List<MyPurchaseInquiryVo> mypruchaseinquiry(String user_id) {
         return mypageDao.mypruchaseinquiry(user_id);
     }
 
@@ -55,5 +55,21 @@ public class MypageService {
 
     public int countBasket(String user_id) {
         return mypageDao.countBasket(user_id);
+    }
+
+    public String getmainImageByproductId(int productid) {
+        return mypageDao.getmainImageByproductId(productid);
+    }
+
+    public String getproductNameByproductId(int productid) {
+        return mypageDao.getproductNameByproductId(productid);
+    }
+
+    public HashMap<String, Object> getProductImgByProductId(int productid) {
+        return mypageDao.getProductImgByProductId(productid);
+    }
+
+    public HashMap<String, Object> getFile(String file_name) {
+        return mypageDao.getFile(file_name);
     }
 }

@@ -13,7 +13,7 @@ public interface MypageDao {
 
     List<ReviewVo> myreview(String user_id);
 
-    List<PurchaselistVo> mypruchaseinquiry(String user_id);
+    List<MyPurchaseInquiryVo> mypruchaseinquiry(String user_id);
 
     TestpostVo invoiceNumberGet(long invoicenumber);
     
@@ -21,4 +21,12 @@ public interface MypageDao {
 
     void myinfoUpdate(HashMap<String, Object> myinfo2);
     int countBasket(String user_id);
+
+    String getmainImageByproductId(int productid);
+
+    String getproductNameByproductId(int productid);
+
+    HashMap<String, Object> getProductImgByProductId(int productid);
+
+    HashMap<String, Object> getFile(String file_name);
 }

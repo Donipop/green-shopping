@@ -303,6 +303,11 @@
         WHERE MARKET_NAME = #{marketName}
     </select>
 
+    <select id="getMarketNamebySellerid" resultType="String">
+                SELECT NAME
+                FROM MARKET_TB
+                WHERE SELLERID = #{user_id}
+    </select>
 </mapper>
 
 
