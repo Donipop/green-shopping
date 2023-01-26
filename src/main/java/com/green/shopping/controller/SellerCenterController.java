@@ -141,16 +141,22 @@ public class SellerCenterController {
 
         HashMap<String, Object> putbasket = new HashMap<>();
         List<HashMap<String, Object>> SettelValue = new ArrayList<>();
-        HashMap<String, Object> a =  sellerCenterService.PurchaseConfirmCount(map);
-        HashMap<String, Object> b =  sellerCenterService.beforeSettleSum(map);
-        HashMap<String, Object> c =  sellerCenterService.afterSettleSum(map);
-        putbasket.put("count",a.get("COUNT"));
-        putbasket.put("beforeSettleSum",b.get("BEFORESETTLESUM"));
-        putbasket.put("afterSettleSum",c.get("AFTERSETTLESUM"));
+        HashMap<String, Object> PurchaseConfirmCount =  sellerCenterService.PurchaseConfirmCount(map); // 구매확정 카운트
+        HashMap<String, Object> beforeSettleSum =  sellerCenterService.beforeSettleSum(map); // 정산예정 금액
+        HashMap<String, Object> afterSettleSum =  sellerCenterService.afterSettleSum(map); // 정산된 금액
+        if(beforeSettleSum == null) {
+            putbasket.put("beforeSettleSum",0);
+        } else {
+            putbasket.put("beforeSettleSum",beforeSettleSum.get("BEFORESETTLESUM"));
+        }
+        if(afterSettleSum == null) {
+            putbasket.put("afterSettleSum",0);
+        } else {
+            putbasket.put("afterSettleSum",afterSettleSum.get("AFTERSETTLESUM"));
+        }
+        putbasket.put("count",PurchaseConfirmCount.get("COUNT"));
         SettelValue.add(putbasket);
-
         return SettelValue;
-
     }
 
     @GetMapping("/salesstatus")

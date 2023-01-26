@@ -44,9 +44,25 @@ public class IndexController {
 
     @GetMapping("/randomitemlist")
     public List<HashMap<String, Object>> randomitemlist() {
-        List<HashMap<String, Object>> a = indexService.randomitemlist();
-       return a;
+        List<HashMap<String, Object>> randomitemlist = indexService.randomitemlist();
+       return randomitemlist;
 
+    }
+
+    @GetMapping("/recommenditemlist")
+    public List<HashMap<String, Object>> recommenditemlist() {
+        List<HashMap<String, Object>> recommenditemlist = indexService.recommenditemlist();
+        for(int i=0; i<recommenditemlist.size(); i++) {
+            HashMap<String, Object> starCount = indexService.starCount(recommenditemlist.get(i));
+            if(starCount.get("star") == null) {
+                recommenditemlist.get(i).put("star", 0);
+                recommenditemlist.get(i).put("starCount", 0);
+            } else {
+                recommenditemlist.get(i).put("star", starCount.get("star"));
+                recommenditemlist.get(i).put("starCount", starCount.get("starCount"));
+            }
+        }
+       return recommenditemlist;
     }
 
 }

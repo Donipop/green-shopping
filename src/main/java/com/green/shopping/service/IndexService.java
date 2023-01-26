@@ -21,4 +21,12 @@ public class IndexService {
     public void insertRandomItem() {
         indexDao.insertRandomItem();
     }
+
+    public List<HashMap<String, Object>> recommenditemlist() {
+        return indexDao.recommenditemlist();
+    }
+
+    public HashMap<String, Object> starCount(HashMap<String, Object> map) {
+        return indexDao.starCount(map);
+    }
 }

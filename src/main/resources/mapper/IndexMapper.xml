@@ -25,4 +25,20 @@
         ORDER BY DBMS_RANDOM.VALUE)
         WHERE ROWNUM  <![CDATA[<= 9 ]]>
     </insert>
+
+    <select id="recommenditemlist"
+            resultType="HashMap">
+        SELECT TITLE,ID,MAINIMAGE
+        FROM  (SELECT * FROM PRODUCT_TB
+        ORDER BY DBMS_RANDOM.VALUE)
+        WHERE ROWNUM <![CDATA[<= 15 ]]>
+    </select>
+
+    <select id="starCount"
+            resultType="HashMap">
+        SELECT  sum(star) as star, count(star) as starcount
+        FROM REVIEW_TB
+        WHERE PRODUCT_NUM = #{ID}
+    </select>
+
 </mapper>
