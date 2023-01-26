@@ -17,13 +17,14 @@ public class PayMentDaoImpl implements PayMentDao {
     }
 
     @Override
-    public int insertPurchaseList(String userId, int totalPrice, int productId, int delivery, int postAddress) {
+    public int insertPurchaseList(String userId, int totalPrice, int productId, int delivery, int postAddress, String marketName) {
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("userId", userId);
         map.put("totalPrice", totalPrice);
         map.put("productId", productId);
         map.put("delivery", delivery);
         map.put("postAddress",postAddress);
+        map.put("marketName",marketName);
 
         sqlSession.insert("Payment.insertPurchaseList", map);
         return (int) map.get("id");

@@ -316,4 +316,9 @@ public class SellerCenterController {
         sellerCenterService.addShoppingBasket(yetAddShoppingBasketInfo);
         sellerCenterService.updateShoppingBasket(alreadyAddShoppingBasketInfo);
     }
+    @GetMapping("/getmarketNamebySellerid")
+    public String getMarketNamebySellerid(@RequestParam String user_id){
+        String marketName = sellerCenterService.getMarketNamebySellerid(user_id);
+        return marketName;
+    }
 }

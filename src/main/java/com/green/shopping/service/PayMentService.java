@@ -34,7 +34,7 @@ public class PayMentService {
             totalPrice += paymentVo.getDelivery();
 
             //purcharseList_Tb insert
-            int purchaseListId = payMentDaoImpl.insertPurchaseList(userId.get(),totalPrice,paymentVo.getProductId(),paymentVo.getDelivery(),postAddress);
+            int purchaseListId = payMentDaoImpl.insertPurchaseList(userId.get(),totalPrice,paymentVo.getProductId(),paymentVo.getDelivery(),postAddress, paymentVo.getMarketName());
 
             //purcharseDetailList_Tb insert
             for (PaymentListItemVo item : paymentVo.getListItem()) {

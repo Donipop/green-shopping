@@ -127,20 +127,25 @@ public class ChatController {
         //내가 가지고 있는 정보 userId랑 marketOwnerId
         log.info("[connect] connections : {}", sessionId);
 
+        //로그인 되어있는 상태
         if (loginCheck.equals("true")) {
-            //로그인 되어있는 상태
-            checkChatRoom(userId, uuid, productId, marketOwner, sessionId);
-            //이전 채팅내역 불러오기
-            getBeforeChatList(sessionId);
+            //채팅방이 있는지 확인하고 없다면 생성
+            if(checkChatRoom(userId, uuid, productId, marketOwner, sessionId).equals("success")){
+                //이전 채팅내역 불러오기
+                if(getBeforeChatList(sessionId).equals("success")){
+                    log.info("[connect] 성공");
+                }
+            }
+
         }
 
     }
 
-    private void getBeforeChatList(String sessionId) {
+    private String getBeforeChatList(String sessionId) {
         //이전 채팅내역 불러오기
         String uuid = sessionToUUIDListMap.get(sessionId).get("uuid").toString();
         if (uuid == null) {
-            return;
+            return "fail";
         }
         Optional<Object> chatObject = Optional.ofNullable(chatMongoDbDao.findById(uuid));
         log.info("chatObject : {}", chatObject);
@@ -151,20 +156,21 @@ public class ChatController {
         } else {
             log.info("{} 채팅내역 없음", uuid);
         }
+        return "success";
     }
 
-    private void checkChatRoom(String userId, String uuid, String productId, String marketOwner, String sessionId) {
+    private String checkChatRoom(String userId, String uuid, String productId, String marketOwner, String sessionId) {
         Map<String, String> itemMap = new HashMap<>();
 
         log.info("userID {} marketOwner {} uuid {} sessionId {} productId {}", userId, marketOwner, uuid, sessionId, productId);
         if (userId == null) {
             log.info("[잘못된 접근] userId null");
-            return;
+            return "fail";
         }
         if (uuid.equals("view")) {
             if (productId == null) {
                 log.info("[잘못된 접근] productId null");
-                return;
+                return "fail";
             }
             //uuid => view 라면 view 페이지에서 접속한 것이므로
             //productId로 marketOwner를 구해옴
@@ -173,7 +179,7 @@ public class ChatController {
             if (userId.equals(marketOwner)) {
                 //같으면 접속 불가
                 log.info("[잘못된 접근] userId와 marketOwner가 같음");
-                return;
+                return "fail";
             }
             //userId와 marketOwner로 uuid를 구해옴
             Optional<String> uuidFromDB = Optional.ofNullable(talkDaoImpl.getIdByUserIdAndMarketOwner(userId, marketOwner));
@@ -189,6 +195,7 @@ public class ChatController {
                 //uuid가 존재하지 않으면 새로운 채팅방 생성
                 String newUUID = UUID.randomUUID().toString();
                 talkDaoImpl.insert(newUUID, userId, marketOwner);
+                chatMongoDbDao.save(new ChatDoc(newUUID, new ArrayList<>()));
                 itemMap.put("uuid", newUUID);
                 sessionToUUIDListMap.put(sessionId, itemMap);
                 log.info("[View] 새로운 uuid 생성 : {}", newUUID);
@@ -203,9 +210,10 @@ public class ChatController {
                 log.info("uuid 존재 : {}", uuid);
             } else {
                 log.info("잘못된 uuid");
-                return;
+                return "fail";
             }
         }
+        return "success";
     }
 
     @EventListener(SessionDisconnectEvent.class)
