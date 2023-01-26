@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 @Repository
 public class TalkDaoImpl implements TalkDao {
 
@@ -93,5 +94,10 @@ public class TalkDaoImpl implements TalkDao {
     @Override
     public String getMarketOwnerByUuid(String uuid) {
         return sqlSession.selectOne("Talk.getMarketOwnerByUuid", uuid);
+    }
+
+    @Override
+    public String getMarketOwnerIdByProductId(int productId) {
+        return sqlSession.selectOne("Talk.getMarketOwnerIdByProductId", productId);
     }
 }

@@ -170,7 +170,6 @@ public class SellerCenterController {
     @GetMapping("/getmarketnamelist")
     public List<String> getMarketNameList(@RequestParam String user_id) {
         List<String> MarketNameList = sellerCenterService.getMarketNameList(user_id);
-        System.out.println("마켓네임리스트 = " +MarketNameList);
         return MarketNameList;
     }
 

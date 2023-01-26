@@ -85,6 +85,12 @@
         select MARKETOWNER from Talk_Tb
         where ID = #{uuid}
     </select>
+
+    <select id="getMarketOwnerIdByProductId" parameterType="Integer" resultType="String">
+        select sellerId from market_tb
+        where name = (select market_name from product_tb
+                      where id = #{productId})
+    </select>
 </mapper>
 
 
