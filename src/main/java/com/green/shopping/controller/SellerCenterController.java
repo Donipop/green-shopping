@@ -164,6 +164,7 @@ public class SellerCenterController {
     @GetMapping("/getmarketnamelist")
     public List<String> getMarketNameList(@RequestParam String user_id) {
         List<String> MarketNameList = sellerCenterService.getMarketNameList(user_id);
+        System.out.println("마켓네임리스트 = " +MarketNameList);
         return MarketNameList;
     }
 
@@ -176,6 +177,7 @@ public class SellerCenterController {
     @PostMapping("/getbeforesettlement")
     public List<Object> getBeforeSettlement(@RequestParam String user_id, @RequestParam String market_name) {
         HashMap<String, Object> map = new HashMap<>();
+        System.out.println(user_id);
         map.put("user_id", user_id);
         map.put("market_name", market_name);
         List<Object> BeforeSettlement = sellerCenterService.getBeforeSettlement(map);
