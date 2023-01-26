@@ -158,7 +158,22 @@ public class LoginController {
             }
         }
     }
-
+    @PostMapping("/findId")
+    public String findId(@RequestParam String user_name, @RequestParam String user_tel) {
+        HashMap<String, Object> user_NameAndTel = new HashMap<>();
+        user_NameAndTel.put("user_name", user_name);
+        user_NameAndTel.put("user_tel", user_tel);
+        String user_id = loginService.findId(user_NameAndTel);
+        return user_id;
+    }
+    @PostMapping("/findPassword")
+    public String findPassword(@RequestParam String user_id, @RequestParam String user_email) {
+        HashMap<String, Object> user_IdAndEmail = new HashMap<>();
+        user_IdAndEmail.put("user_id", user_id);
+        user_IdAndEmail.put("user_email", user_email);
+        String user_password = loginService.findPassword(user_IdAndEmail);
+        return user_password;
+    }
 
 
 

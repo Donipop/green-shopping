@@ -16,4 +16,8 @@ public interface LoginDao {
     UserVo login(HashMap<String, String> map);
 
     void seller_sign_up(SellerVo sellerVo);
+
+    String findId(HashMap<String, Object> user_NameAndTel);
+
+    String findPassword(HashMap<String, Object> user_IdAndEmail);
 }
