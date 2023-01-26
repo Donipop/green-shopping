@@ -83,7 +83,6 @@ public class LoginController {
 
     @PostMapping("/signup")
     public String post(@RequestBody SignUp name) {
-        System.out.println(name);
         return "ho";
     }
 

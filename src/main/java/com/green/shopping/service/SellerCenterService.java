@@ -346,6 +346,23 @@ public class SellerCenterService {
         return sellerCenterDaoImpl.deliveryState(map);
     }
 
+    public void addShoppingBasket(HashMap<String, Object> map) {
+        sellerCenterDaoImpl.addShoppingBasket(map);
+    }
+
+
+    public List<Integer> AlreadyCountList(String user_id) {
+        return sellerCenterDaoImpl.AlreadyCountList(user_id);
+    }
+
+    public List<Integer> AlreadyProductDetailIdList(String user_id) {
+        return sellerCenterDaoImpl.AlreadyProductDetailIdList(user_id);
+    }
+
+    public void updateShoppingBasket(HashMap<String, Object> alreadyAddShoppingBasketInfo) {
+        sellerCenterDaoImpl.updateShoppingBasket(alreadyAddShoppingBasketInfo);
+    }
+
     public String getMarketNamebySellerid(String user_id) {
         return sellerCenterDaoImpl.getMarketNamebySellerid(user_id);
     }

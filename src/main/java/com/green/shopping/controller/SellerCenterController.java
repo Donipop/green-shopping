@@ -2,6 +2,7 @@ package com.green.shopping.controller;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -170,6 +171,7 @@ public class SellerCenterController {
     @GetMapping("/getmarketnamelist")
     public List<String> getMarketNameList(@RequestParam String user_id) {
         List<String> MarketNameList = sellerCenterService.getMarketNameList(user_id);
+
         return MarketNameList;
     }
 
@@ -182,7 +184,7 @@ public class SellerCenterController {
     @PostMapping("/getbeforesettlement")
     public List<Object> getBeforeSettlement(@RequestParam String user_id, @RequestParam String market_name) {
         HashMap<String, Object> map = new HashMap<>();
-        System.out.println(user_id);
+
         map.put("user_id", user_id);
         map.put("market_name", market_name);
         List<Object> BeforeSettlement = sellerCenterService.getBeforeSettlement(map);
@@ -289,10 +291,29 @@ public class SellerCenterController {
         List<Integer> deliveryState = sellerCenterService.deliveryState(map);
         return deliveryState;
     }
-
-    @GetMapping("/getmarketNamebySellerid")
-    public String getMarketNamebySellerid(@RequestParam String user_id){
-        String marketName = sellerCenterService.getMarketNamebySellerid(user_id);
-        return marketName;
+    @PostMapping("/addShoppingBasket")
+    public void addShoppingBasket(@RequestBody HashMap<Object, Object> addShoppingBasketInfo) {
+        List<Integer> countList = (List<Integer>) addShoppingBasketInfo.get("countList");
+        List<Integer> productDetailIdList = (List<Integer>) addShoppingBasketInfo.get("productDetailIdList");
+        String user_id = (String) addShoppingBasketInfo.get("user_id");
+        List<Integer> AlreadyCountList = sellerCenterService.AlreadyCountList(user_id); // 장바구니에 등록된 count
+        List<Integer> AlreadyProductDetailIdList = sellerCenterService.AlreadyProductDetailIdList(user_id); // 장바구니에 등록된 productDetailId
+        HashMap<String, Object> yetAddShoppingBasketInfo = new HashMap<>();
+        HashMap<String, Object> alreadyAddShoppingBasketInfo = new HashMap<>();
+        for( int v = 0; v < productDetailIdList.size(); v++ ) {
+            if(AlreadyProductDetailIdList.contains(productDetailIdList.get(v))) {
+                int index = AlreadyProductDetailIdList.indexOf(productDetailIdList.get(v));
+                int count = AlreadyCountList.get(index) + countList.get(v);
+                alreadyAddShoppingBasketInfo.put("count", count);
+                alreadyAddShoppingBasketInfo.put("productDetailId", productDetailIdList.get(v));
+                alreadyAddShoppingBasketInfo.put("user_id", user_id);
+            } else {
+                yetAddShoppingBasketInfo.put("count", countList.get(v));
+                yetAddShoppingBasketInfo.put("productDetailId", productDetailIdList.get(v));
+                yetAddShoppingBasketInfo.put("user_id", user_id);
+            }
+        }
+        sellerCenterService.addShoppingBasket(yetAddShoppingBasketInfo);
+        sellerCenterService.updateShoppingBasket(alreadyAddShoppingBasketInfo);
     }
 }

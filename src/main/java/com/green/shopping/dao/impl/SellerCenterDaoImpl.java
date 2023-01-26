@@ -257,4 +257,21 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
     public String getMarketNamebySellerid(String user_id) {
         return sqlSession.selectOne("SellerCenter.getMarketNamebySellerid", user_id);
     }
+
+    public void addShoppingBasket(HashMap<String, Object> map) {
+        sqlSession.insert("SellerCenter.addShoppingBasket", map);
+    }
+
+
+    public List<Integer> AlreadyCountList(String user_id) {
+        return sqlSession.selectList("SellerCenter.AlreadyCountList", user_id);
+    }
+
+    public List<Integer> AlreadyProductDetailIdList(String user_id) {
+        return sqlSession.selectList("SellerCenter.AlreadyProductDetailIdList", user_id);
+    }
+
+    public void updateShoppingBasket(HashMap<String, Object> alreadyAddShoppingBasketInfo) {
+        sqlSession.update("SellerCenter.updateShoppingBasket", alreadyAddShoppingBasketInfo);
+    }
 }

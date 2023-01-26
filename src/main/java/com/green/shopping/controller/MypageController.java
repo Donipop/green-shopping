@@ -30,10 +30,7 @@ public class MypageController {
 
     @PostMapping("/user_shopping_basket")
     public List<Shopping_basketVo> user_shopping_basket(@RequestParam String user_id) {
-
         List<Shopping_basketVo> user_shopping_basket = mypageService.user_shopping_basket(user_id);
-
-
         return user_shopping_basket;
     }
 
@@ -102,8 +99,7 @@ public class MypageController {
 
         HashMap<String, Object> myinfo2 = (HashMap<String, Object>) myinfo.get("myinfo");
         String refreshToken = (String) myinfo.get("refreshToken");
-        System.out.println(myinfo2);
-        System.out.println(refreshToken);
+
 
         try {
             mypageService.myinfoUpdate(myinfo2);
