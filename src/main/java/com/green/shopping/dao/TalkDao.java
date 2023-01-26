@@ -18,4 +18,5 @@ public interface TalkDao {
     public int getMarketOwnerCountByUuid(String uuid);
     public int getUserIdCountByUuid(String uuid);
     public String getMarketOwnerByUuid(String uuid);
+    public String getMarketOwnerIdByProductId(int productId);
 }
