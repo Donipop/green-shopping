@@ -23,8 +23,8 @@ import java.util.*;
 @RestController
 @Slf4j
 public class ChatController {
-    private final List<String> sessionIdList = new ArrayList<>();
-    private final Map<String, String> sessionToUUIDListMap = new HashMap<>();
+    private final Map<String, List<String>> userListMap = new HashMap<>();
+    private final Map<String, Map> sessionToUUIDListMap = new HashMap<>();
     private final Map<String, List<Map>> chatListMap = new HashMap<>();
     private final ChatMongoDbDao chatMongoDbDao;
     private final SimpMessagingTemplate simpMessagingTemplate;
@@ -47,23 +47,71 @@ public class ChatController {
         String uuid = message.get("uuid").toString();
         String type = message.get("type").toString();
         log.info(message.toString());
-        HashMap<String,Object> sendMessageMap = new HashMap<>();
-        sendMessageMap.put("Type", "Connect");
-        sendMessageMap.put("Message", "접속되었습니다.");
-        sendMessageMap.put("UUID", sessionToUUIDListMap.get(sessionId));
-
-        simpMessagingTemplate.convertAndSendToUser(sessionId, "/queue/message", sendMessageMap,createHeaders(messageHeaderAccessor.getSessionId()));
-
+        HashMap<String, Object> sendMessageMap = new HashMap<>();
+        if (uuid.equals("view")) {
+            sendMessageMap.put("TYPE", "Refresh");
+            sendMessageMap.put("MESSAGE", "새로고침.");
+            sendMessageMap.put("UUID", sessionToUUIDListMap.get(sessionId).get("uuid"));
+            sendMessageMap.put("MARKETOWNER", sessionToUUIDListMap.get(sessionId).get("marketOwner"));
+        } else {
+            sendMessageMap.put("TYPE", "Connect");
+            sendMessageMap.put("MESSAGE", "접속되었습니다.");
+            sendMessageMap.put("UUID", uuid);
+            sendMessageMap.put("MARKETOWNER", userId);
+            sendMessageMap.put("CHATLIST", chatListMap.get(uuid));
+        }
+        //Map에 List가 없으면 생성하고 세션추가 없으면 세션만 추가
+        userListMap.computeIfAbsent(sendMessageMap.get("UUID").toString(), k -> new ArrayList<>()).add(sessionId);
+        simpMessagingTemplate.convertAndSendToUser(sessionId, "/queue/message", sendMessageMap, createHeaders(messageHeaderAccessor.getSessionId()));
     }
 
     @MessageMapping("/queue")
     @SendTo("/queue/user")
     public void sendMessageToUser(Map message, SimpMessageHeaderAccessor messageHeaderAccessor) {
-        //세션에 등록된 아이디
-        if (sessionIdList.contains(messageHeaderAccessor.getSessionId())) {
+        String sessionId = messageHeaderAccessor.getSessionId();
+        String msg = message.get("message").toString();
+        String uuid = message.get("uuid").toString();
+        String userId = message.get("userId").toString();
+        String marketOwner = message.get("marketOwner").toString();
+        Map<String, Object> messageMap = new HashMap<>();
+        Map<String, String> mongoDbDataMap = new HashMap<>();
+        log.info(message.toString());
+        mongoDbDataMap.put("sender", userId);
+        mongoDbDataMap.put("message", msg);
+        mongoDbDataMap.put("time", new Date().toString());
+        chatListMap.get(uuid).add(mongoDbDataMap);
+        messageMap.put("TYPE", "Message");
+        messageMap.put("MESSAGE", msg);
+        messageMap.put("UUID", uuid);
+        messageMap.put("MARKETOWNER", marketOwner);
+        messageMap.put("USERID", userId);
+        simpMessagingTemplate.convertAndSend("/queue/user/" + uuid, messageMap);
+        chatDataSave(userId, marketOwner, uuid);
+    }
 
+    private void chatDataSave(String userId, String marketOwner, String uuid) {
+        //mongoDB에 저장
+        chatMongoDbDao.save(new ChatDoc(uuid, chatListMap.get(uuid)));
+        //oracleDB에 카운트 저장
+        if (userId.equals(marketOwner)) {
+            if (userListMap.get(uuid).size() > 1) {
+                //두명이상 접속중일때
+                talkDaoImpl.updateBothCount(uuid);
+                log.info("[업데이트] 마켓오너 메세지 두명이상 접속중일때");
+            } else {
+                talkDaoImpl.updateMarketOwnerCount(uuid);
+                log.info("[업데이트] 마켓오너 메세지");
+            }
+        } else {
+            if (userListMap.get(uuid).size() > 1) {
+                //두명이상 접속중일때
+                talkDaoImpl.updateBothCount(uuid);
+                log.info("[업데이트] 구매자 메세지 두명이상 접속중일때");
+            } else {
+                talkDaoImpl.updateUserIdCount(uuid);
+                log.info("[업데이트] 구매자 메세지");
+            }
         }
-
     }
 
     @EventListener(SessionConnectEvent.class)
@@ -81,7 +129,6 @@ public class ChatController {
 
         if (loginCheck.equals("true")) {
             //로그인 되어있는 상태
-//            (String userId, String uuid, String productId, String marketOwner, String sessionId)
             checkChatRoom(userId, uuid, productId, marketOwner, sessionId);
             //이전 채팅내역 불러오기
             getBeforeChatList(sessionId);
@@ -91,23 +138,25 @@ public class ChatController {
 
     private void getBeforeChatList(String sessionId) {
         //이전 채팅내역 불러오기
-        String uuid = sessionToUUIDListMap.get(sessionId);
-        if(uuid == null){
+        String uuid = sessionToUUIDListMap.get(sessionId).get("uuid").toString();
+        if (uuid == null) {
             return;
         }
         Optional<Object> chatObject = Optional.ofNullable(chatMongoDbDao.findById(uuid));
         log.info("chatObject : {}", chatObject);
         if (!chatObject.get().equals(Optional.empty())) {
-            Optional<ChatDoc> chatDoc = (Optional<ChatDoc>)chatObject.get();
+            Optional<ChatDoc> chatDoc = (Optional<ChatDoc>) chatObject.get();
             chatListMap.put(uuid, chatDoc.get().getMessageList());
             log.info("{} 채팅내역 불러옴", uuid);
-        }else{
+        } else {
             log.info("{} 채팅내역 없음", uuid);
         }
     }
 
     private void checkChatRoom(String userId, String uuid, String productId, String marketOwner, String sessionId) {
-        log.info("userID {} marketOwner {} uuid {} sessionId {} productId {}", userId, marketOwner,uuid, sessionId, productId);
+        Map<String, String> itemMap = new HashMap<>();
+
+        log.info("userID {} marketOwner {} uuid {} sessionId {} productId {}", userId, marketOwner, uuid, sessionId, productId);
         if (userId == null) {
             log.info("[잘못된 접근] userId null");
             return;
@@ -128,30 +177,35 @@ public class ChatController {
             }
             //userId와 marketOwner로 uuid를 구해옴
             Optional<String> uuidFromDB = Optional.ofNullable(talkDaoImpl.getIdByUserIdAndMarketOwner(userId, marketOwner));
+
+            itemMap.put("marketOwner", marketOwner);
             if (uuidFromDB.isPresent()) {
                 //uuid가 존재하면
                 uuid = uuidFromDB.get();
-                sessionToUUIDListMap.put(sessionId, uuid);
+                itemMap.put("uuid", uuid);
+                sessionToUUIDListMap.put(sessionId, itemMap);
                 log.info("[View] uuid 존재 : {}", uuid);
             } else {
                 //uuid가 존재하지 않으면 새로운 채팅방 생성
                 String newUUID = UUID.randomUUID().toString();
                 talkDaoImpl.insert(newUUID, userId, marketOwner);
-                sessionToUUIDListMap.put(sessionId, newUUID);
+                itemMap.put("uuid", newUUID);
+                sessionToUUIDListMap.put(sessionId, itemMap);
                 log.info("[View] 새로운 uuid 생성 : {}", newUUID);
             }
         } else {
             //uuid가 view가 아니라면 uuid의 유효성 검사
             Optional<List> uuidFromDB = Optional.ofNullable(talkDaoImpl.getIdByMarketOwner(marketOwner));
-            if(uuidFromDB.get().contains(uuid)){
-                sessionToUUIDListMap.put(sessionId, uuid);
+            if (uuidFromDB.get().contains(uuid)) {
+                itemMap.put("uuid", uuid);
+                itemMap.put("marketOwner", marketOwner);
+                sessionToUUIDListMap.put(sessionId, itemMap);
                 log.info("uuid 존재 : {}", uuid);
-            }else{
+            } else {
                 log.info("잘못된 uuid");
                 return;
             }
         }
-
     }
 
     @EventListener(SessionDisconnectEvent.class)
@@ -159,6 +213,7 @@ public class ChatController {
         String sessionId = event.getSessionId();
         log.info("[disconnect] connections : {}", sessionId);
         //접속 끊기면 삭제
+        userListMap.get(sessionToUUIDListMap.get(sessionId).get("uuid")).remove(sessionId);
         sessionToUUIDListMap.remove(sessionId);
     }
 
@@ -174,17 +229,23 @@ public class ChatController {
     /*==================================================================*/
     @GetMapping("/chat/getChatList")
     public List<Map<String, Object>> getChatList(@RequestParam String marketOwner) {
+        log.info("marketOwner : {}", marketOwner);
         //마켓오너가 가지고 있는 채팅방 리스트를 가져온다
         List<String> chatList = talkDaoImpl.getIdByMarketOwner(marketOwner);
         List<Map<String, Object>> chatListMap = new ArrayList<>();
         for (String uuid : chatList) {
             Map<String, Object> chatMap = new HashMap<>();
-            chatMap.put("uuid", uuid);
-            List<? extends Object> mongoMessageList = chatMongoDbDao.findById(uuid).get().getMessageList();
-            chatMap.put("chatList", mongoMessageList.get(mongoMessageList.size() - 1));
-            chatMap.put("count", talkDaoImpl.getMarketOwnerCountByUuid(uuid));
-            chatListMap.add(chatMap);
+            Optional<ChatDoc> chatDoc = chatMongoDbDao.findById(uuid);
+            if(!chatDoc.isEmpty()){
+                Map lastMessage = chatDoc.get().getMessageList().get(chatDoc.get().getMessageList().size() - 1);
+                chatMap.put("uuid", uuid);
+                chatMap.put("chatList", lastMessage);
+                chatMap.put("count", talkDaoImpl.getMarketOwnerCountByUuid(uuid));
+                chatListMap.add(chatMap);
+                log.info("chatMap : {}", chatMap);
+            }
         }
+        log.info("chatListMap : {}", chatListMap);
         return chatListMap;
     }
 }
