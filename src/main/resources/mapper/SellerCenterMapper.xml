@@ -302,7 +302,32 @@
         FROM PRODUCT_TB
         WHERE MARKET_NAME = #{marketName}
     </select>
-
+    <insert id="addShoppingBasket"
+            parameterType="HashMap">
+        INSERT INTO SHOPPING_BASKET_TB (ID, USER_ID, PRODUCTDETAIL_NUM, COUNT)
+        VALUES (SHOPPING_BASKET_TB_SEQ.NEXTVAL, #{user_id}, #{productDetailId}, #{count})
+    </insert>
+    <select id="AlreadyCountList"
+            parameterType="String"
+            resultType="Integer">
+            SELECT COUNT
+            FROM SHOPPING_BASKET_TB
+            WHERE USER_ID = #{user_id}
+    </select>
+    <select id="AlreadyProductDetailIdList"
+            parameterType="String"
+            resultType="Integer">
+            SELECT PRODUCTDETAIL_NUM
+            FROM SHOPPING_BASKET_TB
+            WHERE USER_ID = #{user_id}
+    </select>
+    <update id="updateShoppingBasket"
+            parameterType="HashMap">
+        UPDATE SHOPPING_BASKET_TB
+        SET COUNT = #{count}
+        WHERE USER_ID = #{user_id}
+        AND PRODUCTDETAIL_NUM = #{productDetailId}
+    </update>
 </mapper>
 
 

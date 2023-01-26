@@ -9,7 +9,7 @@
     <select id="user_shopping_basket"
             resultType="com.green.shopping.vo.Shopping_basketVo">
 
-        SELECT S.PRODUCTDETAIL_NUM as productDetailID, S.COUNT as count, P.PRODUCT_PRICE as price , P.PRODUCT_NAME as name, P.PRODUCT_ID as productId, R.MARKET_NAME as marketName
+        SELECT S.PRODUCTDETAIL_NUM as productDetailID, S.COUNT as count, P.PRODUCT_PRICE as price , P.PRODUCT_NAME as name, P.PRODUCT_ID as productId, R.MARKET_NAME as marketName, P.PRODUCT_DISCOUNT AS Discount
         FROM SHOPPING_BASKET_TB S LEFT JOIN PRODUCTDETAIL_TB P
         ON S.PRODUCTDETAIL_NUM = P.ID
         LEFT JOIN PRODUCT_TB R
