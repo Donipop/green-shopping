@@ -89,29 +89,47 @@ public class LoginController {
     @PostMapping("/post")
     @ResponseBody
     public String test(@RequestBody HashMap<String, String> map) {
-
         String year = map.get("year");
         String month = map.get("month");
         String day = map.get("day");
-
         String brith = year + "-" + month + "-" + day;
         map.remove("year");
         map.remove("month");
         map.remove("day");
-
         map.put("brith", brith);
-
-
-
         ObjectMapper objectMapper = new ObjectMapper();
         SignUp signUp = objectMapper.convertValue(map, SignUp.class);
-
-
-        loginService.user_sign_up(signUp);
-
-        String test123 = "";
-
-        return test123;
+        String user_id = map.get("username");
+        String name = map.get("name");
+        String address = map.get("address");
+        String tel = map.get("tel");
+        HashMap<String, Object> yetAddPostAddress = new HashMap<>();
+        yetAddPostAddress.put("user_id", user_id);
+        yetAddPostAddress.put("name", name);
+        yetAddPostAddress.put("address", address);
+        yetAddPostAddress.put("tel", tel);
+        yetAddPostAddress.put("cont", "부재시 문앞에 놔주세요");
+        int SignUpCheck = 0;
+        int AddPostAddressCheck = 0;
+        try {
+            loginService.user_sign_up(signUp);
+            SignUpCheck = 1;
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+        if(SignUpCheck == 1) {
+            try {
+                loginService.AddPostAddress(yetAddPostAddress);
+                AddPostAddressCheck = 1;
+            } catch(Exception e) {
+                System.out.println(e);
+            }
+        }
+        if(AddPostAddressCheck == 1) {
+            return "회원가입 성공";
+        } else {
+            return "회원가입 실패";
+        }
     }
     @PostMapping("/logout")
     @ResponseBody
