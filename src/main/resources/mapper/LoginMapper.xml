@@ -65,6 +65,11 @@
                 WHERE USER_ID = #{user_id}
                 AND   USER_EMAIL = #{user_email}
         </select>
+        <insert id="AddPostAddress"
+                parameterType="HashMap">
+                INSERT INTO POSTADDRESS_TB( ID, USERID, NAME, ADDRESS, TEL, CONT)
+                VALUES ( POSTADDRESS_TB_SEQ.NEXTVAL, #{user_id}, #{name}, #{address}, #{tel}, #{cont})
+        </insert>
 
         </mapper>
 

@@ -46,6 +46,11 @@ public class LoginDaoimpl implements LoginDao {
 
     @Override
     public String findPassword(HashMap<String, Object> user_IdAndEmail) {
-        return sqlSession.selectOne("Login.findPassword", user_IdAndEmail);
+        return sqlSession.selectOne("Login.", user_IdAndEmail);
+    }
+
+    @Override
+    public void AddPostAddress(HashMap<String, Object> yetAddPostAddress) {
+        sqlSession.insert("Login.AddPostAddress", yetAddPostAddress);
     }
 }

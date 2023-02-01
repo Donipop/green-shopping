@@ -39,7 +39,6 @@ public class SellerCenterController {
         if (parent_num == null || parent_num.equals("")) {
             parent_num = "-1";
         }
-
         return sellerCenterService.getCategoryList(parent_num);
     }
 
@@ -84,6 +83,10 @@ public class SellerCenterController {
     @GetMapping("/reviewmanagement/reviewlist")
     public List<ReviewVo> getReviewListCount(@RequestParam HashMap<String, Object> map) {
         return sellerCenterService.getReviewListCount(map);
+    }
+    @PostMapping("/reviewmanagement/reviewlistGetBySelectedId")
+    public List<ReviewVo> getReviewListBySelectedId(@RequestBody HashMap<String, Object> map) {
+        return sellerCenterService.getReviewListBySelectedId(map);
     }
     @PostMapping("/getpurchaseconfirm")
     public List<purchaseconfirmVo> getPurchaseConfirm(@RequestParam String user_id, @RequestParam String start, @RequestParam String end) {
@@ -184,7 +187,6 @@ public class SellerCenterController {
     @PostMapping("/getbeforesettlement")
     public List<Object> getBeforeSettlement(@RequestParam String user_id, @RequestParam String market_name) {
         HashMap<String, Object> map = new HashMap<>();
-
         map.put("user_id", user_id);
         map.put("market_name", market_name);
         List<Object> BeforeSettlement = sellerCenterService.getBeforeSettlement(map);
@@ -298,23 +300,59 @@ public class SellerCenterController {
         String user_id = (String) addShoppingBasketInfo.get("user_id");
         List<Integer> AlreadyCountList = sellerCenterService.AlreadyCountList(user_id); // 장바구니에 등록된 count
         List<Integer> AlreadyProductDetailIdList = sellerCenterService.AlreadyProductDetailIdList(user_id); // 장바구니에 등록된 productDetailId
-        HashMap<String, Object> yetAddShoppingBasketInfo = new HashMap<>();
-        HashMap<String, Object> alreadyAddShoppingBasketInfo = new HashMap<>();
+        HashMap<Object, Object> yetAddShoppingBasketInfo = new HashMap<>();
+        HashMap<Object, Object> alreadyAddShoppingBasketInfo = new HashMap<>();
         for( int v = 0; v < productDetailIdList.size(); v++ ) {
+            HashMap<String, Object> map = new HashMap<>();
             if(AlreadyProductDetailIdList.contains(productDetailIdList.get(v))) {
                 int index = AlreadyProductDetailIdList.indexOf(productDetailIdList.get(v));
                 int count = AlreadyCountList.get(index) + countList.get(v);
-                alreadyAddShoppingBasketInfo.put("count", count);
-                alreadyAddShoppingBasketInfo.put("productDetailId", productDetailIdList.get(v));
-                alreadyAddShoppingBasketInfo.put("user_id", user_id);
+                map.put("count", count);
+                map.put("productDetailId", productDetailIdList.get(v));
+                map.put("user_id", user_id);
+                alreadyAddShoppingBasketInfo.put(v, map);
             } else {
-                yetAddShoppingBasketInfo.put("count", countList.get(v));
-                yetAddShoppingBasketInfo.put("productDetailId", productDetailIdList.get(v));
-                yetAddShoppingBasketInfo.put("user_id", user_id);
+                map.put("count", countList.get(v));
+                map.put("productDetailId", productDetailIdList.get(v));
+                map.put("user_id", user_id);
+                yetAddShoppingBasketInfo.put(v, map);
             }
         }
-        sellerCenterService.addShoppingBasket(yetAddShoppingBasketInfo);
-        sellerCenterService.updateShoppingBasket(alreadyAddShoppingBasketInfo);
+        List<Integer> keyList = new ArrayList<>();
+        for(Object key : alreadyAddShoppingBasketInfo.keySet()) {
+            keyList.add((Integer) key);
+        }
+        for(Object key : yetAddShoppingBasketInfo.keySet()) {
+            keyList.add((Integer) key);
+        }
+        if(alreadyAddShoppingBasketInfo.size() == 0) {
+            for(int i = 0; i < keyList.size(); i++) {
+                HashMap<String, Object> map = (HashMap<String, Object>) yetAddShoppingBasketInfo.get(i);
+                sellerCenterService.addShoppingBasket(map);
+            }
+        } else if(yetAddShoppingBasketInfo.size() == 0) {
+            for(int i = 0; i < keyList.size(); i++) {
+                HashMap<String, Object> map = (HashMap<String, Object>) alreadyAddShoppingBasketInfo.get(i);
+                sellerCenterService.updateShoppingBasket(map);
+            }
+        } else {
+            for(int i = 0; i < keyList.size(); i++) {
+                HashMap<String, Object> map = (HashMap<String, Object>) alreadyAddShoppingBasketInfo.get(i);
+                if(map == null) {
+                    continue;
+                }
+                sellerCenterService.updateShoppingBasket(map);
+            }
+            for(int i = 0; i < keyList.size(); i++) {
+                HashMap<String, Object> map = (HashMap<String, Object>) yetAddShoppingBasketInfo.get(i);
+                if(map == null) {
+                    continue;
+                }
+                sellerCenterService.addShoppingBasket(map);
+            }
+        }
+
+
     }
     @GetMapping("/getmarketNamebySellerid")
     public String getMarketNamebySellerid(@RequestParam String user_id){

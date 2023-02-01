@@ -47,4 +47,8 @@ public class LoginService {
     public String findPassword(HashMap<String, Object> user_IdAndEmail) {
         return loginDao.findPassword(user_IdAndEmail);
     }
+
+    public void AddPostAddress(HashMap<String, Object> yetAddPostAddress) {
+        loginDao.AddPostAddress(yetAddPostAddress);
+    }
 }
