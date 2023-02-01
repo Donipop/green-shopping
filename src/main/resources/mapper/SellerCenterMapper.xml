@@ -334,6 +334,17 @@
                 FROM MARKET_TB
                 WHERE SELLERID = #{user_id}
     </select>
+    <select id="getReviewListBySelectedId"
+            parameterType="HashMap"
+            resultType="com.green.shopping.vo.ReviewVo">
+    SELECT R.STAR, P.ID
+    FROM MARKET_TB M JOIN PRODUCT_TB P ON M.NAME = P.MARKET_NAME JOIN REVIEW_TB R
+    ON P.ID = R.PRODUCT_NUM
+    WHERE SELLERID = #{user_id} AND R.TIME BETWEEN TO_DATE(#{start}, 'yyyy-mm-dd') AND TO_DATE(#{end}, 'yyyy-mm-dd hh24:mi')
+        AND P.ID = #{id}
+    </select>
+
+
 </mapper>
 
 

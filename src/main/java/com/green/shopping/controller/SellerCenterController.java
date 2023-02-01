@@ -84,6 +84,10 @@ public class SellerCenterController {
     public List<ReviewVo> getReviewListCount(@RequestParam HashMap<String, Object> map) {
         return sellerCenterService.getReviewListCount(map);
     }
+    @PostMapping("/reviewmanagement/reviewlistGetBySelectedId")
+    public List<ReviewVo> getReviewListBySelectedId(@RequestBody HashMap<String, Object> map) {
+        return sellerCenterService.getReviewListBySelectedId(map);
+    }
     @PostMapping("/getpurchaseconfirm")
     public List<purchaseconfirmVo> getPurchaseConfirm(@RequestParam String user_id, @RequestParam String start, @RequestParam String end) {
         HashMap<String, String> map = new HashMap<>();

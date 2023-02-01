@@ -274,4 +274,8 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
     public void updateShoppingBasket(HashMap<String, Object> alreadyAddShoppingBasketInfo) {
         sqlSession.update("SellerCenter.updateShoppingBasket", alreadyAddShoppingBasketInfo);
     }
+
+    public List<ReviewVo> getReviewListBySelectedId(HashMap<String, Object> map) {
+        return sqlSession.selectList("SellerCenter.getReviewListBySelectedId", map);
+    }
 }

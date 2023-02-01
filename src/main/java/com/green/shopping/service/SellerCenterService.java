@@ -366,4 +366,8 @@ public class SellerCenterService {
     public String getMarketNamebySellerid(String user_id) {
         return sellerCenterDaoImpl.getMarketNamebySellerid(user_id);
     }
+
+    public List<ReviewVo> getReviewListBySelectedId(HashMap<String, Object> map) {
+        return sellerCenterDaoImpl.getReviewListBySelectedId(map);
+    }
 }
