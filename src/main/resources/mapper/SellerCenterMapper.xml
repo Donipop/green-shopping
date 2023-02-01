@@ -333,6 +333,11 @@
                 FROM MARKET_TB
                 WHERE SELLERID = #{user_id}
     </select>
+    <update id="deleteProduct" parameterType="Integer">
+        update product_tb
+        set deletecheck = 1
+        where id = #{productId}
+    </update>
 </mapper>
 
 

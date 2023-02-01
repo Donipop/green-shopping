@@ -366,4 +366,8 @@ public class SellerCenterService {
     public String getMarketNamebySellerid(String user_id) {
         return sellerCenterDaoImpl.getMarketNamebySellerid(user_id);
     }
+
+    public void deleteProduct(int productId) {
+        sellerCenterDaoImpl.deleteProduct(productId);
+    }
 }

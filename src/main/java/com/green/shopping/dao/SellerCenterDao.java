@@ -53,4 +53,5 @@ public interface SellerCenterDao {
     List<PurchaselistVo> getPurchaseList(String marketName);
     Map<String,Object> getProductIdAndTitleMapByMarketName(String marketName);
 
+    void deleteProduct(int productId);
 }

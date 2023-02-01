@@ -321,4 +321,8 @@ public class SellerCenterController {
         String marketName = sellerCenterService.getMarketNamebySellerid(user_id);
         return marketName;
     }
+    @PostMapping("/deleteProduct")
+    public void deleteProduct(@RequestBody Map productId){
+        sellerCenterService.deleteProduct(Integer.parseInt(productId.get("productId").toString()));
+    }
 }

@@ -250,6 +250,11 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
         return sqlSession.selectMap("SellerCenter.getProductIdAndTitleMapByMarketName", marketName, "ID");
     }
 
+    @Override
+    public void deleteProduct(int productId) {
+        sqlSession.update("SellerCenter.deleteProduct", productId);
+    }
+
     public List<Integer> deliveryState(HashMap<String, Object> map) {
         return sqlSession.selectList("SellerCenter.deliveryState", map);
     }
