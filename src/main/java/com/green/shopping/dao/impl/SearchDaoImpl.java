@@ -24,8 +24,8 @@ public class SearchDaoImpl implements SearchDao {
     }
 
     @Override
-    public List<HashMap<String, Object>> Allcategorysearch(HashMap<String, Object> map) {
-        List<HashMap<String, Object>> Allcategorysearch = sqlSession.selectList("search.Allcategorysearch", map);
+    public List<HashMap<String, Object>> Allcategorysearch(String searchcont) {
+        List<HashMap<String, Object>> Allcategorysearch = sqlSession.selectList("search.Allcategorysearch", searchcont);
         return Allcategorysearch;
     }
 
@@ -51,5 +51,15 @@ public class SearchDaoImpl implements SearchDao {
     public HashMap<String, Object> getFile(String file_name) {
         return sqlSession.selectOne("search.getFile", file_name);
     }
+
+    @Override
+    public String categorynum(String name) {
+
+        String categorynum = sqlSession.selectOne("search.categorynum", name);
+        return categorynum;
+    }
+
+
+
 }
 

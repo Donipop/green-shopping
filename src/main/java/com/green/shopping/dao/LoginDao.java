@@ -20,4 +20,6 @@ public interface LoginDao {
     String findId(HashMap<String, Object> user_NameAndTel);
 
     String findPassword(HashMap<String, Object> user_IdAndEmail);
+
+    void userRoleUpdate(SellerVo sellerVo);
 }

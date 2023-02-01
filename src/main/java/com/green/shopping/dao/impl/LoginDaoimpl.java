@@ -48,4 +48,9 @@ public class LoginDaoimpl implements LoginDao {
     public String findPassword(HashMap<String, Object> user_IdAndEmail) {
         return sqlSession.selectOne("Login.findPassword", user_IdAndEmail);
     }
+
+    @Override
+    public void userRoleUpdate(SellerVo sellerVo) {
+       sqlSession.update("Login.userRoleUpdate", sellerVo);
+    }
 }

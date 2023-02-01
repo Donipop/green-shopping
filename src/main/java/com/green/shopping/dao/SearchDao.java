@@ -6,7 +6,7 @@ import java.util.List;
 public interface SearchDao {
     List<HashMap<String, Object>> Categorysearch(HashMap<String, Object> map);
 
-    List<HashMap<String, Object>> Allcategorysearch(HashMap<String, Object> map);
+    List<HashMap<String, Object>> Allcategorysearch(String searchcont);
 
     HashMap<String, Object> searchview1(HashMap<String, Object> map);
 
@@ -15,4 +15,7 @@ public interface SearchDao {
     HashMap<String, Object> getProductImgByProductId(String id);
 
     HashMap<String, Object> getFile(String file_name);
+
+    String categorynum(String name);
+
 }

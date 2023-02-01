@@ -10,7 +10,7 @@
         FROM USER_SEQUENCES
         WHERE SEQUENCE_NAME = 'TODAYITEMLIST_TB_SEQ') AND
         (SELECT
-        (LAST_NUMBER) -14
+        (LAST_NUMBER) -12
         FROM
         USER_SEQUENCES
         WHERE
