@@ -16,8 +16,8 @@ public class SearchService {
         return Categorysearch;
     }
 
-    public List<HashMap<String, Object>> Allcategorysearch(HashMap<String, Object> map) {
-        List<HashMap<String, Object>> Allcategorysearch = searchDao.Allcategorysearch(map);
+    public List<HashMap<String, Object>> Allcategorysearch(String searchcont) {
+        List<HashMap<String, Object>> Allcategorysearch = searchDao.Allcategorysearch(searchcont);
         return Allcategorysearch;
     }
 
@@ -37,5 +37,10 @@ public class SearchService {
 
     public HashMap<String, Object> getFile(String file_name) {
         return searchDao.getFile(file_name);
+    }
+
+    public String categorynum(String name) {
+        String categorynum = searchDao.categorynum(name);
+        return categorynum;
     }
 }

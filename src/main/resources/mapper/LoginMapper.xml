@@ -46,9 +46,14 @@
         <insert id="seller_sign_up"
                 parameterType="com.green.shopping.vo.SellerVo">
         INSERT INTO SELLER_TB( USER_ID, BANK_NAME, BANK_ACCOUNT, BANK_ACCOUNTOWNER, DESCRIPTION, BUSINESS_NUMBER,MARKET_NAME)
-        VALUES ( 'admin4', #{bank_name}, #{bank_account}, #{bank_accountowner}, #{description}, #{business_number}, #{market_name})
+        VALUES ( #{user_id}, #{bank_name}, #{bank_account}, #{bank_accountowner}, #{description}, #{business_number}, #{market_name})
 
         </insert>
+        <update id="userRoleUpdate">
+                UPDATE USER_TB
+                SET USER_ROLE = #{user_role}
+                WHERE USER_ID = #{user_id}
+        </update>
         <select id="findId"
         parameterType="HashMap"
                 resultType="String">

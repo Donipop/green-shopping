@@ -14,16 +14,15 @@ public class MyPurchaseInquiryVo {
     private String time;
     private String mainimage;
     private String title;
-
     private long totalprice;
     private int count;
-
     private String productimage;
+    private int price;
 
     public MyPurchaseInquiryVo() {
     }
 
-    public MyPurchaseInquiryVo(int id,int state, String time, String mainimage, String title, long totalprice, int count, int productid, String productimage) {
+    public MyPurchaseInquiryVo(int id,int state, String time, String mainimage, String title, long totalprice, int count, int productid, String productimage,int price) {
         this.id = id;
         this.state = state;
         this.time = time;
@@ -33,6 +32,7 @@ public class MyPurchaseInquiryVo {
         this.count = count;
         this.productid = productid;
         this.productimage = productimage;
+        this.price = price;
     }
 
 

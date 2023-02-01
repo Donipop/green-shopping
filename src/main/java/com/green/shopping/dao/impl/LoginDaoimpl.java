@@ -53,4 +53,9 @@ public class LoginDaoimpl implements LoginDao {
     public void AddPostAddress(HashMap<String, Object> yetAddPostAddress) {
         sqlSession.insert("Login.AddPostAddress", yetAddPostAddress);
     }
+
+    @Override
+    public void userRoleUpdate(SellerVo sellerVo) {
+       sqlSession.update("Login.userRoleUpdate", sellerVo);
+    }
 }

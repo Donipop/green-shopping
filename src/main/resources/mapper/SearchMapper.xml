@@ -7,14 +7,20 @@
 <mapper namespace="search">
     <select id="searchview"
             resultType="HashMap" >
-        select p.title,p.id,p.mainimage
-        from product_tb p
-        where p.title like '%'||#{searchcont}||'%' and p.category In (
+            select p.title,p.id,p.mainimage
+            from product_tb p
+            where REPLACE(p.title,' ','') LIKE '%'||#{searchcont}||'%' and p.category In (
+            select num
+            from category_tb c
+            start with c.num = #{categorynum}
+            connect by prior c.num = c.parent_num
+            )
+    </select>
+
+    <select id="categorynum" resultType="String">
         select num
         from category_tb c
-        start with c.name = #{name}
-        connect by prior c.num = c.parent_num
-        )
+        where  c.name = #{name}
     </select>
 
     <select id="searchview1"
@@ -40,7 +46,7 @@
             resultType="HashMap">
         select p.title,p.id,p.mainimage
         from product_tb p
-        where p.title like '%'||#{searchcont}||'%' and p.category In (
+        where REPLACE(p.title,' ','') LIKE '%'||#{searchcont}||'%' and p.category In (
         select num
         from category_tb
         start with parent_num is null

@@ -1,4 +1,5 @@
 package com.green.shopping.service;
+
 import com.green.shopping.dao.LoginDao;
 import com.green.shopping.vo.SellerVo;
 import com.green.shopping.dao.impl.UserDaoImpl;
@@ -37,7 +38,7 @@ public class LoginService {
     }
 
     public void seller_sign_up(SellerVo sellerVo) {
-         loginDao.seller_sign_up(sellerVo);
+        loginDao.seller_sign_up(sellerVo);
     }
 
     public String findId(HashMap<String, Object> user_NameAndTel) {
@@ -50,5 +51,9 @@ public class LoginService {
 
     public void AddPostAddress(HashMap<String, Object> yetAddPostAddress) {
         loginDao.AddPostAddress(yetAddPostAddress);
+    }
+
+    public void userRoleUpdate(SellerVo sellerVo) {
+        loginDao.userRoleUpdate(sellerVo);
     }
 }

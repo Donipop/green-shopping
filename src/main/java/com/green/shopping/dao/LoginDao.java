@@ -22,4 +22,6 @@ public interface LoginDao {
     String findPassword(HashMap<String, Object> user_IdAndEmail);
 
     void AddPostAddress(HashMap<String, Object> yetAddPostAddress);
+
+    void userRoleUpdate(SellerVo sellerVo);
 }
