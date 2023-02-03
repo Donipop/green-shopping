@@ -45,7 +45,7 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
 
 
     @Override
-    public int createProductDetail(int Product_Id, String Product_Name, String Product_Price, String Product_Discount, String Product_Count, String DateStart, String DateEnd) {
+    public int   createProductDetail(int Product_Id, String Product_Name, String Product_Price, String Product_Discount, String Product_Count, String DateStart, String DateEnd) {
         HashMap<String, String> productDetailMap = new HashMap<>();
         productDetailMap.put("product_Id", String.valueOf(Product_Id));
         productDetailMap.put("product_Name", Product_Name);
@@ -142,7 +142,7 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
 
     @Override
     public List<HashMap<String, Object>> getProductTbByMarketName(String marketName) {
-        return sqlSession.selectList("SellerCenter.getProductTbByMarketName", marketName);
+        return sqlSession.selectList("SellerCenter.getProductTbIdAndTitleByMarketName", marketName);
     }
 
     @Override
@@ -253,6 +253,21 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
     @Override
     public void deleteProduct(int productId) {
         sqlSession.update("SellerCenter.deleteProduct", productId);
+    }
+
+    @Override
+    public HashMap<String, Object> getProduct(int id) {
+        return sqlSession.selectOne("SellerCenter.getProductTbById", id);
+    }
+
+    @Override
+    public String getSellerIdByMarketName(String marketName) {
+        return sqlSession.selectOne("SellerCenter.getSellerIdByMarketName", marketName);
+    }
+
+    @Override
+    public void updateDetailProductDeleteCheckById(int id) {
+        sqlSession.update("SellerCenter.updateDetailProductDeleteCheckById", id);
     }
 
     public List<Integer> deliveryState(HashMap<String, Object> map) {

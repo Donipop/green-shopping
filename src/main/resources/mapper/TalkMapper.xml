@@ -26,8 +26,8 @@
         where MARKETOWNER = #{marketOwner}
     </select>
 
-    <select id="getIdByUserId" parameterType="String" resultType="String">
-        select ID from Talk_Tb
+    <select id="getIdByUserId" parameterType="String" resultType="HashMap">
+        select * from Talk_Tb
         where USERID = #{userId}
     </select>
 

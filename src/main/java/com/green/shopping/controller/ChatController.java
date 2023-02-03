@@ -2,6 +2,7 @@ package com.green.shopping.controller;
 
 import com.green.shopping.Doc.ChatDoc;
 import com.green.shopping.dao.ChatMongoDbDao;
+import com.green.shopping.dao.impl.SellerCenterDaoImpl;
 import com.green.shopping.dao.impl.TalkDaoImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -29,11 +30,13 @@ public class ChatController {
     private final ChatMongoDbDao chatMongoDbDao;
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final TalkDaoImpl talkDaoImpl;
+    private final SellerCenterDaoImpl sellerCenterDaoImpl;
 
-    public ChatController(SimpMessagingTemplate simpMessagingTemplate, ChatMongoDbDao chatMongoDbDao, TalkDaoImpl talkDaoImpl) {
+    public ChatController(SimpMessagingTemplate simpMessagingTemplate, ChatMongoDbDao chatMongoDbDao, TalkDaoImpl talkDaoImpl, SellerCenterDaoImpl sellerCenterDaoImpl) {
         this.simpMessagingTemplate = simpMessagingTemplate;
         this.chatMongoDbDao = chatMongoDbDao;
         this.talkDaoImpl = talkDaoImpl;
+        this.sellerCenterDaoImpl = sellerCenterDaoImpl;
     }
 
     @MessageMapping("/user")
@@ -255,5 +258,26 @@ public class ChatController {
         }
         log.info("chatListMap : {}", chatListMap);
         return chatListMap;
+    }
+    @GetMapping("/chat/ChatListByUserId")
+    public List<Map<String,Object>> chatListByUserId(@RequestParam String userId){
+        log.info("userId : {}", userId);
+        //유저가 가지고 있는 채팅방 리스트를 가져온다
+        List<Map<String,Object>> resultList = new ArrayList<>();
+        List<Map> chatList = talkDaoImpl.getIdByUserId(userId);
+        for(Map forMap : chatList){
+            Map<String, Object> map = new HashMap<>();
+            Optional<ChatDoc> chatDoc = chatMongoDbDao.findById(forMap.get("ID").toString());
+            if(chatDoc.isEmpty()){continue;}
+            Map lastMessage = chatDoc.get().getMessageList().get(chatDoc.get().getMessageList().size() - 1);
+            map.put("uuid", forMap.get("ID"));
+            map.put("marketName",sellerCenterDaoImpl.getMarketNamebySellerid(forMap.get("MARKETOWNER").toString()));
+            map.put("marketOwner", forMap.get("MARKETOWNER"));
+            map.put("lastMessage", lastMessage.get("message"));
+            map.put("count", talkDaoImpl.getUserIdCountByUuid(forMap.get("ID").toString()));
+            resultList.add(map);
+        }
+        log.info("resultList : {}", resultList);
+        return resultList;
     }
 }

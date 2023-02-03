@@ -38,14 +38,14 @@ class PayMentServiceTest {
         paymentVo.setProductId(79);
 
         //purcharseList_Tb insert
-        int purchaseListId = payMentDaoImpl.insertPurchaseList("test",150000,paymentVo.getProductId(),paymentVo.getDelivery());
+//        int purchaseListId = payMentDaoImpl.insertPurchaseList("test",150000,paymentVo.getProductId(),paymentVo.getDelivery());
         System.out.println(paymentVo.toString());
-        System.out.println("insertPurchaseList : " + purchaseListId);
+//        System.out.println("insertPurchaseList : " + purchaseListId);
 
         //purcharseDetailList_Tb insert
         for (PaymentListItemVo item : paymentVo.getListItem()) {
-            int j = payMentDaoImpl.insertPurchaseDetailList(item.getPrice(),item.getProductDetailId(),item.getCount(),0,purchaseListId);
-            System.out.println("insertPurchaseDetailList : " + j);
+//            int j = payMentDaoImpl.insertPurchaseDetailList(item.getPrice(),item.getProductDetailId(),item.getCount(),0,purchaseListId);
+//            System.out.println("insertPurchaseDetailList : " + j);
         }
 
 
