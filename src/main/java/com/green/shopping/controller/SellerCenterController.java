@@ -144,6 +144,10 @@ public class SellerCenterController {
     public List<HashMap<String,Object>> getProductTb(@RequestParam(value = "marketName") String marketName) {
         return sellerCenterService.getProductTbByMarketName(marketName);
     }
+    @GetMapping("/product")
+    public HashMap<String,Object> getProduct(@RequestParam(value = "productId") int id){
+        return sellerCenterService.getProduct(id);
+    }
     @GetMapping("/getcategoryroot")
     public HashMap<String,Object> getCategoryRoot(@RequestParam(value = "num") int num) {
         return sellerCenterService.getCategoryRoot(num);
@@ -160,10 +164,9 @@ public class SellerCenterController {
         productDetail.get(0).put("PRODUCTIMG",productImage);
         return productDetail;
     }
-    @PostMapping("/updateproduct")
-    public void updateProduct(@RequestBody HashMap<String,Object> updateData) throws Exception {
-        SellerCenterCreateVo sellerCenterCreateVo = new ObjectMapper().convertValue(updateData.get("sellerCenterCreateVo"), SellerCenterCreateVo.class);
-        sellerCenterService.updateProduct(sellerCenterCreateVo, updateData);
+    @PutMapping("/product")
+    public void updateProduct(@RequestBody ProductUpdateVo updateData) {
+        sellerCenterService.updateProduct(updateData);
     }
     @GetMapping("/canclecostsettle")
     public  List<HashMap<String, Object>>  cancleCostSettle(@RequestParam HashMap<String,Object> map) {
@@ -377,8 +380,6 @@ public class SellerCenterController {
                 sellerCenterService.addShoppingBasket(map);
             }
         }
-
-
     }
     @GetMapping("/getmarketNamebySellerid")
     public String getMarketNamebySellerid(@RequestParam String user_id){
@@ -389,5 +390,4 @@ public class SellerCenterController {
     public void deleteProduct(@RequestBody Map productId){
         sellerCenterService.deleteProduct(Integer.parseInt(productId.get("productId").toString()));
     }
-
 }

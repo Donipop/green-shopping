@@ -124,11 +124,15 @@
         <result property="deletecheck" column="deletecheck"/>
     </resultMap>
 
-    <select id="getProductTbByMarketName" parameterType="String" resultType="java.util.HashMap" resultMap="ProductTbMapList">
+    <select id="getProductTbById" parameterType="Integer" resultType="java.util.HashMap" resultMap="ProductTbMapList">
         select * from product_tb
-        where deletecheck = 0 and market_name = #{marketName}
+        where deletecheck = 0 and id = #{id}
     </select>
 
+    <select id="getProductTbIdAndTitleByMarketName" parameterType="String" resultType="java.util.HashMap">
+        select id, title from product_tb
+        where deletecheck = 0 and market_name = #{marketName}
+    </select>
     <select id="getCategoryRoot" parameterType="Integer" resultType="java.util.HashMap">
         select listagg(name, '>') within group (order by level desc) as name, listagg(num, '>') within group (order by level desc) as num
         from category_tb
@@ -137,7 +141,8 @@
     </select>
 
     <select id="getProductDetailByProductId" parameterType="Integer" resultType="java.util.HashMap">
-        select ID,PRODUCT_ID,PRODUCT_NAME,PRODUCT_PRICE,PRODUCT_DISCOUNT,PRODUCT_COUNT,to_char(DATESTART,'YYYY-MM-DD') as DATESTART,to_char(DATEEND,'YYYY-MM-DD') as DATEEND,DELETECHECK from productdetail_tb
+        select ID,PRODUCT_ID,PRODUCT_NAME,PRODUCT_PRICE,PRODUCT_DISCOUNT,PRODUCT_COUNT,to_char(DATESTART,'YYYY-MM-DD') as DATESTART,to_char(DATEEND,'YYYY-MM-DD') as DATEEND,DELETECHECK
+        from productdetail_tb
         where product_id = #{productId}
     </select>
 
@@ -350,6 +355,16 @@
     WHERE SELLERID = #{user_id} AND R.TIME BETWEEN TO_DATE(#{start}, 'yyyy-mm-dd') AND TO_DATE(#{end}, 'yyyy-mm-dd hh24:mi')
         AND P.ID = #{id}
     </select>
+    <select id="getSellerIdByMarketName" parameterType="String" resultType="String">
+        SELECT SELLERID
+        FROM MARKET_TB
+        WHERE NAME = #{marketName}
+    </select>
+    <update id="updateDetailProductDeleteCheckById" parameterType="Integer">
+        update productdetail_tb
+        set deletecheck = 1
+        where id = #{id}
+    </update>
     <select id="getPurchaseConfirmBySelectedTitle"
             parameterType="HashMap"
             resultType="com.green.shopping.vo.PurchaselistVo">
