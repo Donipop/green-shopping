@@ -72,4 +72,8 @@ public class MypageService {
     public HashMap<String, Object> getFile(String file_name) {
         return mypageDao.getFile(file_name);
     }
+
+    public void MyPurchaseConfirm(HashMap<String, Object> map) {
+        mypageDao.MyPurchaseConfirm(map);
+    }
 }

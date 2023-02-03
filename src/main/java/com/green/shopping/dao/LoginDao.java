@@ -24,4 +24,6 @@ public interface LoginDao {
     void AddPostAddress(HashMap<String, Object> yetAddPostAddress);
 
     void userRoleUpdate(SellerVo sellerVo);
+
+    void marketUpdate(HashMap<String, Object> marketBasket);
 }

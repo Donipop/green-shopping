@@ -6,13 +6,10 @@ import com.green.shopping.dao.impl.UserDaoImpl;
 import com.green.shopping.vo.SignUp;
 import com.green.shopping.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class LoginService {
@@ -55,5 +52,9 @@ public class LoginService {
 
     public void userRoleUpdate(SellerVo sellerVo) {
         loginDao.userRoleUpdate(sellerVo);
+    }
+
+    public void marketUpdate(HashMap<String, Object> marketBasket) {
+        loginDao.marketUpdate(marketBasket);
     }
 }

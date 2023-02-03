@@ -58,4 +58,9 @@ public class LoginDaoimpl implements LoginDao {
     public void userRoleUpdate(SellerVo sellerVo) {
        sqlSession.update("Login.userRoleUpdate", sellerVo);
     }
+
+    @Override
+    public void marketUpdate(HashMap<String, Object> marketBasket) {
+        sqlSession.update("Login.marketUpdate", marketBasket);
+    }
 }

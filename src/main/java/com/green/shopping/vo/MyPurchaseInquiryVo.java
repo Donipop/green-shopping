@@ -19,10 +19,12 @@ public class MyPurchaseInquiryVo {
     private String productimage;
     private int price;
 
+    private int purchaseid;
+
     public MyPurchaseInquiryVo() {
     }
 
-    public MyPurchaseInquiryVo(int id,int state, String time, String mainimage, String title, long totalprice, int count, int productid, String productimage,int price) {
+    public MyPurchaseInquiryVo(int id,int state, String time, String mainimage, String title, long totalprice, int count, int productid, String productimage,int price,int purchaseid) {
         this.id = id;
         this.state = state;
         this.time = time;
@@ -33,6 +35,7 @@ public class MyPurchaseInquiryVo {
         this.productid = productid;
         this.productimage = productimage;
         this.price = price;
+        this.purchaseid = purchaseid;
     }
 
 

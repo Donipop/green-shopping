@@ -63,7 +63,6 @@ public class SearchController {
                 String categorynum = searchService.categorynum(map.get("name").toString());
                 mapbasket.put("categorynum", categorynum);
                 mapbasket.put("searchcont", searchcont);
-                System.out.println(mapbasket);
                Categorysearch = searchService.Categorysearch(mapbasket);
             }
             for (int i = 0; i < Categorysearch.size(); i++) {

@@ -15,8 +15,9 @@ public class SellerVo {
     private long business_number;
     private String description;
     private String market_name;
-
     private String mainImg;
+
+    private String user_role;
 
     public SellerVo() {
     }

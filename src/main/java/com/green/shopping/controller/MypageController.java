@@ -55,7 +55,6 @@ public class MypageController {
         List<ReviewVo> myReviewList = mypageService.myreview(user_id);
         for (int i = 0; i < myReviewList.size(); i++) {
             HashMap<String, Object> productImage = mypageService.getProductImgByProductId(myReviewList.get(i).getProduct_num());
-            System.out.println(productImage);
             if (productImage != null) {
                 HashMap<String, Object> fileMap = mypageService.getFile(productImage.get("FILE_NAME").toString());
                 myReviewList.get(i).setProductimage(fileMap.get("NAME") + "." + fileMap.get("FILE_TYPE"));
@@ -108,8 +107,14 @@ public class MypageController {
             return 0;
         }
     }
-    @GetMapping("countBasket")
+    @GetMapping("/countBasket")
     public int countBasket(@RequestParam String user_id){
         return mypageService.countBasket(user_id);
     }
-}
+    @GetMapping("/MyPurchaseConfirm")
+    public void MyPurchaseConfirm(@RequestParam HashMap<String, Object> map){
+        mypageService.MyPurchaseConfirm(map);
+    }
+
+    }
+

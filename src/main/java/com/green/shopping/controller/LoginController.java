@@ -156,8 +156,16 @@ public class LoginController {
     public void Sellersignup(@RequestBody SellerVo sellerVo){
         loginService.seller_sign_up(sellerVo);
         loginService.userRoleUpdate(sellerVo);
-        String businessImg = fileService.fileUpload(sellerVo.getMainImg(), "test");
-        String accountImg = fileService.fileUpload(sellerVo.getMainImg(), "test");
+        // loginService.sellerMarketUpdate(sellerVo);
+        HashMap<String, Object> marketBasket = new HashMap<>();
+        marketBasket.put("user_id", sellerVo.getUser_id());
+        marketBasket.put("market_name", sellerVo.getMarket_name());
+        loginService.marketUpdate(marketBasket);
+        if(sellerVo.getMainImg() != null && sellerVo.getMainImg() != "") {
+            String businessImg = fileService.fileUpload(sellerVo.getMainImg(), "test");
+            String accountImg = fileService.fileUpload(sellerVo.getMainImg(), "test");
+        }
+
 
     }
     @PostMapping("/refreshTokenToAccessToken")

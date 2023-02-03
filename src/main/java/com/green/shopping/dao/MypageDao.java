@@ -29,4 +29,6 @@ public interface MypageDao {
     HashMap<String, Object> getProductImgByProductId(int productid);
 
     HashMap<String, Object> getFile(String file_name);
+
+    void MyPurchaseConfirm(HashMap<String, Object> map);
 }

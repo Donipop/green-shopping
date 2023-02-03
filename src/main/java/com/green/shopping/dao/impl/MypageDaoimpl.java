@@ -69,6 +69,11 @@ public class MypageDaoimpl implements MypageDao {
     }
 
     @Override
+    public void MyPurchaseConfirm(HashMap<String, Object> map) {
+        sqlSession.update("Mypage.MyPurchaseConfirm", map);
+    }
+
+    @Override
     public List<ReviewVo> myreview(String user_id) {
 
         return sqlSession.selectList("Mypage.myreview", user_id);

@@ -45,8 +45,8 @@
 
         <insert id="seller_sign_up"
                 parameterType="com.green.shopping.vo.SellerVo">
-        INSERT INTO SELLER_TB( USER_ID, BANK_NAME, BANK_ACCOUNT, BANK_ACCOUNTOWNER, DESCRIPTION, BUSINESS_NUMBER,MARKET_NAME)
-        VALUES ( #{user_id}, #{bank_name}, #{bank_account}, #{bank_accountowner}, #{description}, #{business_number}, #{market_name})
+        INSERT INTO SELLER_TB( USER_ID, BANK_NAME, BANK_ACCOUNT, BANK_ACCOUNTOWNER, DESCRIPTION, BUSINESS_NUMBER,MARKET_NAME,MONEY,ALLMONEY)
+        VALUES ( #{user_id}, #{bank_name}, #{bank_account}, #{bank_accountowner}, #{description}, #{business_number}, #{market_name},0,0)
 
         </insert>
         <update id="userRoleUpdate">
@@ -74,6 +74,11 @@
                 parameterType="HashMap">
                 INSERT INTO POSTADDRESS_TB( ID, USERID, NAME, ADDRESS, TEL, CONT)
                 VALUES ( POSTADDRESS_TB_SEQ.NEXTVAL, #{user_id}, #{name}, #{address}, #{tel}, #{cont})
+        </insert>
+
+        <insert id="marketUpdate">
+                INSERT INTO  MARKET_TB(NAME,SELLERID)
+                VALUES (#{market_name},#{user_id})
         </insert>
 
         </mapper>
