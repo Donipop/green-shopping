@@ -88,13 +88,38 @@ public class SellerCenterController {
     public List<ReviewVo> getReviewListBySelectedId(@RequestBody HashMap<String, Object> map) {
         return sellerCenterService.getReviewListBySelectedId(map);
     }
+    @GetMapping("/reviewmanagement/reviewlistId")
+    public List<Object> getReviewListId(@RequestParam HashMap<String, Object> map) {
+        List<ReviewVo> reviewList = sellerCenterService.getReviewListCount(map);
+        List<Object> result = new ArrayList<>();
+        // id와 title값이 중복안되게 result에 넣기
+        for (ReviewVo reviewVo : reviewList) {
+            Map<String, Object> temp = new HashMap<>();
+            temp.put("id", reviewVo.getId());
+            temp.put("title", reviewVo.getTitle());
+            if (!result.contains(temp)) {
+                result.add(temp);
+            }
+        }
+        return result;
+    }
     @PostMapping("/getpurchaseconfirm")
-    public List<purchaseconfirmVo> getPurchaseConfirm(@RequestParam String user_id, @RequestParam String start, @RequestParam String end) {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("user_id", user_id);
-        map.put("start", start);
-        map.put("end", end);
-        return sellerCenterService.getPurchaseConfirm(map);
+    public List<purchaseconfirmVo> getPurchaseConfirm(@RequestParam String user_id, @RequestParam String start, @RequestParam String end,
+                                                      @RequestParam String selectedTitle) {
+        if(selectedTitle != null && !selectedTitle.equals("") && !selectedTitle.equals("전체")) {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("user_id", user_id);
+            map.put("start", start);
+            map.put("end", end);
+            map.put("selectedTitle", selectedTitle);
+            return sellerCenterService.getPurchaseConfirmBySelectedTitle(map);
+        } else {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("user_id", user_id);
+            map.put("start", start);
+            map.put("end", end);
+            return sellerCenterService.getPurchaseConfirm(map);
+        }
     }
 
     @PostMapping("getpurchasedetailinfo")
@@ -280,11 +305,12 @@ public class SellerCenterController {
 
     @PostMapping("/getalreadysettlement")
     public List<AlreadySettlementVo> getAlreadySettlement(@RequestParam String user_id, @RequestParam String start,
-                                                          @RequestParam String end) {
+                                                          @RequestParam String end, String OrderBy) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("user_id", user_id);
         map.put("start", start);
         map.put("end", end);
+        map.put("OrderBy", OrderBy);
         List<AlreadySettlementVo> AlreadySettlement = sellerCenterService.getAlreadySettlement(map);
         return AlreadySettlement;
     }
@@ -363,6 +389,5 @@ public class SellerCenterController {
     public void deleteProduct(@RequestBody Map productId){
         sellerCenterService.deleteProduct(Integer.parseInt(productId.get("productId").toString()));
     }
-
 
 }

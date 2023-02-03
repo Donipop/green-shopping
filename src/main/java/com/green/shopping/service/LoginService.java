@@ -57,4 +57,11 @@ public class LoginService {
     public void marketUpdate(HashMap<String, Object> marketBasket) {
         loginDao.marketUpdate(marketBasket);
     }
+
+    public int checkDuplicateId(String user_id) {
+        return loginDao.checkDuplicateId(user_id);
+    }
+    public int checkDuplicateNick(String user_nick) {
+        return loginDao.checkDuplicateNick(user_nick);
+    }
 }

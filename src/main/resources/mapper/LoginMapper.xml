@@ -15,8 +15,8 @@
 
         <insert id="user_sign_up"
         parameterType="com.green.shopping.vo.SignUp">
-                INSERT INTO USER_TB( USER_ID, USER_PASSWORD, USER_EMAIL, USER_NAME, USER_BRITH, USER_ADDRESS, USER_SEX, USER_NICK)
-                VALUES ( #{username}, #{password}, #{email}, #{name}, #{brith}, #{address}, #{sex}, #{nick} )
+                INSERT INTO USER_TB( USER_ID, USER_PASSWORD, USER_EMAIL, USER_NAME, USER_BRITH, USER_ADDRESS, USER_SEX, USER_NICK, USER_TEL)
+                VALUES ( #{username}, #{password}, #{email}, #{name}, #{brith}, #{address}, #{sex}, #{nick}, #{tel} )
 
 
         </insert>
@@ -80,7 +80,20 @@
                 INSERT INTO  MARKET_TB(NAME,SELLERID)
                 VALUES (#{market_name},#{user_id})
         </insert>
-
+        <select id="checkDuplicateId"
+                parameterType="String"
+                resultType="Integer">
+                SELECT COUNT(USER_ID)
+                FROM USER_TB
+                WHERE USER_ID = #{user_id}
+        </select>
+        <select id="checkDuplicateNick"
+                parameterType="String"
+                resultType="Integer">
+                SELECT COUNT(USER_NICK)
+                FROM USER_TB
+                WHERE USER_NICK = #{user_nick}
+        </select>
         </mapper>
 
 

@@ -26,4 +26,8 @@ public interface LoginDao {
     void userRoleUpdate(SellerVo sellerVo);
 
     void marketUpdate(HashMap<String, Object> marketBasket);
+
+    int checkDuplicateId(String user_id);
+
+    int checkDuplicateNick(String user_nick);
 }
