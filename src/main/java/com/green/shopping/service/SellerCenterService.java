@@ -169,7 +169,7 @@ public class SellerCenterService {
         log.info("getProductUpdateVo : {}",getProductUpdateVo);
         //상품 테이블 업데이트
         HashMap<String,Object> productTbMap = getProductTbMap(productUpdateVo, getProductUpdateVo);
-//        sellerCenterDaoImpl.updateProductTb(productTbMap);
+        sellerCenterDaoImpl.updateProductTb(productTbMap);
         //상품 상세 테이블 업데이트
         updateProductDetailTb(productUpdateVo, getProductUpdateVo);
         //상품 이미지 테이블 업데이트
@@ -177,11 +177,6 @@ public class SellerCenterService {
     }
 
     private void updateImgTb(ProductUpdateVo p1, ProductUpdateVo p2) {
-        //삭제된 이미지
-        List<String> deleteImgList = new ArrayList<>();
-        //추가된 이미지
-        List<String> addImgList = new ArrayList<>();
-
         List<String> p1DetailImgList = p1.getDetailImg();
         List<String> p2DetailImgList = p2.getDetailImg();
 
@@ -191,8 +186,11 @@ public class SellerCenterService {
         }else{
             log.info("메인이미지 변경 있음");
             log.info("변경된 메인 이미지 : {}...", p1.getMainImg().substring(0,20));
-            addImgList.add(p1.getMainImg());
-            deleteImgList.add(p2.getMainImg().split(IMG_URL)[1]);
+            //변경된 메인 이미지 업로드
+            fileService.fileUpload(p1.getMainImg(),p1.getUserId());
+            //기존 메인이미지 삭제
+            fileService.fileDelete(p2.getMainImg().split(IMG_URL)[1].split("\\.")[0]);
+            log.info("삭제된이미지 : {}",p2.getMainImg().split(IMG_URL)[1].split("\\.")[0]);
         }
         //상세이미지 변경 확인
         List<String> addDetailImgList = p1DetailImgList.stream().filter(item -> !p2DetailImgList.contains(item)).collect(Collectors.toList());
@@ -202,7 +200,7 @@ public class SellerCenterService {
         if(addDetailImgList.size() == 0){
             log.info("추가된 상세이미지 없음");
         }else{
-            log.info("상세이미지 변경 : {}",addDetailImgList);
+            log.info("상세이미지 추가 : {}",addDetailImgList);
         }
         //삭제된 상세이미지 확인
         if(deleteDetailImgList.size() == 0) {
@@ -211,8 +209,14 @@ public class SellerCenterService {
             log.info("상세이미지 삭제 : {}",deleteDetailImgList);
         }
         //이미지 삭제
-        //추가된 이미지
-        //이미지 업로드
+        for(String fileName : deleteDetailImgList){
+            log.info("파일삭제 : {}", fileService.fileDelete(fileName.split(IMG_URL)[1].split("\\.")[0]));
+        }
+        //추가된 이미지 업로드
+        for(String fileName : addDetailImgList){
+            log.info("파일업로드 : {}", fileService.fileUpload(fileName,p1.getUserId()));
+        }
+
     }
 
     private String updateProductDetailTb(ProductUpdateVo p1, ProductUpdateVo p2) {
@@ -221,9 +225,9 @@ public class SellerCenterService {
         p1.getProduct().stream().forEach(item -> {
             if(item.get("id") == null){
                 //상품추가
-//                sellerCenterDaoImpl.createProductDetail(p1.getId(), item.get("product_name").toString(),
-//                        item.get("product_price").toString(),item.get("product_discount").toString(), item.get("product_count").toString(),
-//                        item.get("dateStart").toString(), item.get("dateEnd").toString());
+                sellerCenterDaoImpl.createProductDetail(p1.getId(), item.get("product_name").toString(),
+                        item.get("product_price").toString(),item.get("product_discount").toString(), item.get("product_count").toString(),
+                        item.get("dateStart").toString(), item.get("dateEnd").toString());
                 log.info("새로 추가된 상품 : {}",item);
             }
         });
@@ -237,7 +241,7 @@ public class SellerCenterService {
         log.info("p2ProductIdList : {}",p2ProductIdList);
         deleteList.stream().forEach(item -> {
             log.info("삭제된 상품 : {}",item);
-//            sellerCenterDaoImpl.updateDetailProductDeleteCheckById(item);
+            sellerCenterDaoImpl.updateDetailProductDeleteCheckById(item);
         });
         return "success";
     }
@@ -249,6 +253,7 @@ public class SellerCenterService {
         resultMap.put("title",p1.getTitle());
         resultMap.put("cont",p1.getCont());
         resultMap.put("event",p2.getEvent());
+        resultMap.put("category",p1.getCategory());
         return resultMap;
     }
 

@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.green.shopping.dao.impl.FileDaoImpl;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
@@ -60,8 +61,11 @@ public class FileService {
                 response.append(responseLine.trim());
             }
             conn.disconnect();
-            return response.toString();
-
+            if(response.toString().contains("ok")){
+                return fileDaoimpl.deleteFile(fileName);
+            }else{
+                return "fail";
+            }
         }catch (Exception e){
             e.printStackTrace();
             return e.toString();
