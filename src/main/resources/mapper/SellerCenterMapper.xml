@@ -74,7 +74,7 @@
     </insert>
 
     <select id="getReviewListCount" resultType="com.green.shopping.vo.ReviewVo">
-        SELECT R.STAR, P.ID
+        SELECT R.STAR, P.ID, P.TITLE
         FROM MARKET_TB M JOIN PRODUCT_TB P ON M.NAME = P.MARKET_NAME JOIN REVIEW_TB R
         ON P.ID = R.PRODUCT_NUM
         WHERE SELLERID = #{user_id} AND R.TIME BETWEEN TO_DATE(#{start}, 'yyyy-mm-dd') AND TO_DATE(#{end}, 'yyyy-mm-dd hh24:mi')
@@ -208,10 +208,12 @@
             parameterType="java.util.HashMap"
             resultType="com.green.shopping.vo.AlreadySettlementVo">
 
+
             SELECT ID, USER_ID, MARKET_NAME, TOTALPRICE, BANK_ACCOUNT, BANK_NAME, BANK_ACCOUNTOWNER, SETTLE_DATE, IDLIST
             FROM SETTLEHISTORY_TB
             WHERE USER_ID = #{user_id}
             AND SETTLE_DATE BETWEEN TO_DATE(#{start}, 'YYYY-MM-DD') AND TO_DATE(#{end}, 'YYYY-MM-DD')
+            ORDER BY ${OrderBy}
     </select>
 
     <select id="PurchaseConfirmCount" parameterType="String" resultType="java.util.HashMap">
@@ -347,6 +349,18 @@
     ON P.ID = R.PRODUCT_NUM
     WHERE SELLERID = #{user_id} AND R.TIME BETWEEN TO_DATE(#{start}, 'yyyy-mm-dd') AND TO_DATE(#{end}, 'yyyy-mm-dd hh24:mi')
         AND P.ID = #{id}
+    </select>
+    <select id="getPurchaseConfirmBySelectedTitle"
+            parameterType="HashMap"
+            resultType="com.green.shopping.vo.PurchaselistVo">
+    SELECT  U.id as id , M.NAME as marketname, M.SELLERID as sellerid , P.TITLE as title, U.USER_ID as buyerid, U.TOTALPRICE as totalprice, U.DELIVERY as delivery, U.TIME as purchasetime, TO_CHAR(U.PURCHASECONFIRMTIME, 'YYYY-MM-DD HH24:MI:SS') as purchaseconfirmtime
+    FROM    MARKET_TB M LEFT JOIN PRODUCT_TB P
+    ON      M.NAME = P.MARKET_NAME
+    LEFT JOIN PURCHASELIST_TB U
+    ON      P.ID = U.PRODUCTID
+    WHERE   U.PURCHASECONFIRMTIME BETWEEN TO_DATE(#{start}, 'YYYY-MM-DD') AND LAST_DAY(TO_DATE(#{end}, 'YYYY-MM-DD'))
+    AND     M.SELLERID = #{user_id}
+    AND     P.TITLE = #{selectedTitle}
     </select>
 </mapper>
 

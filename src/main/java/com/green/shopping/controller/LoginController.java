@@ -92,9 +92,9 @@ public class LoginController {
         return "ho";
     }
 
-    @PostMapping("/post")
+    @PostMapping("/userSignUp")
     @ResponseBody
-    public String test(@RequestBody HashMap<String, String> map) {
+    public int UserSignUp(@RequestBody HashMap<String, String> map) {
         String year = map.get("year");
         String month = map.get("month");
         String day = map.get("day");
@@ -121,21 +121,22 @@ public class LoginController {
             loginService.user_sign_up(signUp);
             SignUpCheck = 1;
         } catch(Exception e) {
-            System.out.println(e);
+
         }
         if(SignUpCheck == 1) {
             try {
                 loginService.AddPostAddress(yetAddPostAddress);
                 AddPostAddressCheck = 1;
             } catch(Exception e) {
-                System.out.println(e);
+
             }
         }
         if(AddPostAddressCheck == 1) {
-            return "회원가입 성공";
+            return 1;
         } else {
-            return "회원가입 실패";
+            return 0;
         }
+
     }
     @PostMapping("/logout")
     @ResponseBody
@@ -197,6 +198,17 @@ public class LoginController {
         user_IdAndEmail.put("user_email", user_email);
         String user_password = loginService.findPassword(user_IdAndEmail);
         return user_password;
+    }
+    @PostMapping("/checkDuplicateId")
+    public int checkDuplicateId(@RequestParam String user_id) {
+        int check = loginService.checkDuplicateId(user_id);
+        return check;
+    }
+
+    @PostMapping("/checkDuplicateNick")
+    public int checkDuplicateNick(@RequestParam String user_nick) {
+        int check = loginService.checkDuplicateNick(user_nick);
+        return check;
     }
 
 

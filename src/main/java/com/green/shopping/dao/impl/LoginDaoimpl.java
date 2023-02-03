@@ -46,7 +46,7 @@ public class LoginDaoimpl implements LoginDao {
 
     @Override
     public String findPassword(HashMap<String, Object> user_IdAndEmail) {
-        return sqlSession.selectOne("Login.", user_IdAndEmail);
+        return sqlSession.selectOne("Login.findPassword", user_IdAndEmail);
     }
 
     @Override
@@ -58,4 +58,15 @@ public class LoginDaoimpl implements LoginDao {
     public void userRoleUpdate(SellerVo sellerVo) {
        sqlSession.update("Login.userRoleUpdate", sellerVo);
     }
+
+    @Override
+    public int checkDuplicateId(String user_id) {
+        return sqlSession.selectOne("Login.checkDuplicateId", user_id);
+    }
+
+    @Override
+    public int checkDuplicateNick(String user_nick) {
+        return sqlSession.selectOne("Login.checkDuplicateNick", user_nick);
+    }
+
 }

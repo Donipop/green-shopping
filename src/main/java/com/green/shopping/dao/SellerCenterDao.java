@@ -54,4 +54,6 @@ public interface SellerCenterDao {
     Map<String,Object> getProductIdAndTitleMapByMarketName(String marketName);
 
     void deleteProduct(int productId);
+
+    List<purchaseconfirmVo> getPurchaseConfirmBySelectedTitle(HashMap<String, String> map);
 }

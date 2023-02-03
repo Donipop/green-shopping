@@ -372,4 +372,8 @@ public class SellerCenterService {
     public List<ReviewVo> getReviewListBySelectedId(HashMap<String, Object> map) {
         return sellerCenterDaoImpl.getReviewListBySelectedId(map);
     }
+
+    public List<purchaseconfirmVo> getPurchaseConfirmBySelectedTitle(HashMap<String, String> map) {
+        return sellerCenterDaoImpl.getPurchaseConfirmBySelectedTitle(map);
+    }
 }

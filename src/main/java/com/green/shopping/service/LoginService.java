@@ -56,4 +56,11 @@ public class LoginService {
     public void userRoleUpdate(SellerVo sellerVo) {
         loginDao.userRoleUpdate(sellerVo);
     }
+
+    public int checkDuplicateId(String user_id) {
+        return loginDao.checkDuplicateId(user_id);
+    }
+    public int checkDuplicateNick(String user_nick) {
+        return loginDao.checkDuplicateNick(user_nick);
+    }
 }

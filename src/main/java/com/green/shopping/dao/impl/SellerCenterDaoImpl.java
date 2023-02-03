@@ -255,6 +255,11 @@ public class SellerCenterDaoImpl implements SellerCenterDao {
         sqlSession.update("SellerCenter.deleteProduct", productId);
     }
 
+    @Override
+    public List<purchaseconfirmVo> getPurchaseConfirmBySelectedTitle(HashMap<String, String> map) {
+        return sqlSession.selectList("SellerCenter.getPurchaseConfirmBySelectedTitle", map);
+    }
+
     public List<Integer> deliveryState(HashMap<String, Object> map) {
         return sqlSession.selectList("SellerCenter.deliveryState", map);
     }

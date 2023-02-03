@@ -24,4 +24,8 @@ public interface LoginDao {
     void AddPostAddress(HashMap<String, Object> yetAddPostAddress);
 
     void userRoleUpdate(SellerVo sellerVo);
+
+    int checkDuplicateId(String user_id);
+
+    int checkDuplicateNick(String user_nick);
 }
