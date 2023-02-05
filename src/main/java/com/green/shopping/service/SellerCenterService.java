@@ -187,9 +187,13 @@ public class SellerCenterService {
             log.info("메인이미지 변경 있음");
             log.info("변경된 메인 이미지 : {}...", p1.getMainImg().substring(0,20));
             //변경된 메인 이미지 업로드
-            fileService.fileUpload(p1.getMainImg(),p1.getUserId());
+            String filename = fileService.fileUpload(p1.getMainImg(),p1.getUserId());
+            log.info(filename + "메인이미지 업로드");
+            //product_img_tb에 업데이트
+            sellerCenterDaoImpl.createProductImg(filename,p1.getId(),"1");
             //기존 메인이미지 삭제
-            fileService.fileDelete(p2.getMainImg().split(IMG_URL)[1].split("\\.")[0]);
+            log.info(fileService.fileDelete(p2.getMainImg().split(IMG_URL)[1]) + "메인이미지 삭제");
+            log.info("product_img_tb에서 삭제 : " +  sellerCenterDaoImpl.deleteProductImg(p2.getMainImg().split(IMG_URL)[1].split("\\.")[0]));
             log.info("삭제된이미지 : {}",p2.getMainImg().split(IMG_URL)[1].split("\\.")[0]);
         }
         //상세이미지 변경 확인
@@ -211,10 +215,13 @@ public class SellerCenterService {
         //이미지 삭제
         for(String fileName : deleteDetailImgList){
             log.info("파일삭제 : {}", fileService.fileDelete(fileName.split(IMG_URL)[1].split("\\.")[0]));
+            log.info("이미지테이블 삭제 : {}", sellerCenterDaoImpl.deleteProductImg(fileName.split(IMG_URL)[1].split("\\.")[0]));
         }
         //추가된 이미지 업로드
         for(String fileName : addDetailImgList){
-            log.info("파일업로드 : {}", fileService.fileUpload(fileName,p1.getUserId()));
+            String filename = fileService.fileUpload(fileName,p1.getUserId());
+            sellerCenterDaoImpl.createProductImg(filename,p1.getId(),"0");
+            log.info("파일업로드 : {}", filename);
         }
 
     }

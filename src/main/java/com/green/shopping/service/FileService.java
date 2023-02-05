@@ -30,8 +30,6 @@ public class FileService {
         }else {
             return "error";
         }
-
-
     }
     public String fileDelete(String fileName) {
         //이미지 서버에서 삭제
@@ -62,7 +60,8 @@ public class FileService {
             }
             conn.disconnect();
             if(response.toString().contains("ok")){
-                return fileDaoimpl.deleteFile(fileName);
+                fileDeleteToDB(fileName.split("\\.")[0]);
+                return "success";
             }else{
                 return "fail";
             }
@@ -72,6 +71,13 @@ public class FileService {
         }
         //DB에서 삭제
     }
+
+    private void fileDeleteToDB(String fileName) {
+        fileDaoimpl.deleteFile(fileName);
+        //product_img_tb에서삭제
+        //
+    }
+
     public int fileUpdate() {
         return 0;
     }

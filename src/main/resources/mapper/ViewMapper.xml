@@ -4,12 +4,12 @@
 <mapper namespace="View">
     <select id="getProduct" parameterType="Integer" resultType="com.green.shopping.vo.SellerCenterCreateVo">
         SELECT * FROM Product_Tb
-        WHERE ID = #{id}
+        WHERE ID = #{id} And DeleteCheck = 0
     </select>
 
     <select id="getProductDetail" parameterType="Integer" resultType="com.green.shopping.vo.ProductVo">
         SELECT * FROM ProductDetail_Tb
-        WHERE product_id = #{id}
+        WHERE product_id = #{id} And DeleteCheck = 0
     </select>
 
     <select id="getProductImg" parameterType="Integer" resultType="com.green.shopping.vo.ProductImgVo">

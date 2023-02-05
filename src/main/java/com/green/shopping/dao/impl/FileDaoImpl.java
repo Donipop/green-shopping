@@ -27,9 +27,10 @@ public class FileDaoImpl implements FileDao {
     }
 
     @Override
-    public String deleteFile(String filename) {
-        return sqlSession.delete("File.deleteFile",filename) == 1 ? "success" : "fail";
+    public int deleteFile(String filename) {
+        return sqlSession.delete("File.deleteFile",filename);
     }
+
 
     @Override
     public String updateFile(String Id, String name, String fileType, String fileSize, String width, String height, String userId) {
@@ -40,4 +41,5 @@ public class FileDaoImpl implements FileDao {
     public HashMap<String,Object> getFile(String Name) {
         return sqlSession.selectOne("File.getFile",Name);
     }
+
 }
