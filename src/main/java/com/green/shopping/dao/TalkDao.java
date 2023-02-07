@@ -1,5 +1,6 @@
 package com.green.shopping.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,4 +20,5 @@ public interface TalkDao {
     public int getUserIdCountByUuid(String uuid);
     public String getMarketOwnerByUuid(String uuid);
     public String getMarketOwnerIdByProductId(int productId);
+    public List<HashMap<String,String>> getUserNickAndUuid(String marketOwner);
 }

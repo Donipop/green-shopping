@@ -26,6 +26,12 @@
         where MARKETOWNER = #{marketOwner}
     </select>
 
+    <select id="getUserNickAndUuid" parameterType="String" resultType="HashMap">
+        select u.user_nick, t.id from Talk_Tb t
+        inner join User_Tb u on u.user_id = t.userId
+        where MARKETOWNER = #{marketOwner}
+    </select>
+
     <select id="getIdByUserId" parameterType="String" resultType="HashMap">
         select * from Talk_Tb
         where USERID = #{userId}

@@ -239,23 +239,31 @@ public class ChatController {
     /*==========================  채팅방 API  ==============================*/
     /*==================================================================*/
     @GetMapping("/chat/getChatList")
-    public List<Map<String, Object>> getChatList(@RequestParam String marketOwner) {
+    public List<HashMap<String, Object>> getChatList(@RequestParam String marketOwner) {
         log.info("marketOwner : {}", marketOwner);
         //마켓오너가 가지고 있는 채팅방 리스트를 가져온다
-        List<String> chatList = talkDaoImpl.getIdByMarketOwner(marketOwner);
-        List<Map<String, Object>> chatListMap = new ArrayList<>();
-        for (String uuid : chatList) {
-            Map<String, Object> chatMap = new HashMap<>();
-            Optional<ChatDoc> chatDoc = chatMongoDbDao.findById(uuid);
-            if(!chatDoc.isEmpty()){
-                Map lastMessage = chatDoc.get().getMessageList().get(chatDoc.get().getMessageList().size() - 1);
-                chatMap.put("uuid", uuid);
-                chatMap.put("chatList", lastMessage);
-                chatMap.put("count", talkDaoImpl.getMarketOwnerCountByUuid(uuid));
-                chatListMap.add(chatMap);
-                log.info("chatMap : {}", chatMap);
-            }
+        List<HashMap<String,String>> userNickAndUuid = talkDaoImpl.getUserNickAndUuid(marketOwner);
+        log.info("userNickAndUuid : {}", userNickAndUuid);
+        List<HashMap<String, Object>> chatListMap = new ArrayList<>();
+        for(HashMap<String,String> map : userNickAndUuid){
+            HashMap<String, Object> chatMap = new HashMap<>();
+            chatMap.putAll(map);
+            chatMap.put("COUNT", talkDaoImpl.getMarketOwnerCountByUuid(map.get("ID")));
+            chatListMap.add(chatMap);
+            log.info("chatMap : {}", chatMap);
         }
+//        for (String uuid : chatList) {
+//            Map<String, Object> chatMap = new HashMap<>();
+//            Optional<ChatDoc> chatDoc = chatMongoDbDao.findById(uuid);
+//            if(!chatDoc.isEmpty()){
+//                Map lastMessage = chatDoc.get().getMessageList().get(chatDoc.get().getMessageList().size() - 1);
+//                chatMap.put("uuid", uuid);
+//                chatMap.put("chatList", lastMessage);
+//                chatMap.put("count", talkDaoImpl.getMarketOwnerCountByUuid(uuid));
+//                chatListMap.add(chatMap);
+//                log.info("chatMap : {}", chatMap);
+//            }
+//        }
         log.info("chatListMap : {}", chatListMap);
         return chatListMap;
     }

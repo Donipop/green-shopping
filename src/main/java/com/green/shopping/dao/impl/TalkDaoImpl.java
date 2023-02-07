@@ -100,4 +100,9 @@ public class TalkDaoImpl implements TalkDao {
     public String getMarketOwnerIdByProductId(int productId) {
         return sqlSession.selectOne("Talk.getMarketOwnerIdByProductId", productId);
     }
+
+    @Override
+    public List<HashMap<String,String>> getUserNickAndUuid(String marketOwner) {
+        return sqlSession.selectList("Talk.getUserNickAndUuid", marketOwner);
+    }
 }
