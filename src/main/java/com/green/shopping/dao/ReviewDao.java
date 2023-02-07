@@ -49,4 +49,6 @@ public interface ReviewDao  {
     String getmarketName(HashMap<String, Object> map);
 
     String getmarketNamebyproductid(HashMap<String, Object> map);
+
+    int getReviewCheck(HashMap<String, Object> map);
 }
