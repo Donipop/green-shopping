@@ -25,13 +25,14 @@
 
     <select id="searchview1"
             resultType="HashMap">
-    select distinct(product_price),product_discount
-    from productdetail_tb
-    where product_id = #{ID} and product_price = (
-    select min(product_price)
-    from productdetail_tb
-    where product_id = #{ID}
-    )
+        select distinct(product_price),product_discount
+        from productdetail_tb
+        where  product_id = #{ID} and (product_price-product_discount) = (
+        select min(product_price-product_discount)
+        from productdetail_tb
+        where product_id = #{ID}) and rownum <![CDATA[<= 1]]>
+
+
 
     </select>
 
