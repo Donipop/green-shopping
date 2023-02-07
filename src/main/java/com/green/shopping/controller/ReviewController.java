@@ -4,10 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.shopping.service.ReviewService;
 import com.green.shopping.vo.QnAVo;
 import com.green.shopping.vo.ReviewVo;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -145,9 +145,20 @@ public class ReviewController {
         catch (Exception e){
             return false;
         }
-
-
-
+    }
+    @GetMapping("/view/reviewCheck/{page}")
+    public boolean getReviewCheck(@RequestParam HashMap<String, Object> map) {
+        try {
+            List<HashMap<String, Object>>  reviewCheck = reviewService.getReviewCheck(map);
+            if(reviewCheck.size() == 0){
+                return false;
+            } else {
+                return true;
+            }
+        }
+        catch (Exception e) {
+            return false;
+        }
     }
 }
 

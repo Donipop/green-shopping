@@ -144,6 +144,12 @@
 
     </select>
 
+    <select id="getReviewCheck" resultType="HashMap">
+    SELECT ID
+    FROM PURCHASELIST_TB
+    WHERE USER_ID = #{user_id} and PRODUCTID = #{page}
+    </select>
+
 
 
 </mapper>

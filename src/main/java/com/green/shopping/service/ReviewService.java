@@ -98,4 +98,8 @@ public class ReviewService {
     public String getmarketNamebyproductid(HashMap<String, Object> map) {
         return reviewDao.getmarketNamebyproductid(map);
     }
+
+    public  List<HashMap<String, Object>> getReviewCheck(HashMap<String, Object> map) {
+        return reviewDao.getReviewCheck(map);
+    }
 }
