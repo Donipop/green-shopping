@@ -29,6 +29,7 @@ public class SearchController {
 
         if( map.get("name").equals("전체")){
             List<HashMap<String, Object>> Allcategorysearch = searchService.Allcategorysearch(searchcont);
+            System.out.println(Allcategorysearch);
             for(int i=0; i< Allcategorysearch.size(); i++){
                 HashMap<String, Object> c = searchService.searchview1(Allcategorysearch.get(i));
                 HashMap<String, Object> f = searchService.searchview2(Allcategorysearch.get(i));
