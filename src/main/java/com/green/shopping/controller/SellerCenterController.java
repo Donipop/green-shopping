@@ -104,22 +104,13 @@ public class SellerCenterController {
         return result;
     }
     @PostMapping("/getpurchaseconfirm")
-    public List<purchaseconfirmVo> getPurchaseConfirm(@RequestParam String user_id, @RequestParam String start, @RequestParam String end,
-                                                      @RequestParam String selectedTitle) {
-        if(selectedTitle != null && !selectedTitle.equals("") && !selectedTitle.equals("전체")) {
-            HashMap<String, String> map = new HashMap<>();
-            map.put("user_id", user_id);
-            map.put("start", start);
-            map.put("end", end);
-            map.put("selectedTitle", selectedTitle);
-            return sellerCenterService.getPurchaseConfirmBySelectedTitle(map);
-        } else {
+    public List<purchaseconfirmVo> getPurchaseConfirm(@RequestParam String user_id, @RequestParam String start, @RequestParam String end) {
             HashMap<String, String> map = new HashMap<>();
             map.put("user_id", user_id);
             map.put("start", start);
             map.put("end", end);
             return sellerCenterService.getPurchaseConfirm(map);
-        }
+
     }
 
     @PostMapping("getpurchasedetailinfo")
