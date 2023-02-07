@@ -50,5 +50,5 @@ public interface ReviewDao  {
 
     String getmarketNamebyproductid(HashMap<String, Object> map);
 
-    List<HashMap<String, Object>> getReviewCheck(HashMap<String, Object> map);
+    int getReviewCheck(HashMap<String, Object> map);
 }

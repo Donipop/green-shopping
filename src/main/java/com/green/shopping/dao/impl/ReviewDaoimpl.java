@@ -111,11 +111,9 @@ public class ReviewDaoimpl implements ReviewDao {
     public String getmarketNamebyproductid(HashMap<String, Object> map) {
         return sqlSession.selectOne("Review.getmarketNamebyproductid", map);
     }
-
     @Override
-    public  List<HashMap<String, Object>> getReviewCheck(HashMap<String, Object> map) {
-        return sqlSession.selectList("Review.getReviewCheck", map);
+    public int getReviewCheck(HashMap<String, Object> map) {
+        return sqlSession.selectOne("Review.getReviewCheck2", map);
     }
-
 
 }

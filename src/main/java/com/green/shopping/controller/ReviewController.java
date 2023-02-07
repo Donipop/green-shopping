@@ -134,9 +134,9 @@ public class ReviewController {
     @GetMapping("/view/marketcheck")
     public boolean marketcheck(@RequestParam HashMap<String, Object> map) {
         try {
-            String a = reviewService.getmarketName(map);
-            String b = reviewService.getmarketNamebyproductid(map);
-            if (a.equals(b)) {
+            String getmarketName = reviewService.getmarketName(map);
+            String getmarketNamebyproductid = reviewService.getmarketNamebyproductid(map);
+            if (getmarketName.equals(getmarketNamebyproductid)) {
                 return true;
             } else {
                 return false;
@@ -149,8 +149,8 @@ public class ReviewController {
     @GetMapping("/view/reviewCheck/{page}")
     public boolean getReviewCheck(@RequestParam HashMap<String, Object> map) {
         try {
-            List<HashMap<String, Object>>  reviewCheck = reviewService.getReviewCheck(map);
-            if(reviewCheck.size() == 0){
+            int reviewCheck = reviewService.getReviewCheck(map);
+            if(reviewCheck == 0){
                 return false;
             } else {
                 return true;
