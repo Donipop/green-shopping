@@ -12,6 +12,8 @@ public class PaymentListItemVo {
     private String name;
     private int price;
     private int productDetailId;
+    private int discount;
+    private int totalPrice;
 
     public PaymentListItemVo() {
     }

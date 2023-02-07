@@ -106,7 +106,7 @@ public class SellerCenterService {
             totalMap.put("ID", p.getId());
             Calendar cal = Calendar.getInstance();
             cal.setTime(p.getTime());
-            cal.add(Calendar.HOUR_OF_DAY, 9);
+            cal.add(Calendar.HOUR_OF_DAY, 9); // 9시간 + 하루 더해줌
             totalMap.put("TIME", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(cal.getTime()));
             totalMap.put("product_Title", map.get("TITLE"));
             totalMap.put("PRODUCTID", p.getProductid());

@@ -302,6 +302,7 @@
         SELECT *
         FROM PURCHASELIST_TB
         WHERE marketName = #{marketName}
+        order by id desc
     </select>
 
     <select id="getProductIdAndTitleMapByMarketName" parameterType="String" resultType="java.util.HashMap">

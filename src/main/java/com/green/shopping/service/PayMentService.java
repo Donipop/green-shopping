@@ -29,7 +29,7 @@ public class PayMentService {
             //총결제금액 구하기
             int totalPrice = 0;
             for (PaymentListItemVo item : paymentVo.getListItem()) {
-                totalPrice += item.getPrice() * item.getCount();
+                totalPrice += item.getTotalPrice();
             }
             totalPrice += paymentVo.getDelivery();
 
