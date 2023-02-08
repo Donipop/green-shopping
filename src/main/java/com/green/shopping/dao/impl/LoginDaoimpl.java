@@ -74,4 +74,9 @@ public class LoginDaoimpl implements LoginDao {
         return sqlSession.selectOne("Login.checkDuplicateNick", user_nick);
     }
 
+    @Override
+    public int checkDuplicateNameAndTel(HashMap<String, Object> user_NameAndTel) {
+        return sqlSession.selectOne("Login.checkDuplicateNameAndTel", user_NameAndTel);
+    }
+
 }

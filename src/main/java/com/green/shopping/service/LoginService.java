@@ -64,4 +64,8 @@ public class LoginService {
     public int checkDuplicateNick(String user_nick) {
         return loginDao.checkDuplicateNick(user_nick);
     }
+
+    public int checkDuplicateNameAndTel(HashMap<String, Object> user_NameAndTel) {
+        return loginDao.checkDuplicateNameAndTel(user_NameAndTel);
+    }
 }

@@ -30,4 +30,6 @@ public interface LoginDao {
     int checkDuplicateId(String user_id);
 
     int checkDuplicateNick(String user_nick);
+
+    int checkDuplicateNameAndTel(HashMap<String, Object> user_NameAndTel);
 }

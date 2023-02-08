@@ -94,6 +94,14 @@
                 FROM USER_TB
                 WHERE USER_NICK = #{user_nick}
         </select>
+        <select id="checkDuplicateNameAndTel"
+                parameterType="HashMap"
+                resultType="Integer">
+                SELECT COUNT(USER_ID)
+                FROM USER_TB
+                WHERE USER_NAME = #{user_name}
+                AND   USER_TEL = #{user_tel}
+        </select>
         </mapper>
 
 
