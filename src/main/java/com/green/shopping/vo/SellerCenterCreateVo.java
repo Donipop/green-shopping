@@ -21,5 +21,5 @@ public class SellerCenterCreateVo {
     public String userId;
     public int productId;
     public int id;
-    public String mainimage;
+    public String mainImage;
 }
