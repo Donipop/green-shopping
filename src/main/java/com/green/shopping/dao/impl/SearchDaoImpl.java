@@ -16,17 +16,17 @@ public class SearchDaoImpl implements SearchDao {
     private SqlSession sqlSession;
 
     @Override
-    public List<HashMap<String, Object>> Categorysearch(HashMap<String, Object> map) {
-        List<HashMap<String, Object>> Categorysearch =  sqlSession.selectList("search.searchview", map);
+    public List<HashMap<String, Object>> categorySearch(HashMap<String, Object> map) {
+        List<HashMap<String, Object>> categorySearch =  sqlSession.selectList("search.searchview", map);
 
-        return Categorysearch;
+        return categorySearch;
 
     }
 
     @Override
-    public List<HashMap<String, Object>> Allcategorysearch(String searchcont) {
-        List<HashMap<String, Object>> Allcategorysearch = sqlSession.selectList("search.Allcategorysearch", searchcont);
-        return Allcategorysearch;
+    public List<HashMap<String, Object>> AllcategorySearch(String searchcont) {
+        List<HashMap<String, Object>> AllcategorySearch = sqlSession.selectList("search.AllcategorySearch", searchcont);
+        return AllcategorySearch;
     }
 
     @Override

@@ -11,14 +11,14 @@ import java.util.List;
 public class SearchService {
     @Autowired
     private SearchDao searchDao;
-    public List<HashMap<String, Object>> Categorysearch(HashMap<String, Object> map) {
-        List<HashMap<String, Object>> Categorysearch = searchDao.Categorysearch(map);
-        return Categorysearch;
+    public List<HashMap<String, Object>> categorySearch(HashMap<String, Object> map) {
+        List<HashMap<String, Object>> categorySearch = searchDao.categorySearch(map);
+        return categorySearch;
     }
 
-    public List<HashMap<String, Object>> Allcategorysearch(String searchcont) {
-        List<HashMap<String, Object>> Allcategorysearch = searchDao.Allcategorysearch(searchcont);
-        return Allcategorysearch;
+    public List<HashMap<String, Object>> AllcategorySearch(String searchcont) {
+        List<HashMap<String, Object>> AllcategorySearch = searchDao.AllcategorySearch(searchcont);
+        return AllcategorySearch;
     }
 
     public HashMap<String, Object> getProductValue(HashMap<String, Object> map) {

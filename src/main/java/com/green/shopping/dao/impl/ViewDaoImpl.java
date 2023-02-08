@@ -22,7 +22,8 @@ public class ViewDaoImpl implements ViewDao {
 
     @Override
     public List<ProductVo> getProductDetail(int product_id) {
-        return sqlSession.selectList("View.getProductDetail", product_id);
+        List<ProductVo> p = sqlSession.selectList("View.getProductDetail", product_id);
+        return p;
     }
 
     @Override

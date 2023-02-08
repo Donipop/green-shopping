@@ -16,7 +16,7 @@ public class SchedulConfig {
         this.indexService = indexService;
     }
 
-    @Scheduled(cron = "0 0 9 * * *")
+    @Scheduled(cron = "0 0 02 * * *")
     public void  insertRandomItem() {
        indexService.insertRandomItem();
     }

@@ -14,7 +14,7 @@
         FROM
         USER_SEQUENCES
         WHERE
-        SEQUENCE_NAME = 'TODAYITEMLIST_TB_SEQ')
+        SEQUENCE_NAME = 'TODAYITEMLIST_TB_SEQ') AND P.DELETECHECK = 0
     </select>
 
     <insert id="insertRandomItem">

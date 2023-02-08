@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface SearchDao {
-    List<HashMap<String, Object>> Categorysearch(HashMap<String, Object> map);
+    List<HashMap<String, Object>> categorySearch (HashMap<String, Object> map);
 
-    List<HashMap<String, Object>> Allcategorysearch(String searchcont);
+    List<HashMap<String, Object>> AllcategorySearch(String searchcont);
 
     HashMap<String, Object> getProductValue(HashMap<String, Object> map);
 

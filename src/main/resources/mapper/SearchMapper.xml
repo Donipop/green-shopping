@@ -14,7 +14,7 @@
             from category_tb c
             start with c.num = #{categorynum}
             connect by prior c.num = c.parent_num
-            )
+            ) and p.deletecheck = 0
     </select>
 
     <select id="categorynum" resultType="String">
@@ -43,15 +43,15 @@
         where product_num = #{ID}
     </select>
 
-    <select id="Allcategorysearch"
+    <select id="AllcategorySearch"
             resultType="HashMap">
-        select p.title,p.id,p.mainimage
+        select p.title,p.id,p.mainimage,p.category
         from product_tb p
         where REPLACE(p.title,' ','') LIKE '%'||#{searchcont}||'%' and p.category In (
         select num
         from category_tb
         start with parent_num is null
-        connect by prior num = parent_num )
+        connect by prior num = parent_num ) and p.deletecheck = 0
 
     </select>
 
