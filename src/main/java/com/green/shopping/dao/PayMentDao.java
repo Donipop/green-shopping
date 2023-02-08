@@ -8,4 +8,6 @@ public interface PayMentDao {
     int insertPurchaseDetailList(int price, int productDetailId, int count, int sale, int purchaseListId);
 
     HashMap<String,Object> getAddress(String userId);
+
+    void deleteShoppingBasket(String userId, int productDetailId);
 }

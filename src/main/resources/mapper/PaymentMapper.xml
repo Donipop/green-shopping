@@ -34,6 +34,12 @@
         select * from postaddress_tb
         where userid = #{userId}
     </select>
+    <delete id="deleteShoppingBasket"
+            parameterType="java.util.HashMap">
+        DELETE FROM SHOPPING_BASKET_TB
+        WHERE USER_ID = #{userId}
+        AND PRODUCTDETAIL_NUM = #{productDetailId}
+    </delete>
 
 </mapper>
 

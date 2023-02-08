@@ -47,4 +47,12 @@ public class PayMentDaoImpl implements PayMentDao {
     public HashMap<String,Object> getAddress(String userId) {
         return sqlSession.selectOne("Payment.getAddress", userId);
     }
+
+    @Override
+    public void deleteShoppingBasket(String userId, int productDetailId) {
+        HashMap<String,Object> map = new HashMap<String, Object>();
+        map.put("userId", userId);
+        map.put("productDetailId", productDetailId);
+        sqlSession.delete("Payment.deleteShoppingBasket", map);
+    }
 }

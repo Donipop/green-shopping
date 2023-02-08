@@ -40,6 +40,8 @@ public class PayMentService {
                 //(int price, int productDetailId, int count, int sale, int purchaseListId)
                 payMentDaoImpl.insertPurchaseDetailList((item.getPrice()/item.getCount()),item.getProductDetailId(),item.getCount(),item.getDiscount(),purchaseListId);
             }
+            // shopping_basket_Tb delete
+            payMentDaoImpl.deleteShoppingBasket(userId.get(),paymentVo.getListItem().get(0).getProductDetailId());
 
             logger.info("insertPurchase : " + paymentVo.toString());
             return "success";
