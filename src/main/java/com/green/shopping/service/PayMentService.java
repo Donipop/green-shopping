@@ -31,14 +31,14 @@ public class PayMentService {
             for (PaymentListItemVo item : paymentVo.getListItem()) {
                 totalPrice += item.getTotalPrice();
             }
-            totalPrice += paymentVo.getDelivery();
 
             //purcharseList_Tb insert
             int purchaseListId = payMentDaoImpl.insertPurchaseList(userId.get(),totalPrice,paymentVo.getProductId(),paymentVo.getDelivery(),postAddress, paymentVo.getMarketName());
 
             //purcharseDetailList_Tb insert
             for (PaymentListItemVo item : paymentVo.getListItem()) {
-                int j = payMentDaoImpl.insertPurchaseDetailList(item.getPrice(),item.getProductDetailId(),item.getCount(),0,purchaseListId);
+                //(int price, int productDetailId, int count, int sale, int purchaseListId)
+                payMentDaoImpl.insertPurchaseDetailList((item.getPrice()/item.getCount()),item.getProductDetailId(),item.getCount(),item.getDiscount(),purchaseListId);
             }
 
             logger.info("insertPurchase : " + paymentVo.toString());

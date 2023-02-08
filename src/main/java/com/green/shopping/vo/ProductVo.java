@@ -13,4 +13,5 @@ public class ProductVo {
     public String product_count;
     public String dateStart;
     public String dateEnd;
+    public int deleteCheck;
 }
