@@ -23,7 +23,7 @@
         where  c.name = #{name}
     </select>
 
-    <select id="searchview1"
+    <select id="getProductValue"
             resultType="HashMap">
         select distinct(product_price),product_discount
         from productdetail_tb
@@ -36,7 +36,7 @@
 
     </select>
 
-    <select id="searchview2"
+    <select id="getProductReview"
             resultType="HashMap">
         select sum(star) as star, count(star) as starcount
         from review_tb
