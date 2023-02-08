@@ -218,6 +218,14 @@ public class LoginController {
         int check = loginService.checkDuplicateNick(user_nick);
         return check;
     }
+    @PostMapping("/checkDuplicateNameAndTel")
+    public int checkDuplicateNameAndTel(@RequestParam String user_name, @RequestParam String user_tel) {
+        HashMap<String, Object> user_NameAndTel = new HashMap<>();
+        user_NameAndTel.put("user_name", user_name);
+        user_NameAndTel.put("user_tel", user_tel);
+        int check = loginService.checkDuplicateNameAndTel(user_NameAndTel);
+        return check;
+    }
 
 
 
