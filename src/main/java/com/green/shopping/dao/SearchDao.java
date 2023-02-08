@@ -8,9 +8,9 @@ public interface SearchDao {
 
     List<HashMap<String, Object>> Allcategorysearch(String searchcont);
 
-    HashMap<String, Object> searchview1(HashMap<String, Object> map);
+    HashMap<String, Object> getProductValue(HashMap<String, Object> map);
 
-    HashMap<String, Object> searchview2(HashMap<String, Object> map);
+    HashMap<String, Object> getProductReview(HashMap<String, Object> map);
 
     HashMap<String, Object> getProductImgByProductId(String id);
 

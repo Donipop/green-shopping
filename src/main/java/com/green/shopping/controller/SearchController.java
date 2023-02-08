@@ -30,8 +30,8 @@ public class SearchController {
         if( map.get("name").equals("전체")){
             List<HashMap<String, Object>> Allcategorysearch = searchService.Allcategorysearch(searchcont);
             for(int i=0; i< Allcategorysearch.size(); i++){
-                HashMap<String, Object> c = searchService.searchview1(Allcategorysearch.get(i));
-                HashMap<String, Object> f = searchService.searchview2(Allcategorysearch.get(i));
+                HashMap<String, Object> productValue = searchService.getProductValue(Allcategorysearch.get(i));
+                HashMap<String, Object> productReview = searchService.getProductReview(Allcategorysearch.get(i));
                 SearchPut = new HashMap<>();
                 HashMap<String,Object> productImage = searchService.getProductImgByProductId(Allcategorysearch.get(i).get("ID").toString());
                  if(productImage != null){
@@ -39,13 +39,13 @@ public class SearchController {
                      SearchPut.put("FILE_NAME",fileMap.get("NAME") + "." + fileMap.get("FILE_TYPE"));
                  }
 
-                SearchPut.put("product_price", c.get("PRODUCT_PRICE"));
-                SearchPut.put("product_discount", c.get("PRODUCT_DISCOUNT"));
-                SearchPut.put("star", f.get("STAR"));
+                SearchPut.put("product_price", productValue.get("PRODUCT_PRICE"));
+                SearchPut.put("product_discount", productValue.get("PRODUCT_DISCOUNT"));
+                SearchPut.put("star", productReview.get("STAR"));
                 SearchPut.put("title", Allcategorysearch.get(i).get("TITLE"));
                 SearchPut.put("id", Allcategorysearch.get(i).get("ID"));
                 SearchPut.put("mainimage", Allcategorysearch.get(i).get("MAINIMAGE"));
-                SearchPut.put("starcount", f.get("STARCOUNT"));
+                SearchPut.put("starcount", productReview.get("STARCOUNT"));
 
                 SearchValue.add(SearchPut);
 
@@ -67,21 +67,21 @@ public class SearchController {
             }
             for (int i = 0; i < Categorysearch.size(); i++) {
                 SearchPut = new HashMap<>();
-                HashMap<String, Object> c = searchService.searchview1(Categorysearch.get(i));
-                HashMap<String, Object> f = searchService.searchview2(Categorysearch.get(i));
+                HashMap<String, Object> productValue = searchService.getProductValue(Categorysearch.get(i));
+                HashMap<String, Object> productReview = searchService.getProductReview(Categorysearch.get(i));
                 HashMap<String,Object> productImage = searchService.getProductImgByProductId(Categorysearch.get(i).get("ID").toString());
                 if(productImage != null){
                     HashMap<String,Object> fileMap = searchService.getFile(productImage.get("FILE_NAME").toString());
                     SearchPut.put("FILE_NAME",fileMap.get("NAME") + "." + fileMap.get("FILE_TYPE"));
                 }
 
-                SearchPut.put("product_price", c.get("PRODUCT_PRICE"));
-                SearchPut.put("product_discount", c.get("PRODUCT_DISCOUNT"));
-                SearchPut.put("star", f.get("STAR"));
+                SearchPut.put("product_price", productValue.get("PRODUCT_PRICE"));
+                SearchPut.put("product_discount", productValue.get("PRODUCT_DISCOUNT"));
+                SearchPut.put("star", productReview.get("STAR"));
                 SearchPut.put("title", Categorysearch.get(i).get("TITLE"));
                 SearchPut.put("id", Categorysearch.get(i).get("ID"));
                 SearchPut.put("mainimage", Categorysearch.get(i).get("MAINIMAGE"));
-                SearchPut.put("starcount", f.get("STARCOUNT"));
+                SearchPut.put("starcount", productReview.get("STARCOUNT"));
 
                 SearchValue.add(SearchPut);
 
@@ -89,9 +89,6 @@ public class SearchController {
         }
 
     return SearchValue;
-
-
-
 
 
         }

@@ -23,19 +23,20 @@
         where  c.name = #{name}
     </select>
 
-    <select id="searchview1"
+    <select id="getProductValue"
             resultType="HashMap">
-    select distinct(product_price),product_discount
-    from productdetail_tb
-    where product_id = #{ID} and product_price = (
-    select min(product_price)
-    from productdetail_tb
-    where product_id = #{ID}
-    )
+        select distinct(product_price),product_discount
+        from productdetail_tb
+        where  product_id = #{ID} and (product_price-product_discount) = (
+        select min(product_price-product_discount)
+        from productdetail_tb
+        where product_id = #{ID}) and rownum <![CDATA[<= 1]]>
+
+
 
     </select>
 
-    <select id="searchview2"
+    <select id="getProductReview"
             resultType="HashMap">
         select sum(star) as star, count(star) as starcount
         from review_tb

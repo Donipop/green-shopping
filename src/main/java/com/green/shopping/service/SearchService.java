@@ -21,13 +21,13 @@ public class SearchService {
         return Allcategorysearch;
     }
 
-    public HashMap<String, Object> searchview1(HashMap<String, Object> map) {
-        HashMap<String, Object> b = searchDao.searchview1(map);
+    public HashMap<String, Object> getProductValue(HashMap<String, Object> map) {
+        HashMap<String, Object> b = searchDao.getProductValue(map);
         return b;
     }
 
-    public HashMap<String, Object> searchview2(HashMap<String, Object> map) {
-        HashMap<String, Object> c = searchDao.searchview2(map);
+    public HashMap<String, Object> getProductReview(HashMap<String, Object> map) {
+        HashMap<String, Object> c = searchDao.getProductReview(map);
         return c;
     }
 

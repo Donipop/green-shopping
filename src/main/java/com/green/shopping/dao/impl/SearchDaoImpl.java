@@ -30,15 +30,15 @@ public class SearchDaoImpl implements SearchDao {
     }
 
     @Override
-    public  HashMap<String, Object> searchview1(HashMap<String, Object> map) {
-        HashMap<String, Object> b = sqlSession.selectOne("search.searchview1", map);
+    public  HashMap<String, Object> getProductValue(HashMap<String, Object> map) {
+        HashMap<String, Object> b = sqlSession.selectOne("search.getProductValue", map);
         return b;
 
     }
 
     @Override
-    public  HashMap<String, Object> searchview2(HashMap<String, Object> map) {
-        HashMap<String, Object> c = sqlSession.selectOne("search.searchview2", map);
+    public  HashMap<String, Object> getProductReview(HashMap<String, Object> map) {
+        HashMap<String, Object> c = sqlSession.selectOne("search.getProductReview", map);
         return c;
     }
 
