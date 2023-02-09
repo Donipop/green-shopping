@@ -184,11 +184,9 @@ public class SellerCenterController {
 
     @GetMapping("/salesstatus")
     public List<Integer> salesStatus(@RequestParam HashMap<String,Object> map) {
-        List<Integer> salesStatus = sellerCenterService.salesStatus (map);
         return sellerCenterService.salesStatus(map);
 
     }
-
 
     @GetMapping("/getmarketnamelist")
     public List<String> getMarketNameList(@RequestParam String user_id) {
