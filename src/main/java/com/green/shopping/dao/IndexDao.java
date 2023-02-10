@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface IndexDao {
 
@@ -15,4 +16,5 @@ public interface IndexDao {
 
     HashMap<String, Object> starCount(HashMap<String, Object> map);
 
+    List<Map<String, Object>> categoryItemList(Map<String,String> category);
 }

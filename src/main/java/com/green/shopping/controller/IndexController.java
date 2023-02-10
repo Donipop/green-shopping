@@ -64,5 +64,10 @@ public class IndexController {
         }
        return recommenditemlist;
     }
+    @GetMapping("/categoryItemList")
+    public List<Map<String,Object>> categoryItemList(@RequestParam("category[]") String[] category) {
+        List<Map<String,Object>> categoryItemList = indexService.categoryItemList(category);
+        return categoryItemList;
+    }
 
 }

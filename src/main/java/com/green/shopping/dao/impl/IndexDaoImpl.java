@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class IndexDaoImpl implements IndexDao {
@@ -35,6 +36,11 @@ public class IndexDaoImpl implements IndexDao {
     @Override
     public HashMap<String, Object> starCount(HashMap<String, Object> map) {
         return sqlSession.selectOne("Index.starCount", map);
+    }
+
+    @Override
+    public List<Map<String, Object>> categoryItemList(Map<String,String> category) {
+        return sqlSession.selectList("Index.categoryItemList", category);
     }
 }
 

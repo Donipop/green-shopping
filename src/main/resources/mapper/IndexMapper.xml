@@ -41,4 +41,11 @@
         WHERE PRODUCT_NUM = #{ID}
     </select>
 
+    <select id="categoryItemList" resultType="Map" parameterType="Map">
+        SELECT ID,MAINIMAGE,TITLE
+        FROM (SELECT ID, MAINIMAGE,TITLE FROM PRODUCT_TB
+        WHERE CATEGORY LIKE #{category1}||'%' or CATEGORY LIKE #{category2}||'%' or CATEGORY LIKE #{category3}||'%' or CATEGORY LIKE #{category4}||'%'
+        ORDER BY DBMS_RANDOM.VALUE)
+        WHERE ROWNUM <![CDATA[<= 15 ]]>
+    </select>
 </mapper>
