@@ -8,7 +8,8 @@ spring:
     mongodb:
       uri: mongodb+srv://donipop:ehslvkq123@cluster0.tqn2bie.mongodb.net/?retryWrites=true&w=majority
       database: greenshop
-
+  main:
+    allow-bean-definition-overriding: true
 server:
   servlet:
     context-Path: /api
