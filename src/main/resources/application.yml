@@ -13,7 +13,7 @@ spring:
 server:
   servlet:
     context-Path: /api
-  port: 80
+  port: 8080
 
 mybatis:
   mapper-locations: mapper/*.xml
